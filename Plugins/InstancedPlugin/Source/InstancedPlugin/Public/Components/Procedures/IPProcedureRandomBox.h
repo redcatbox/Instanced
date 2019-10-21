@@ -1,0 +1,33 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "IPProcedureRandomBase.h"
+#include "IPProcedureRandomBox.generated.h"
+
+UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+class INSTANCEDPLUGIN_API UIPProcedureRandomBox : public UIPProcedureRandomBase
+{
+	GENERATED_BODY()
+
+public:
+	UIPProcedureRandomBox();
+
+#if WITH_EDITOR
+	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
+#endif
+
+#if WITH_EDITORONLY_DATA
+	/** Number of instances to create */
+	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
+		FIntVector InstancesNum3D;
+
+	/** Box extent */
+	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
+		FVector BoxExtent;
+
+	/** Should instances be generated on box surface only? */
+	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
+		bool bOnSurfaceOnly;
+#endif
+};
