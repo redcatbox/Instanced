@@ -7,6 +7,7 @@ UIPProcedureGrid3DBase::UIPProcedureGrid3DBase()
 	PrimaryComponentTick.bCanEverTick = false;
 
 #if WITH_EDITORONLY_DATA
+	bInstancesNumEditCondition = false;
 	InstancesNum3D = FIntVector(1, 1, 1);
 
 	InstanceSpace = FVector(100.f, 100.f, 100.f);
@@ -27,5 +28,7 @@ void UIPProcedureGrid3DBase::RunProcedure(int32 NumIterations, TArray<FTransform
 		FMath::Clamp(InstancesNum3D.X, 1, InstancesNum3D.X),
 		FMath::Clamp(InstancesNum3D.Y, 1, InstancesNum3D.Y),
 		FMath::Clamp(InstancesNum3D.Z, 1, InstancesNum3D.Z));
+
+	InstancesNum = InstancesNum3D.X * InstancesNum3D.Y * InstancesNum3D.Z;
 }
 #endif

@@ -27,18 +27,18 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY()
-		bool bExecutionCondition;
+		bool bInstancesNumEditCondition;
+
+	/** Number of instances to create */
+	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bInstancesNumEditCondition", ClampMin = "1", UIMin = "1"))
+		int32 InstancesNum;
 
 	/** Process this procedure or not */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution", Meta = (EditCondition = "bExecutionCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution")
 		bool bEnabled;
 
 	/** Order in procedures execution chain */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution", Meta = (EditCondition = "bExecutionCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution")
 		int32 ExecutionOrder;
-
-	/** Run InstancesNum times or run once */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution", Meta = (EditCondition = "bExecutionCondition"))
-		bool bUseInstancesNum;
 #endif
 };

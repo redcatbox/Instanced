@@ -2,23 +2,19 @@
 
 #pragma once
 
-#include "IPInstancedActor.h"
+#include "IPInstancedHISMActor.h"
 #include "Components/Procedures/IPProcedureInitialTransform.h"
 #include "Components/Procedures/IPProcedureSpiral.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPSpiralActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced))
-class INSTANCEDPLUGIN_API AIPSpiralActor : public AIPInstancedActor
+class INSTANCEDPLUGIN_API AIPSpiralActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
 
 public:
 	AIPSpiralActor();
-
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)

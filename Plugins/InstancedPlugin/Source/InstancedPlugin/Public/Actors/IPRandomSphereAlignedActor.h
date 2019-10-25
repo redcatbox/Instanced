@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "IPInstancedActor.h"
+#include "IPInstancedHISMActor.h"
 #include "Components/Procedures/IPProcedureInitialTransform.h"
 #include "Components/Procedures/IPProcedureRandomSphere.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
@@ -10,7 +10,7 @@
 #include "IPRandomSphereAlignedActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced))
-class INSTANCEDPLUGIN_API AIPRandomSphereAlignedActor : public AIPInstancedActor
+class INSTANCEDPLUGIN_API AIPRandomSphereAlignedActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
 

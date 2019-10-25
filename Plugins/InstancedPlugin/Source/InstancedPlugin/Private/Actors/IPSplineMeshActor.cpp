@@ -4,8 +4,6 @@
 
 AIPSplineMeshActor::AIPSplineMeshActor()
 {
-	PrimaryActorTick.bCanEverTick = false;
-
 	SplineMeshComponent = CreateDefaultSubobject<USplineMeshComponent>(TEXT("SplineMeshComponent1"));
 	SplineMeshComponent->SetupAttachment(RootComponent);
 	SplineMeshComponent->Mobility = EComponentMobility::Static;

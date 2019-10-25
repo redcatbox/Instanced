@@ -4,19 +4,15 @@
 
 AIPBaseInstancedTwoActor::AIPBaseInstancedTwoActor()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	HISMComponent1 = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent"));
+	HISMComponent1->SetupAttachment(RootComponent);
+	HISMComponent1->Mobility = EComponentMobility::Static;
 
-	ISMComponent = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent"));
-	ISMComponent->SetupAttachment(RootComponent);
-	ISMComponent->Mobility = EComponentMobility::Static;
-
-	ISMComponent2 = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent2"));
-	ISMComponent2->SetupAttachment(RootComponent);
-	ISMComponent2->Mobility = EComponentMobility::Static;
+	HISMComponent2 = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent2"));
+	HISMComponent2->SetupAttachment(RootComponent);
+	HISMComponent2->Mobility = EComponentMobility::Static;
 
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = true;
-	InstancesNum = 10;
 	bUseInstancingRandomSeed = false;
 	InstancingRandomSeed = 0;
 
@@ -54,14 +50,14 @@ void AIPBaseInstancedTwoActor::PostEditChangeProperty(FPropertyChangedEvent& Pro
 
 	if (bUseInstancingRandomSeed)
 	{
-		ISMComponent2->InstancingRandomSeed = InstancingRandomSeed;
-		ISMComponent2->Modify();
+		HISMComponent2->InstancingRandomSeed = InstancingRandomSeed;
+		HISMComponent2->Modify();
 	}
 
-	InstancesNum1 = InstancesNum * Distribution * Contribution1;
-	InstancesNum2 = InstancesNum * (1 - Distribution) * Contribution2;
+	InstancesNum1 = 100 * Distribution * Contribution1;
+	InstancesNum2 = 100 * (1 - Distribution) * Contribution2;
 
-	if (Contribution1 == Contribution2 == 1 && InstancesNum1 + InstancesNum2 != InstancesNum)
+	if (Contribution1 == Contribution2 == 1 && InstancesNum1 + InstancesNum2 != 100)
 		InstancesNum2 += 1;
 
 	RandomStream.Initialize(RandomStreamSeed);

@@ -11,7 +11,7 @@ class INSTANCEDPLUGIN_API AIPConvertibleActor : public AIPBaseGeneratedActor
 	GENERATED_BODY()
 
 public:
-	AIPConvertibleActor();
+	//AIPConvertibleActor();
 
 #if WITH_EDITOR
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = Convertation)

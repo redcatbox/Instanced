@@ -18,10 +18,6 @@ public:
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Number of instances to create */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
-		FIntVector InstancesNum3D;
-
 	/** Box extent */
 	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
 		FVector BoxExtent;

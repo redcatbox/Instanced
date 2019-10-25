@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IPBaseGeneratedActor.h"
-#include "Components/InstancedStaticMeshComponent.h"
+#include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Components/Procedures/IPProcedureComponent.h"
 #include "IPBaseInstancedActor.generated.h"
 
@@ -37,17 +37,7 @@ public:
 		virtual void UpdateInstances(TArray<FTransform>& Transforms, UInstancedStaticMeshComponent* ISMComponentRef);
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
-		UInstancedStaticMeshComponent* ISMComponent;
-
 #if WITH_EDITORONLY_DATA
-	UPROPERTY()
-		bool bInstancesNumEditCondition;
-
-	/** Number of instances to create */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (EditCondition = "bInstancesNumEditCondition", ClampMin = "1", UIMin = "1"))
-		int32 InstancesNum;
-
 	/** Should random seed be used? */
 	UPROPERTY(EditAnywhere, Category = Generation)
 		bool bUseInstancingRandomSeed;
@@ -55,8 +45,5 @@ public:
 	/** Random seed value */
 	UPROPERTY(EditAnywhere, Category = Generation, Meta = (EditCondition = "bUseInstancingRandomSeed"))
 		int32 InstancingRandomSeed;
-
-	UPROPERTY()
-		TArray<UIPProcedureComponent*> ProcedureComponents;
 #endif
 };

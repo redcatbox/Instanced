@@ -22,11 +22,8 @@ void UIPProcedureAlignByDirection::RunProcedure(int32 NumIterations, TArray<FTra
 	{
 		for (FTransform Transf : Transforms)
 		{
-			FVector Location;
-			FRotator Rotation;
-
-			//Location
-			Location = Transf.GetLocation();
+			FVector Location = Transf.GetLocation();
+			FRotator Rotation = Transf.Rotator();
 
 			//Trace
 			FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, GetOwner());
@@ -45,14 +42,10 @@ void UIPProcedureAlignByDirection::RunProcedure(int32 NumIterations, TArray<FTra
 			if (bHit)
 				Location = TraceOutHit.Location - GetOwner()->GetActorLocation();
 
-			//Rotation
-			Rotation = Transf.Rotator();
-
 			if (bOrientToSurface)
 				Rotation += FRotationMatrix::MakeFromZ(TraceOutHit.Normal).Rotator();
 
-			FTransform NewTransf = FTransform(Rotation, Location, Transf.GetScale3D());
-			ResultTransforms.Add(NewTransf);
+			ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
 		}
 	}
 

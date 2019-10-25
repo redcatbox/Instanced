@@ -12,9 +12,6 @@ UIPProcedureSpiral::UIPProcedureSpiral()
 	AngularVelocity = FVector(0.f, 0.f, 360.f);
 	Time = 1.f;
 	bOrientToCentralAxis = false;
-	//bPlaceEvenly = false;
-
-	bUseInstancesNum = true;
 #endif
 }
 
@@ -32,10 +29,6 @@ void UIPProcedureSpiral::RunProcedure(int32 NumIterations, TArray<FTransform>& T
 			int32 Intervals = NumIterations - 1;
 			float IntervalFactor = (float) Index / Intervals;
 			float SpiralAngle = (AngularVelocity * Time).Size();
-
-			//float SpiralLength = (InitialLinearVelocity * Time + LinearAcceleration * Time * Time / 2 + AngularVelocity * Time).Size();
-
-			//if (bPlaceEvenly)
 			float RotYaw = SpiralAngle * IntervalFactor;
 			Rotation = FRotator(0, RotYaw, 0);
 
@@ -46,10 +39,9 @@ void UIPProcedureSpiral::RunProcedure(int32 NumIterations, TArray<FTransform>& T
 
 			//Rotation
 			if (!bOrientToCentralAxis)
-				Rotation += Transf.Rotator();
+				Rotation = Transf.Rotator();
 
-			FTransform NewTransf = FTransform(Rotation, Location, Transf.GetScale3D());
-			ResultTransforms.Add(NewTransf);
+			ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
 		}
 
 	Transforms = ResultTransforms;

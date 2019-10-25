@@ -19,10 +19,7 @@ void UIPProcedureInitialTransform::RunProcedure(int32 NumIterations, TArray<FTra
 
 	for (int32 Index = 0; Index < NumIterations; Index++)
 		for (FTransform Transf : Transforms)
-		{
-			FTransform NewTransf = Transf * InitialTransform;
-			ResultTransforms.Add(NewTransf);
-		}
+			ResultTransforms.Add(Transf * InitialTransform);
 
 	Transforms = ResultTransforms;
 }

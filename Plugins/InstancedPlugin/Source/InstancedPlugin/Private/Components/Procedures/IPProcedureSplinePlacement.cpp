@@ -15,14 +15,20 @@ UIPProcedureSplinePlacement::UIPProcedureSplinePlacement()
 	bOrientByPoints = false;
 	bScaleBetweenPoints = false;
 	XSizeToScale = 100.f;
-
-	bUseInstancesNum = true;
 #endif
 }
 
 #if WITH_EDITOR
 void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
 {
+	if (bPlaceBetweenPoints)
+	{
+		bInstancesNumEditCondition = false;
+		InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
+	}
+	else
+		bInstancesNumEditCondition = true;
+
 	if (bOrientBySpline)
 	{
 		bPlaceBetweenPointsEditCondition = false;

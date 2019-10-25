@@ -24,7 +24,10 @@ public:
 #endif
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
-		UInstancedStaticMeshComponent* ISMComponent2;
+		UInstancedStaticMeshComponent* HISMComponent1;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+		UInstancedStaticMeshComponent* HISMComponent2;
 
 #if WITH_EDITORONLY_DATA
 	/** Distribution between first and second instances */

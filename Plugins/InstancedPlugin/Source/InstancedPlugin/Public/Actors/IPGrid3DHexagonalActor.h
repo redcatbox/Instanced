@@ -2,23 +2,19 @@
 
 #pragma once
 
-#include "IPInstancedActor.h"
+#include "IPInstancedHISMActor.h"
 #include "Components/Procedures/IPProcedureInitialTransform.h"
 #include "Components/Procedures/IPProcedureGrid3DHexagonal.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPGrid3DHexagonalActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced))
-class INSTANCEDPLUGIN_API AIPGrid3DHexagonalActor : public AIPInstancedActor
+class INSTANCEDPLUGIN_API AIPGrid3DHexagonalActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
 
 public:
 	AIPGrid3DHexagonalActor();
-
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)

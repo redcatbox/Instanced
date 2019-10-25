@@ -4,11 +4,7 @@
 
 AIPBaseInstancedActor::AIPBaseInstancedActor()
 {
-	PrimaryActorTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = true;
-	InstancesNum = 10;
 	bUseInstancingRandomSeed = false;
 	InstancingRandomSeed = 0;
 #endif
@@ -18,58 +14,79 @@ AIPBaseInstancedActor::AIPBaseInstancedActor()
 void AIPBaseInstancedActor::RunGeneration()
 {
 	Super::RunGeneration();
+	TArray<UActorComponent*> ACompISMCs = GetComponentsByClass(UInstancedStaticMeshComponent::StaticClass());
 
-	TArray<FTransform> Transforms;
-	TArray<UActorComponent*> AComponents = GetComponentsByClass(UIPProcedureComponent::StaticClass());
-
-	if (AComponents.Num() > 0)
+	if (ACompISMCs.Num() > 0)
 	{
-		ProcedureComponents.Empty();
-
-		for (UActorComponent* AComp : AComponents)
-			if (UIPProcedureComponent* PComp = Cast<UIPProcedureComponent>(AComp))
+		for (UActorComponent* ACompISM : ACompISMCs)
+			if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(ACompISM))
 			{
-				if (PComp->bEnabled)
-					ProcedureComponents.AddUnique(PComp);
+				TArray<FTransform> Transforms;
+				TArray<USceneComponent*> ISMCompChildren;
+				ISMComp->GetChildrenComponents(false, ISMCompChildren);
 
-				PComp->bIsEditorOnly = true;
+				if (ISMCompChildren.Num() > 0)
+				{
+					TArray<UIPProcedureComponent*> PComps;
+
+					for (USceneComponent* SComp : ISMCompChildren)
+						if (UIPProcedureComponent* PComp = Cast<UIPProcedureComponent>(SComp))
+						{
+							if (PComp->bEnabled)
+								PComps.AddUnique(PComp);
+
+							PComp->bIsEditorOnly = true;
+						}
+
+					if (PComps.Num() > 0)
+					{
+						Algo::Sort(PComps, FSortByExecutionOrder());
+						Transforms.Add(FTransform());
+
+						for (UIPProcedureComponent* PComp : PComps)
+							PComp->RunProcedure(PComp->InstancesNum, Transforms);
+					}
+				}
+
+				UpdateInstances(Transforms, ISMComp);
 			}
-
-		if (ProcedureComponents.Num() > 0)
-		{
-			Algo::Sort(ProcedureComponents, FSortByExecutionOrder());
-			Transforms.Add(FTransform());
-
-			for (UIPProcedureComponent* PComp : ProcedureComponents)
-				if (PComp->bUseInstancesNum)
-					PComp->RunProcedure(InstancesNum, Transforms);
-				else
-					PComp->RunProcedure(1, Transforms);
-		}
 	}
-
-	UpdateInstances(Transforms, ISMComponent);
 }
 
 void AIPBaseInstancedActor::UpdateInstances(TArray<FTransform>& Transforms, UInstancedStaticMeshComponent* ISMComponentRef)
 {
-	ISMComponentRef->ClearInstances();
+	if (UHierarchicalInstancedStaticMeshComponent* HISMComponentRef = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComponentRef))
+	{
+		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = false;
+		HISMComponentRef->ClearInstances();
 
-	for (FTransform Transf : Transforms)
-		ISMComponentRef->AddInstance(Transf);
+		for (FTransform Transf : Transforms)
+			HISMComponentRef->AddInstance(Transf);
 
-	ISMComponentRef->Modify();
+		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = true;
+		HISMComponentRef->BuildTreeIfOutdated(true, true);
+		HISMComponentRef->Modify();
+	}
+	else
+	{
+		ISMComponentRef->ClearInstances();
+
+		for (FTransform Transf : Transforms)
+			ISMComponentRef->AddInstance(Transf);
+
+		ISMComponentRef->Modify();
+	}
 }
 
 void AIPBaseInstancedActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 
-	if (bUseInstancingRandomSeed)
-	{
-		ISMComponent->InstancingRandomSeed = InstancingRandomSeed;
-		ISMComponent->Modify();
-	}
+	//if (bUseInstancingRandomSeed)
+	//{
+	//	ISMComponent->InstancingRandomSeed = InstancingRandomSeed;
+	//	ISMComponent->Modify();
+	//}
 
 	RunGeneration();
 }

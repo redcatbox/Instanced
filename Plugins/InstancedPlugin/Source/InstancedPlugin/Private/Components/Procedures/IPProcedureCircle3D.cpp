@@ -7,6 +7,7 @@ UIPProcedureCircle3D::UIPProcedureCircle3D()
 	PrimaryComponentTick.bCanEverTick = false;
 
 #if WITH_EDITORONLY_DATA
+	bInstancesNumEditCondition = false;
 	InstancesNum3D = FIntVector(1, 1, 1);
 	PlacementAngle = 360.f;
 	InstanceSpace = FVector(100.f, 100.f, 100.f);
@@ -19,11 +20,12 @@ UIPProcedureCircle3D::UIPProcedureCircle3D()
 #if WITH_EDITOR
 void UIPProcedureCircle3D::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
 {
-	InstanceSpace = FVector(
-		FMath::Clamp(InstanceSpace.X, 0.f, InstanceSpace.X),
-		FMath::Clamp(InstanceSpace.Y, 0.f, InstanceSpace.Y),
-		FMath::Clamp(InstanceSpace.Z, 0.f, InstanceSpace.Z));
+	InstancesNum3D = FIntVector(
+		FMath::Clamp(InstancesNum3D.X, 1, InstancesNum3D.X),
+		FMath::Clamp(InstancesNum3D.Y, 1, InstancesNum3D.Y),
+		FMath::Clamp(InstancesNum3D.Z, 1, InstancesNum3D.Z));
 
+	InstancesNum = InstancesNum3D.X * InstancesNum3D.Y * InstancesNum3D.Z;
 	TArray<FTransform> ResultTransforms;
 
 	for (int32 Index = 0; Index < NumIterations; Index++)
@@ -35,39 +37,33 @@ void UIPProcedureCircle3D::RunProcedure(int32 NumIterations, TArray<FTransform>&
 						FVector Location;
 						FRotator Rotation;
 
-						//Rotation
 						float RotYaw = PlacementAngle / InstancesNum3D.X;
 						float RotYawHalf = RotYaw * 0.5f;
 						RotYaw *= X;
+						Rotation = FRotator(0, RotYaw, 0);
 
 						if (bCheckerOddEven)
 						{
 							if (bFlipOddEven)
 							{
-								if (!(Z % 2 == 0))
+								if (Z % 2 == 0)
 									RotYaw += RotYawHalf;
 							}
 							else
 							{
-								if (Z % 2 == 0)
+								if (!(Z % 2 == 0))
 									RotYaw += RotYawHalf;
 							}
 						}
 
-						Rotation = FRotator(0, RotYaw, 0);
-
-						//Location
 						float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
 						float LocZ = InstanceSpace.Z * Z;
-						Location = Transf.GetLocation() + FVector(LocX, 0, LocZ);
-						Location = Rotation.RotateVector(Location);
+						Location = Rotation.RotateVector(FVector(LocX, 0, LocZ));
 
-						//Rotation
 						if (!bOrientToCentralAxis)
-							Rotation = Transf.Rotator();
+							Rotation = FRotator::ZeroRotator;
 
-						FTransform NewTransf = FTransform(Rotation, Location, Transf.GetScale3D());
-						ResultTransforms.Add(NewTransf);
+						ResultTransforms.Add(Transf * FTransform(Rotation, Location, Transf.GetScale3D()));
 					}
 
 	Transforms = ResultTransforms;

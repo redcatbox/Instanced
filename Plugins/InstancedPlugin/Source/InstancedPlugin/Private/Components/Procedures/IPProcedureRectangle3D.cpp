@@ -52,8 +52,7 @@ void UIPProcedureRectangle3D::RunProcedure(int32 NumIterations, TArray<FTransfor
 									Rotation = Rotation.GetInverse();
 							}
 
-							FTransform NewTransf = FTransform(Rotation, Location, FVector::OneVector);
-							ResultTransforms.Add(Transf * NewTransf);
+							ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 						}
 
 	Transforms = ResultTransforms;

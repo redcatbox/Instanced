@@ -8,7 +8,6 @@ UIPProcedureGrid3DHexagonal::UIPProcedureGrid3DHexagonal()
 
 #if WITH_EDITORONLY_DATA
 	bFlipOddEven_X = false;
-	//bFlipOddEven_Z = false;
 	bSymmetrical_Y = false;
 #endif
 }
@@ -48,12 +47,8 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(int32 NumIterations, TArray<FTran
 				for (int32 Y = 0; Y < LastIndex_Y; ++Y)
 					for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 					{
-						FVector Location;
-						FRotator Rotation;
-
-						//Location
 						//Hexagon space X/Y = 115.5/100
-						Location = FVector(InstanceSpace.X * 0.75 * X, InstanceSpace.Y * Y, InstanceSpace.Z * Z);
+						 FVector Location = FVector(InstanceSpace.X * 0.75 * X, InstanceSpace.Y * Y, InstanceSpace.Z * Z);
 
 						if (bFlipOddEven_X)
 						{
@@ -73,11 +68,7 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(int32 NumIterations, TArray<FTran
 						if (bHalfSpaceOffset)
 							Location = Location + InstanceSpace * 0.5;
 
-						//Rotation
-						Rotation = Transf.Rotator();
-
-						FTransform NewTransf = Transf * FTransform(Rotation, Location, Transf.GetScale3D());
-						ResultTransforms.Add(NewTransf);
+						ResultTransforms.Add(Transf * FTransform(Transf.Rotator(), Location, Transf.GetScale3D()));
 					}
 			}
 

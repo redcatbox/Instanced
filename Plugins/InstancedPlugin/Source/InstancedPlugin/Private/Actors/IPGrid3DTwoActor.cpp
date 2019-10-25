@@ -4,8 +4,6 @@
 
 AIPGrid3DTwoActor::AIPGrid3DTwoActor()
 {
-	PrimaryActorTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	IPProcedureInitialTransform = CreateDefaultSubobject<UIPProcedureInitialTransform>(TEXT("IPProcedureInitialTransform"));
 	IPProcedureInitialTransform->SetupAttachment(RootComponent);
@@ -21,8 +19,6 @@ AIPGrid3DTwoActor::AIPGrid3DTwoActor()
 	IPProcedureRandomTransform->SetupAttachment(RootComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
 	IPProcedureRandomTransform->ExecutionOrder = 2;
-
-	bInstancesNumEditCondition = false;
 #endif
 }
 
@@ -41,17 +37,7 @@ void AIPGrid3DTwoActor::RunGeneration()
 	TArray<FTransform> Transforms1;
 	TArray<FTransform> Transforms2;
 	DistributeToTwoTransforms(Transforms, Transforms1, Transforms2);
-	UpdateInstances(Transforms1, ISMComponent);
-	UpdateInstances(Transforms2, ISMComponent2);
-}
-
-void AIPGrid3DTwoActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
-	bInstancesNumEditCondition = false;
-	InstancesNum = IPProcedureGrid3D->InstancesNum3D.X * IPProcedureGrid3D->InstancesNum3D.Y * IPProcedureGrid3D->InstancesNum3D.Z;
-
-	RunGeneration();
+	UpdateInstances(Transforms1, HISMComponent1);
+	UpdateInstances(Transforms2, HISMComponent2);
 }
 #endif

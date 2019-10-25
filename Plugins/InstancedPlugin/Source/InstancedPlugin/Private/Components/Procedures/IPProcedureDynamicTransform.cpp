@@ -26,7 +26,7 @@ void UIPProcedureDynamicTransform::RunProcedure(int32 NumIterations, TArray<FTra
 		FTransform InstanceTransformNew;
 		InstancesTransformsOld.Empty();
 		InstancesTransformsNew.Empty();
-
+		/*
 		for (int32 i = 0; i < BaseInstancedActor->InstancesNum; i++)
 		{
 			BaseInstancedActor->ISMComponent->GetInstanceTransform(i, InstanceTransformOld, true);
@@ -36,7 +36,7 @@ void UIPProcedureDynamicTransform::RunProcedure(int32 NumIterations, TArray<FTra
 			InstanceTransformNew.SetRotation(InstanceTransformOld.GetRotation() * DynamicTransformDelta.GetRotation());
 			InstanceTransformNew.SetScale3D(InstanceTransformOld.GetScale3D() + DynamicTransformDelta.GetScale3D());
 			InstancesTransformsNew.Add(InstanceTransformNew);
-		}
+		}*/
 	}
 }
 
@@ -51,7 +51,7 @@ void UIPProcedureDynamicTransform::RunProcedureDynamic()
 	int32 LastModifiedInstanceIndex = -1;
 	bool bInstanceModified = false;
 	float LerpAlpha = 0;
-
+	/*
 	if (AIPBaseInstancedActor* BaseInstancedActor = Cast<AIPBaseInstancedActor>(GetOwner()))
 	{
 		FTransform InstanceTransformNew;
@@ -77,5 +77,5 @@ void UIPProcedureDynamicTransform::RunProcedureDynamic()
 
 		if (bInstanceModified)
 			BaseInstancedActor->ISMComponent->MarkRenderStateDirty();
-	}
+	}*/
 }

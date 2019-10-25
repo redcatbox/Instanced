@@ -15,8 +15,6 @@ UIPProcedureRandomSphere::UIPProcedureRandomSphere()
 	bUseRandomStream = false;
 	bUseRandomStreamSeedEditCondition = false;
 	RandomStreamSeed = 0;
-
-	bUseInstancesNum = true;
 #endif
 }
 
@@ -49,8 +47,7 @@ void UIPProcedureRandomSphere::RunProcedure(int32 NumIterations, TArray<FTransfo
 			if (bOrientToCenter)
 				Rotation += FRotationMatrix::MakeFromX(Location.GetSafeNormal()).Rotator();
 
-			FTransform NewTransf = Transf * FTransform(Rotation, Location, Transf.GetScale3D());
-			ResultTransforms.Add(NewTransf);
+			ResultTransforms.Add(Transf * FTransform(Rotation, Location, Transf.GetScale3D()));
 		}
 
 	Transforms = ResultTransforms;

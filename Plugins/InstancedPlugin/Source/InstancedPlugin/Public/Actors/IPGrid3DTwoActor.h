@@ -18,7 +18,6 @@ public:
 
 #if WITH_EDITOR
 	virtual void RunGeneration() override;
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
 #if WITH_EDITORONLY_DATA

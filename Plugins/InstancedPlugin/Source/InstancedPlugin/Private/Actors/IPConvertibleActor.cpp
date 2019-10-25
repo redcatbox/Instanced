@@ -10,10 +10,7 @@
 #include "Editor.h"
 #endif
 
-AIPConvertibleActor::AIPConvertibleActor()
-{
-	PrimaryActorTick.bCanEverTick = false;
-}
+//AIPConvertibleActor::AIPConvertibleActor() {}
 
 #if WITH_EDITOR
 void AIPConvertibleActor::ConvertToInstances()
@@ -62,12 +59,12 @@ void AIPConvertibleActor::ConvertToInstances()
 		if (TAActor)
 		{
 			// Get mesh and material from the first selected static mesh actor
-			TAActor->ISMComponent->SetStaticMesh(StaticMeshActors[0]->GetStaticMeshComponent()->GetStaticMesh());
+			TAActor->HISMComponent->SetStaticMesh(StaticMeshActors[0]->GetStaticMeshComponent()->GetStaticMesh());
 			int32 NumMaterials = StaticMeshActors[0]->GetStaticMeshComponent()->GetNumMaterials();
 			for (int32 i = 0; i < NumMaterials; i++)
-				TAActor->ISMComponent->SetMaterial(i, StaticMeshActors[0]->GetStaticMeshComponent()->GetMaterial(i));
+				TAActor->HISMComponent->SetMaterial(i, StaticMeshActors[0]->GetStaticMeshComponent()->GetMaterial(i));
 
-			TAActor->ISMComponent->Modify();
+			TAActor->HISMComponent->Modify();
 
 			for (AStaticMeshActor* SMActor : StaticMeshActors)
 			{

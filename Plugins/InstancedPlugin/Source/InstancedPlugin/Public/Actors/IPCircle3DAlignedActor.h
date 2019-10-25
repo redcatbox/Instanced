@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "IPInstancedActor.h"
+#include "IPInstancedHISMActor.h"
 #include "Components/Procedures/IPProcedureInitialTransform.h"
 #include "Components/Procedures/IPProcedureCircle3D.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
@@ -10,16 +10,12 @@
 #include "IPCircle3DAlignedActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced))
-class INSTANCEDPLUGIN_API AIPCircle3DAlignedActor : public AIPInstancedActor
+class INSTANCEDPLUGIN_API AIPCircle3DAlignedActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
 
 public:
 	AIPCircle3DAlignedActor();
-
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)

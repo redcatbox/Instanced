@@ -30,12 +30,9 @@ void UIPProcedureGrid3D::RunProcedure(int32 NumIterations, TArray<FTransform>& T
 						FRotator Rotation = FRotator::ZeroRotator;
 
 						if (bOrientByCustomAxes)
-						{
 							Rotation = FRotationMatrix::MakeFromX((X * CustomAxis_X.GetSafeNormal() + Y * CustomAxis_Y.GetSafeNormal() + Z * CustomAxis_Z.GetSafeNormal()).GetSafeNormal()).Rotator();
-						}
 
-						FTransform NewTransf = FTransform(Rotation, Location, FVector::OneVector);
-						ResultTransforms.Add(Transf * NewTransf);
+						ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 					}
 
 	Transforms = ResultTransforms;

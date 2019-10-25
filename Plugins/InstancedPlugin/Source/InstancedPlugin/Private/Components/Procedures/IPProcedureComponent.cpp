@@ -8,10 +8,11 @@ UIPProcedureComponent::UIPProcedureComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 #if WITH_EDITORONLY_DATA
-	bExecutionCondition = true;
+	bInstancesNumEditCondition = true;
+	InstancesNum = 1;
+
 	bEnabled = true;
 	ExecutionOrder = 0;
-	bUseInstancesNum = false;
 #endif
 }
 

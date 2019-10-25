@@ -39,9 +39,5 @@ public:
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
 		bool bOrientToCentralAxis;
-
-	/** Should instances be placed evenly along spiral? */
-	//UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
-	//	bool bPlaceEvenly;
 #endif
 };

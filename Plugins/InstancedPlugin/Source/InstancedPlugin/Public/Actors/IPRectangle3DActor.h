@@ -2,23 +2,19 @@
 
 #pragma once
 
-#include "IPInstancedActor.h"
+#include "IPInstancedHISMActor.h"
 #include "Components/Procedures/IPProcedureInitialTransform.h"
 #include "Components/Procedures/IPProcedureRectangle3D.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPRectangle3DActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced))
-class INSTANCEDPLUGIN_API AIPRectangle3DActor : public AIPInstancedActor
+class INSTANCEDPLUGIN_API AIPRectangle3DActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
 
 public:
 	AIPRectangle3DActor();
-
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)
