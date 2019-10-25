@@ -7,4 +7,7 @@ UIPProcedureDynamicComponent::UIPProcedureDynamicComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UIPProcedureDynamicComponent::RunProcedureDynamic() {}
+void UIPProcedureDynamicComponent::RunProcedureDynamic()
+{
+	BlueprintProcedureDynamic();
+}

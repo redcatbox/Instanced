@@ -63,7 +63,7 @@ void UIPProcedureCircle3D::RunProcedure(int32 NumIterations, TArray<FTransform>&
 						if (!bOrientToCentralAxis)
 							Rotation = FRotator::ZeroRotator;
 
-						ResultTransforms.Add(Transf * FTransform(Rotation, Location, Transf.GetScale3D()));
+						ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 					}
 
 	Transforms = ResultTransforms;

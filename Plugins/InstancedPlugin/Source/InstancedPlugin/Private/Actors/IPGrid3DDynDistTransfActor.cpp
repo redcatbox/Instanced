@@ -7,7 +7,7 @@ AIPGrid3DDynDistTransfActor::AIPGrid3DDynDistTransfActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	IPProcedureDynamicTransform = CreateDefaultSubobject<UIPProcedureDynamicTransform>(TEXT("IPProcedureDynamicTransform"));
-	IPProcedureDynamicTransform->SetupAttachment(RootComponent);
+	IPProcedureDynamicTransform->SetupAttachment(HISMComponent);
 }
 
 void AIPGrid3DDynDistTransfActor::Tick(float DeltaTime)

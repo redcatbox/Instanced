@@ -19,7 +19,7 @@ public:
 	UFUNCTION()
 		virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = INSTANCED)
+	UFUNCTION(BlueprintImplementableEvent, Category = Instanced)
 		TArray<FTransform> BlueprintProcedure(int32 NumIterations, const TArray<FTransform>& Transforms);
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;

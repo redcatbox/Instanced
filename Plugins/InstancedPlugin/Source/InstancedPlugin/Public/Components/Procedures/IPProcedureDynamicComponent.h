@@ -15,4 +15,7 @@ public:
 
 	UFUNCTION()
 		virtual void RunProcedureDynamic();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = INSTANCED)
+		void BlueprintProcedureDynamic();
 };

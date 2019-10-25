@@ -18,6 +18,9 @@ public:
 	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
 #endif
 
+	UPROPERTY()
+		UInstancedStaticMeshComponent* ISMParentComp;
+
 	/** Dynamic transformation amount */
 	UPROPERTY(EditAnywhere, Category = DynamicTransform)
 		FTransform DynamicTransformDelta;
