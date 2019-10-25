@@ -8,11 +8,13 @@ AIPRandomBoxAlignedActor::AIPRandomBoxAlignedActor()
 	IPProcedureInitialTransform = CreateDefaultSubobject<UIPProcedureInitialTransform>(TEXT("IPProcedureInitialTransform"));
 	IPProcedureInitialTransform->SetupAttachment(HISMComponent);
 	IPProcedureInitialTransform->Mobility = EComponentMobility::Static;
+	IPProcedureInitialTransform->bIsEditorOnly = true;
 	IPProcedureInitialTransform->ExecutionOrder = 0;
 
 	IPProcedureRandomBox = CreateDefaultSubobject<UIPProcedureRandomBox>(TEXT("IPProcedureRandomBox"));
 	IPProcedureRandomBox->SetupAttachment(HISMComponent);
 	IPProcedureRandomBox->Mobility = EComponentMobility::Static;
+	IPProcedureRandomBox->bIsEditorOnly = true;
 	IPProcedureRandomBox->bUseRandomStreamEditCondition = false;
 	IPProcedureRandomBox->bUseRandomStreamSeedEditCondition = false;
 	IPProcedureRandomBox->bUseRandomStream = bUseRandomStream;
@@ -22,11 +24,13 @@ AIPRandomBoxAlignedActor::AIPRandomBoxAlignedActor()
 	IPProcedureAlignByDirection = CreateDefaultSubobject<UIPProcedureAlignByDirection>(TEXT("IPProcedureAlignByDirection"));
 	IPProcedureAlignByDirection->SetupAttachment(HISMComponent);
 	IPProcedureAlignByDirection->Mobility = EComponentMobility::Static;
+	IPProcedureAlignByDirection->bIsEditorOnly = true;
 	IPProcedureAlignByDirection->ExecutionOrder = 2;
 
 	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
 	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
+	IPProcedureRandomTransform->bIsEditorOnly = true;
 	IPProcedureRandomTransform->bUseRandomStreamEditCondition = false;
 	IPProcedureRandomTransform->bUseRandomStream = bUseRandomStream;
 	IPProcedureRandomTransform->RandomStreamSeed = RandomStreamSeed;

@@ -4,11 +4,13 @@
 
 UIPProcedureRectangle3D::UIPProcedureRectangle3D()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+#if WITH_EDITORONLY_DATA
+	bInstancesNumEditCondition = false;
 
 	bNoCornerMeshes = false;
 	bOrientOutside = false;
 	bReverseOrientation = false;
+#endif
 }
 
 #if WITH_EDITOR
@@ -17,7 +19,7 @@ void UIPProcedureRectangle3D::RunProcedure(int32 NumIterations, TArray<FTransfor
 	Super::RunProcedure(NumIterations, Transforms);
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 			for (int32 X = 0; X < InstancesNum3D.X; ++X)
 				for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)

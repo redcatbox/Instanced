@@ -4,8 +4,6 @@
 
 UIPProcedureGrid3DHexagonal::UIPProcedureGrid3DHexagonal()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	bFlipOddEven_X = false;
 	bSymmetrical_Y = false;
@@ -18,7 +16,7 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(int32 NumIterations, TArray<FTran
 	Super::RunProcedure(NumIterations, Transforms);
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 			for (int32 X = 0; X < InstancesNum3D.X; ++X)
 			{

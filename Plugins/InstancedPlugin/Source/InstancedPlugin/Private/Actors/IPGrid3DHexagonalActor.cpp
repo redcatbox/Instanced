@@ -8,16 +8,19 @@ AIPGrid3DHexagonalActor::AIPGrid3DHexagonalActor()
 	IPProcedureInitialTransform = CreateDefaultSubobject<UIPProcedureInitialTransform>(TEXT("IPProcedureInitialTransform"));
 	IPProcedureInitialTransform->SetupAttachment(HISMComponent);
 	IPProcedureInitialTransform->Mobility = EComponentMobility::Static;
+	IPProcedureInitialTransform->bIsEditorOnly = true;
 	IPProcedureInitialTransform->ExecutionOrder = 0;
 
 	IPProcedureGrid3DHexagonal = CreateDefaultSubobject<UIPProcedureGrid3DHexagonal>(TEXT("IPProcedureGrid3DHexagonal"));
 	IPProcedureGrid3DHexagonal->SetupAttachment(HISMComponent);
 	IPProcedureGrid3DHexagonal->Mobility = EComponentMobility::Static;
+	IPProcedureGrid3DHexagonal->bIsEditorOnly = true;
 	IPProcedureGrid3DHexagonal->ExecutionOrder = 1;
 
 	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
 	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
+	IPProcedureRandomTransform->bIsEditorOnly = true;
 	IPProcedureRandomTransform->ExecutionOrder = 2;
 #endif
 }

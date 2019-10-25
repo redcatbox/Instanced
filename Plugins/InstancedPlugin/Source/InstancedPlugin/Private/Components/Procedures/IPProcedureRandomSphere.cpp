@@ -4,8 +4,6 @@
 
 UIPProcedureRandomSphere::UIPProcedureRandomSphere()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	BoxExtent = FVector(500.f, 500.f, 500.f);
 	bOnSurfaceOnly = false;
@@ -25,7 +23,7 @@ void UIPProcedureRandomSphere::RunProcedure(int32 NumIterations, TArray<FTransfo
 	BoxExtent = BoxExtent.GetAbs();
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 		{
 			UIPFunctionLibrary::MutateRandomSeed(RandomStream);

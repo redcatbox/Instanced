@@ -5,9 +5,9 @@
 
 UIPProcedureAlignByDirection::UIPProcedureAlignByDirection()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
+	bInstancesNumEditCondition = false;
+
 	AlignDirection = FVector(0.f, 0.f, -1000.f);
 	bOrientToSurface = false;
 #endif
@@ -18,35 +18,32 @@ void UIPProcedureAlignByDirection::RunProcedure(int32 NumIterations, TArray<FTra
 {
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (FTransform Transf : Transforms)
 	{
-		for (FTransform Transf : Transforms)
-		{
-			FVector Location = Transf.GetLocation();
-			FRotator Rotation = Transf.Rotator();
+		FVector Location = Transf.GetLocation();
+		FRotator Rotation = Transf.Rotator();
 
-			//Trace
-			FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, GetOwner());
-			TraceParams.bReturnPhysicalMaterial = false;
-			FHitResult TraceOutHit(ForceInit);
-			FVector TraceStart = Location + GetOwner()->GetActorLocation();
-			FVector TraceEnd = TraceStart + AlignDirection;
-			bool bHit = GetWorld()->LineTraceSingleByChannel(
-				TraceOutHit,
-				TraceStart,
-				TraceEnd,
-				ECC_Visibility,
-				TraceParams
-			);
+		//Trace
+		FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, GetOwner());
+		TraceParams.bReturnPhysicalMaterial = false;
+		FHitResult TraceOutHit(ForceInit);
+		FVector TraceStart = Location + GetOwner()->GetActorLocation();
+		FVector TraceEnd = TraceStart + AlignDirection;
+		bool bHit = GetWorld()->LineTraceSingleByChannel(
+			TraceOutHit,
+			TraceStart,
+			TraceEnd,
+			ECC_Visibility,
+			TraceParams
+		);
 
-			if (bHit)
-				Location = TraceOutHit.Location - GetOwner()->GetActorLocation();
+		if (bHit)
+			Location = TraceOutHit.Location - GetOwner()->GetActorLocation();
 
-			if (bOrientToSurface)
-				Rotation += FRotationMatrix::MakeFromZ(TraceOutHit.Normal).Rotator();
+		if (bOrientToSurface)
+			Rotation += FRotationMatrix::MakeFromZ(TraceOutHit.Normal).Rotator();
 
-			ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
-		}
+		ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
 	}
 
 	Transforms = ResultTransforms;

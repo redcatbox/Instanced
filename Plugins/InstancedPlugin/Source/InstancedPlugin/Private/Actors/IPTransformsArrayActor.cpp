@@ -8,5 +8,6 @@ AIPTransformsArrayActor::AIPTransformsArrayActor()
 	IPProcedureTransformsArray = CreateDefaultSubobject<UIPProcedureTransformsArray>(TEXT("IPProcedureTransformsArray"));
 	IPProcedureTransformsArray->SetupAttachment(HISMComponent);
 	IPProcedureTransformsArray->Mobility = EComponentMobility::Static;
+	IPProcedureTransformsArray->bIsEditorOnly = true;
 #endif
 }

@@ -11,7 +11,7 @@ class INSTANCEDPLUGIN_API UIPProcedureGrid3D : public UIPProcedureGrid3DBase
 	GENERATED_BODY()
 
 public:
-	UIPProcedureGrid3D();
+	//UIPProcedureGrid3D();
 
 #if WITH_EDITOR
 	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;

@@ -4,8 +4,6 @@
 
 UIPProcedureSplinePlacement::UIPProcedureSplinePlacement()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	bOrientBySplineEditCondition = true;
 	bPlaceBetweenPointsEditCondition = true;
@@ -58,7 +56,7 @@ void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTran
 			NumIterations++;
 	}
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 		{
 			FVector Location;
@@ -66,7 +64,7 @@ void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTran
 			FVector Scale;
 
 			//Location
-			float Distance = SplineComponent->GetSplineLength() * Index / (NumIterations - 1);
+			float Distance = SplineComponent->GetSplineLength() * i / (NumIterations - 1);
 			Location = SplineComponent->GetLocationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
 
 			FVector CurrentLocation;
@@ -74,13 +72,13 @@ void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTran
 
 			if (bPlaceBetweenPoints)
 			{
-				CurrentLocation = SplineComponent->GetLocationAtSplinePoint(Index, ESplineCoordinateSpace::Local);
-				NextLocation = SplineComponent->GetLocationAtSplinePoint(Index + 1, ESplineCoordinateSpace::Local);
+				CurrentLocation = SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::Local);
+				NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
 
 				if (bLoop)
 				{
-					if (Index != NumIterations)
-						NextLocation = SplineComponent->GetLocationAtSplinePoint(Index + 1, ESplineCoordinateSpace::Local);
+					if (i != NumIterations)
+						NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
 					else
 						NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
 				}

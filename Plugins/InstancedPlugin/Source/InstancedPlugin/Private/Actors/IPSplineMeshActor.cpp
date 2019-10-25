@@ -12,6 +12,7 @@ AIPSplineMeshActor::AIPSplineMeshActor()
 	SplineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComponent"));
 	SplineComponent->SetupAttachment(RootComponent);
 	SplineComponent->Mobility = EComponentMobility::Static;
+	SplineComponent->bIsEditorOnly = true;
 #endif
 }
 

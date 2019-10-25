@@ -22,7 +22,7 @@ void UIPProcedureComponent::RunProcedure(int32 NumIterations, TArray<FTransform>
 	Transforms = BlueprintProcedure(NumIterations, Transforms);
 
 //TArray<FTransform> ResultTransforms;
-//for (int32 Index = 0; Index < NumIterations; Index++)
+//for (int32 i = 0; i < NumIterations; i++)
 //	for (FTransform Transf : Transforms)
 //	{
 //		FTransform ProcTransf;

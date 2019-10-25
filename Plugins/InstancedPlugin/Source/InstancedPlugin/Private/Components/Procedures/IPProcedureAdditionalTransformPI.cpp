@@ -4,9 +4,9 @@
 
 UIPProcedureAdditionalTransformPI::UIPProcedureAdditionalTransformPI()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
+	bInstancesNumEditCondition = false;
+
 	AdditionalTransform = FTransform();
 	AdditionalTransform.SetScale3D(FVector::ZeroVector);
 #endif
@@ -15,18 +15,12 @@ UIPProcedureAdditionalTransformPI::UIPProcedureAdditionalTransformPI()
 #if WITH_EDITOR
 void UIPProcedureAdditionalTransformPI::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
 {
-	// This is additional transform for every input transform
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
-		for (int32 i = 0; i < Transforms.Num(); i++)
-		{
-			FTransform NewTransf = FTransform();
-			NewTransf.SetLocation(Transforms[i].GetLocation() + AdditionalTransform.GetLocation() * i);
-			NewTransf.SetRotation((Transforms[i].Rotator() + (AdditionalTransform.Rotator() * i)).Quaternion());
-			NewTransf.SetScale3D(Transforms[i].GetScale3D() + (AdditionalTransform.GetScale3D() * i));
-			ResultTransforms.Add(NewTransf);
-		}
+	for (int32 t = 0; t < Transforms.Num(); t++)
+		ResultTransforms.Add(FTransform((Transforms[t].Rotator() + (AdditionalTransform.Rotator() * t)),
+			Transforms[t].GetLocation() + AdditionalTransform.GetLocation() * t,
+			Transforms[t].GetScale3D() + (AdditionalTransform.GetScale3D() * t)));
 
 	Transforms = ResultTransforms;
 }

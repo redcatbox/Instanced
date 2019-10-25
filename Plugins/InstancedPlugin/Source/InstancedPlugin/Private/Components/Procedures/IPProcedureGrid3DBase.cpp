@@ -4,8 +4,6 @@
 
 UIPProcedureGrid3DBase::UIPProcedureGrid3DBase()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
 	InstancesNum3D = FIntVector(1, 1, 1);

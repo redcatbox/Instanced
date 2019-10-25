@@ -4,10 +4,9 @@
 
 UIPProcedureCircle3D::UIPProcedureCircle3D()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
+
 	InstancesNum3D = FIntVector(1, 1, 1);
 	PlacementAngle = 360.f;
 	InstanceSpace = FVector(100.f, 100.f, 100.f);
@@ -28,7 +27,7 @@ void UIPProcedureCircle3D::RunProcedure(int32 NumIterations, TArray<FTransform>&
 	InstancesNum = InstancesNum3D.X * InstancesNum3D.Y * InstancesNum3D.Z;
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 			for (int32 X = 0; X < InstancesNum3D.X; ++X)
 				for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)

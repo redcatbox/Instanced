@@ -4,20 +4,20 @@
 
 UIPProcedureTransformsArray::UIPProcedureTransformsArray()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+#if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
+#endif
 }
 
 #if WITH_EDITOR
 void UIPProcedureTransformsArray::RunProcedure(int32 NumIterations, TArray<FTransform>& InTransforms)
 {
-	InstancesNum = Transforms.Num();
 	TArray<FTransform> ResultTransforms;
+	InstancesNum = Transforms.Num();
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
-		for (FTransform Transf : Transforms)
-			for (FTransform InTransf : InTransforms)
-				ResultTransforms.Add(InTransf * Transf);
+	for (FTransform Transf : Transforms)
+		for (FTransform InTransf : InTransforms)
+			ResultTransforms.Add(InTransf * Transf);
 
 	InTransforms = ResultTransforms;
 }

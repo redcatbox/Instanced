@@ -4,8 +4,6 @@
 
 UIPProcedureRandomTransform::UIPProcedureRandomTransform()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	bRandomLocation = false;
 	RandomLocationMin = FVector::ZeroVector;
@@ -89,7 +87,7 @@ void UIPProcedureRandomTransform::RunProcedure(int32 NumIterations, TArray<FTran
 
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 		{
 			FVector Location = Transf.GetLocation();

@@ -31,12 +31,8 @@ void AIPBaseInstancedActor::RunGeneration()
 
 					for (USceneComponent* SComp : ISMCompChildren)
 						if (UIPProcedureComponent* PComp = Cast<UIPProcedureComponent>(SComp))
-						{
 							if (PComp->bEnabled)
 								PComps.AddUnique(PComp);
-
-							PComp->bIsEditorOnly = true;
-						}
 
 					if (PComps.Num() > 0)
 					{

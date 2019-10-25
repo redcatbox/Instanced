@@ -4,8 +4,6 @@
 
 UIPProcedureRandomBase::UIPProcedureRandomBase()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	bUseRandomStreamEditCondition = true;
 	bUseRandomStream = false;

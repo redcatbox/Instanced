@@ -2,10 +2,7 @@
 
 #include "Components/Procedures/IPProcedureGrid3D.h"
 
-UIPProcedureGrid3D::UIPProcedureGrid3D()
-{
-	PrimaryComponentTick.bCanEverTick = false;
-}
+//UIPProcedureGrid3D::UIPProcedureGrid3D() {}
 
 #if WITH_EDITOR
 void UIPProcedureGrid3D::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
@@ -13,7 +10,7 @@ void UIPProcedureGrid3D::RunProcedure(int32 NumIterations, TArray<FTransform>& T
 	Super::RunProcedure(NumIterations, Transforms);
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 			for (int32 X = 0; X < InstancesNum3D.X; ++X)
 				for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)

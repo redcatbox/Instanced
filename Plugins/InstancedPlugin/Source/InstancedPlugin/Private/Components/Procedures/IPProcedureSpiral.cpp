@@ -4,8 +4,6 @@
 
 UIPProcedureSpiral::UIPProcedureSpiral()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-
 #if WITH_EDITORONLY_DATA
 	InitialLinearVelocity = FVector(100.f, 0.f, 0.f);
 	LinearAcceleration = FVector(0.f, 0.f, 0.f);
@@ -20,14 +18,14 @@ void UIPProcedureSpiral::RunProcedure(int32 NumIterations, TArray<FTransform>& T
 {
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 Index = 0; Index < NumIterations; Index++)
+	for (int32 i = 0; i < NumIterations; i++)
 		for (FTransform Transf : Transforms)
 		{
 			FVector Location;
 			FRotator Rotation;
 
 			int32 Intervals = NumIterations - 1;
-			float IntervalFactor = (float) Index / Intervals;
+			float IntervalFactor = (float) i / Intervals;
 			float SpiralAngle = (AngularVelocity * Time).Size();
 			float RotYaw = SpiralAngle * IntervalFactor;
 			Rotation = FRotator(0, RotYaw, 0);

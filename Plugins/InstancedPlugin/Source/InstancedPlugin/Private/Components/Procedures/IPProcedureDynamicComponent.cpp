@@ -5,6 +5,10 @@
 UIPProcedureDynamicComponent::UIPProcedureDynamicComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
+#if WITH_EDITORONLY_DATA
+	bInstancesNumEditCondition = false;
+#endif
 }
 
 void UIPProcedureDynamicComponent::RunProcedureDynamic()

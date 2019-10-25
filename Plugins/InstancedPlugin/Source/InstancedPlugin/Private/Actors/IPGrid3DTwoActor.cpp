@@ -8,16 +8,19 @@ AIPGrid3DTwoActor::AIPGrid3DTwoActor()
 	IPProcedureInitialTransform = CreateDefaultSubobject<UIPProcedureInitialTransform>(TEXT("IPProcedureInitialTransform"));
 	IPProcedureInitialTransform->SetupAttachment(RootComponent);
 	IPProcedureInitialTransform->Mobility = EComponentMobility::Static;
+	IPProcedureInitialTransform->bIsEditorOnly = true;
 	IPProcedureInitialTransform->ExecutionOrder = 0;
 
 	IPProcedureGrid3D = CreateDefaultSubobject<UIPProcedureGrid3D>(TEXT("IPProcedureGrid3D"));
 	IPProcedureGrid3D->SetupAttachment(RootComponent);
 	IPProcedureGrid3D->Mobility = EComponentMobility::Static;
+	IPProcedureGrid3D->bIsEditorOnly = true;
 	IPProcedureGrid3D->ExecutionOrder = 1;
 
 	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
 	IPProcedureRandomTransform->SetupAttachment(RootComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
+	IPProcedureRandomTransform->bIsEditorOnly = true;
 	IPProcedureRandomTransform->ExecutionOrder = 2;
 #endif
 }
