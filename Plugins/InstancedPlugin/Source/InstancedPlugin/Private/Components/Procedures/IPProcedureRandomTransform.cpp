@@ -62,9 +62,9 @@ FVector UIPProcedureRandomTransform::RandomizeScale(FVector Scale)
 		return Scale * NewScale;
 }
 
-void UIPProcedureRandomTransform::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureRandomTransform::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Super::RunProcedure(NumIterations, Transforms);
+	Super::RunProcedure(Transforms);
 
 	RandomLocationMax = FVector(
 		FMath::Clamp(RandomLocationMax.X, RandomLocationMin.X, RandomLocationMax.X),
@@ -87,8 +87,8 @@ void UIPProcedureRandomTransform::RunProcedure(int32 NumIterations, TArray<FTran
 
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 i = 0; i < NumIterations; i++)
-		for (FTransform Transf : Transforms)
+	for (FTransform Transf : Transforms)
+		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			FVector Location = Transf.GetLocation();
 			FRotator Rotation = Transf.Rotator();

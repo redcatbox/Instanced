@@ -33,9 +33,9 @@ void AIPGrid3DTwoActor::RunGeneration()
 	TArray<FTransform> Transforms;
 	Transforms.Add(FTransform());
 
-	IPProcedureInitialTransform->RunProcedure(1, Transforms);
-	IPProcedureGrid3D->RunProcedure(1, Transforms);
-	IPProcedureRandomTransform->RunProcedure(1, Transforms);
+	IPProcedureInitialTransform->RunProcedure(Transforms);
+	IPProcedureGrid3D->RunProcedure(Transforms);
+	IPProcedureRandomTransform->RunProcedure(Transforms);
 
 	TArray<FTransform> Transforms1;
 	TArray<FTransform> Transforms2;

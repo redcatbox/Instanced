@@ -16,14 +16,14 @@ UIPProcedureRandomBox::UIPProcedureRandomBox()
 }
 
 #if WITH_EDITOR
-void UIPProcedureRandomBox::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureRandomBox::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Super::RunProcedure(NumIterations, Transforms);
+	Super::RunProcedure(Transforms);
 	BoxExtent = BoxExtent.GetAbs();
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 i = 0; i < NumIterations; i++)
-		for (FTransform Transf : Transforms)
+	for (FTransform Transf : Transforms)
+		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			UIPFunctionLibrary::MutateRandomSeed(RandomStream);
 			FVector Location = UIPFunctionLibrary::RandomVectorInDelta(BoxExtent, false, bUseRandomStream, RandomStream);
@@ -34,7 +34,7 @@ void UIPProcedureRandomBox::RunProcedure(int32 NumIterations, TArray<FTransform>
 				Location = UIPFunctionLibrary::ClampVector(Location, -BoxExtent, BoxExtent);
 			}
 
-			ResultTransforms.Add(Transf * FTransform(Transf.Rotator(), Location, Transf.GetScale3D()));
+			ResultTransforms.Add(Transf * FTransform(Transf.Rotator(), Location, FVector::OneVector));
 		}
 
 	Transforms = ResultTransforms;

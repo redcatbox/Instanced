@@ -14,7 +14,7 @@ public:
 	UIPProcedureAlignFromAxis();
 
 #if WITH_EDITOR
-	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
+	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 #endif
 
 #if WITH_EDITORONLY_DATA

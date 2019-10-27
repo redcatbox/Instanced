@@ -14,7 +14,7 @@ public:
 	UIPProcedureRandomTransform();
 
 #if WITH_EDITOR
-	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
+	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 
 	UFUNCTION()
 		FVector RandomizeLocation(FVector Location);

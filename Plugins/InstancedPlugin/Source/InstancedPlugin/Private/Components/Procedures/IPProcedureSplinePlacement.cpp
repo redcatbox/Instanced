@@ -17,7 +17,7 @@ UIPProcedureSplinePlacement::UIPProcedureSplinePlacement()
 }
 
 #if WITH_EDITOR
-void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 {
 	if (bPlaceBetweenPoints)
 	{
@@ -50,21 +50,21 @@ void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTran
 
 	if (bPlaceBetweenPoints)
 	{
-		NumIterations = SplineComponent->GetNumberOfSplinePoints() - 1;
+		InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
 
 		if (bLoop)
-			NumIterations++;
+			InstancesNum++;
 	}
 
-	for (int32 i = 0; i < NumIterations; i++)
-		for (FTransform Transf : Transforms)
+	for (FTransform Transf : Transforms)
+		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			FVector Location;
 			FRotator Rotation;
 			FVector Scale;
 
 			//Location
-			float Distance = SplineComponent->GetSplineLength() * i / (NumIterations - 1);
+			float Distance = SplineComponent->GetSplineLength() * i / (InstancesNum - 1);
 			Location = SplineComponent->GetLocationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
 
 			FVector CurrentLocation;
@@ -77,7 +77,7 @@ void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTran
 
 				if (bLoop)
 				{
-					if (i != NumIterations)
+					if (i != InstancesNum)
 						NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
 					else
 						NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
@@ -94,10 +94,8 @@ void UIPProcedureSplinePlacement::RunProcedure(int32 NumIterations, TArray<FTran
 			if (bOrientBySpline && !bPlaceBetweenPoints)
 				Rotation += SplineComponent->GetRotationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
 			else
-			{
 				if (bPlaceBetweenPoints && bOrientByPoints)
 					Rotation += FRotationMatrix::MakeFromX((NextLocation - CurrentLocation).GetSafeNormal()).Rotator();
-			}
 
 			//Scale
 			Scale = Transf.GetScale3D();

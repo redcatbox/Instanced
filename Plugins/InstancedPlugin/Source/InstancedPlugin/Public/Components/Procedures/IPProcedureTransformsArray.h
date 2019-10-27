@@ -14,12 +14,12 @@ public:
 	UIPProcedureTransformsArray();
 
 #if WITH_EDITOR
-	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& InTransforms) override;
+	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 #endif
 
 #if WITH_EDITORONLY_DATA
 	/** Array of transforms for instances */
 	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
-		TArray<FTransform> Transforms;
+		TArray<FTransform> PlacementTransforms;
 #endif
 };

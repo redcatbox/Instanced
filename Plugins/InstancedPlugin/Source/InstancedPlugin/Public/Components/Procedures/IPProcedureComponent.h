@@ -17,10 +17,10 @@ public:
 
 #if WITH_EDITOR
 	UFUNCTION()
-		virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms);
+		virtual void RunProcedure(TArray<FTransform>& Transforms);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Instanced)
-		TArray<FTransform> BlueprintProcedure(int32 NumIterations, const TArray<FTransform>& Transforms);
+		TArray<FTransform> BlueprintProcedure(const TArray<FTransform>& Transforms);
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
@@ -30,7 +30,7 @@ public:
 		bool bInstancesNumEditCondition;
 
 	/** Number of instances to create */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bInstancesNumEditCondition", ClampMin = "1", UIMin = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bInstancesNumEditCondition", ClampMin = "1", UIMin = "1"))
 		int32 InstancesNum;
 
 	/** Process this procedure or not */

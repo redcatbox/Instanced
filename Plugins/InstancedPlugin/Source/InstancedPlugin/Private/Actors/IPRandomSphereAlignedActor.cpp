@@ -21,6 +21,12 @@ AIPRandomSphereAlignedActor::AIPRandomSphereAlignedActor()
 	IPProcedureRandomSphere->RandomStreamSeed = RandomStreamSeed;
 	IPProcedureRandomSphere->ExecutionOrder = 1;
 
+	IPProcedureAlignFromPoint = CreateDefaultSubobject<UIPProcedureAlignFromPoint>(TEXT("IPProcedureAlignFromPoint"));
+	IPProcedureAlignFromPoint->SetupAttachment(HISMComponent);
+	IPProcedureAlignFromPoint->Mobility = EComponentMobility::Static;
+	IPProcedureAlignFromPoint->bIsEditorOnly = true;
+	IPProcedureAlignFromPoint->ExecutionOrder = 2;
+
 	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
 	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
@@ -28,13 +34,7 @@ AIPRandomSphereAlignedActor::AIPRandomSphereAlignedActor()
 	IPProcedureRandomTransform->bUseRandomStreamEditCondition = false;
 	IPProcedureRandomTransform->bUseRandomStream = bUseRandomStream;
 	IPProcedureRandomTransform->RandomStreamSeed = RandomStreamSeed;
-	IPProcedureRandomTransform->ExecutionOrder = 2;
-
-	IPProcedureAlignFromPoint = CreateDefaultSubobject<UIPProcedureAlignFromPoint>(TEXT("IPProcedureAlignFromPoint"));
-	IPProcedureAlignFromPoint->SetupAttachment(HISMComponent);
-	IPProcedureAlignFromPoint->Mobility = EComponentMobility::Static;
-	IPProcedureAlignFromPoint->bIsEditorOnly = true;
-	IPProcedureAlignFromPoint->ExecutionOrder = 3;
+	IPProcedureRandomTransform->ExecutionOrder = 3;
 
 	bUseRandomStream = false;
 	RandomStreamSeed = 0;

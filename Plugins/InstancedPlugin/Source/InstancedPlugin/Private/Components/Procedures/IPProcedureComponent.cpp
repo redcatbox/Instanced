@@ -17,19 +17,20 @@ UIPProcedureComponent::UIPProcedureComponent()
 }
 
 #if WITH_EDITOR
-void UIPProcedureComponent::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureComponent::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Transforms = BlueprintProcedure(NumIterations, Transforms);
+	Transforms = BlueprintProcedure(Transforms);
 
-//TArray<FTransform> ResultTransforms;
-//for (int32 i = 0; i < NumIterations; i++)
-//	for (FTransform Transf : Transforms)
-//	{
-//		FTransform ProcTransf;
-//		FTransform NewTransf = Transf * ProcTransf;
-//		ResultTransforms.Add(NewTransf);
-//	}
-//Transforms = ResultTransforms;
+	//TArray<FTransform> ResultTransforms;
+
+	//for (FTransform Transf : Transforms)
+	//	for (int32 i = 0; i < InstancesNum; i++)
+	//	{
+	//		FTransform ProcTransf = FTransform();
+	//		ResultTransforms.Add(Transf * ProcTransf);
+	//	}
+
+	//Transforms = ResultTransforms;
 }
 
 void UIPProcedureComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)

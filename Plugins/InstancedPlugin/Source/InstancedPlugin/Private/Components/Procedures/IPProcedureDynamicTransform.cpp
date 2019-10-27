@@ -13,7 +13,7 @@ UIPProcedureDynamicTransform::UIPProcedureDynamicTransform()
 	DynamicFarFactor = 0.1f;
 }
 
-void UIPProcedureDynamicTransform::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureDynamicTransform::RunProcedure(TArray<FTransform>& Transforms)
 {
 	DynamicNearFactor = FMath::Clamp(DynamicNearFactor, 0.f, 1.f - DynamicFarFactor);
 	DynamicFarFactor = FMath::Clamp(DynamicFarFactor, 0.f, 1.f - DynamicNearFactor);

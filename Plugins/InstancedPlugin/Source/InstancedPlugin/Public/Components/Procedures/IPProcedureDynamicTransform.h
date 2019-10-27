@@ -15,7 +15,7 @@ public:
 	virtual void RunProcedureDynamic() override;
 
 #if WITH_EDITOR
-	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
+	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 #endif
 
 	UPROPERTY()

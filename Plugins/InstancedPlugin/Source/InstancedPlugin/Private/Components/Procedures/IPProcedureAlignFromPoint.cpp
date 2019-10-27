@@ -16,7 +16,7 @@ UIPProcedureAlignFromPoint::UIPProcedureAlignFromPoint()
 }
 
 #if WITH_EDITOR
-void UIPProcedureAlignFromPoint::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureAlignFromPoint::RunProcedure(TArray<FTransform>& Transforms)
 {
 	TArray<FTransform> ResultTransforms;
 
@@ -48,8 +48,7 @@ void UIPProcedureAlignFromPoint::RunProcedure(int32 NumIterations, TArray<FTrans
 		if (bOrientToSurface)
 			Rotation += FRotationMatrix::MakeFromZ(TraceOutHit.Normal).Rotator();
 
-		FTransform NewTransf = FTransform(Rotation, Location, Transf.GetScale3D());
-		ResultTransforms.Add(NewTransf);
+		ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
 	}
 
 	Transforms = ResultTransforms;

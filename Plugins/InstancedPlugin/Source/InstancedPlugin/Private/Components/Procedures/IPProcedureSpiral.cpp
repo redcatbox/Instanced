@@ -10,36 +10,34 @@ UIPProcedureSpiral::UIPProcedureSpiral()
 	AngularVelocity = FVector(0.f, 0.f, 360.f);
 	Time = 1.f;
 	bOrientToCentralAxis = false;
+	//bPlaceEvenly = false;
 #endif
 }
 
 #if WITH_EDITOR
-void UIPProcedureSpiral::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureSpiral::RunProcedure(TArray<FTransform>& Transforms)
 {
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 i = 0; i < NumIterations; i++)
-		for (FTransform Transf : Transforms)
+	for (FTransform Transf : Transforms)
+		for (int32 i = 0; i < InstancesNum; i++)
 		{
-			FVector Location;
-			FRotator Rotation;
+			//if (bPlaceEvenly)
+			//	float SpiralLength = (InitialLinearVelocity * Time + LinearAcceleration * Time * Time / 2 + AngularVelocity * Time).Size();
 
-			int32 Intervals = NumIterations - 1;
-			float IntervalFactor = (float) i / Intervals;
+			int32 Intervals = InstancesNum - 1;
+			float IntervalFactor = (float)i / Intervals;
 			float SpiralAngle = (AngularVelocity * Time).Size();
 			float RotYaw = SpiralAngle * IntervalFactor;
-			Rotation = FRotator(0, RotYaw, 0);
-
-			//Location
+			FRotator Rotation = FRotator(0, RotYaw, 0);
 			FVector LinearVelocity = InitialLinearVelocity + LinearAcceleration * Time;
-			Location = Transf.GetLocation() + LinearVelocity * Time * IntervalFactor;
+			FVector Location = LinearVelocity * Time * IntervalFactor;
 			Location = Rotation.RotateVector(Location);
 
-			//Rotation
 			if (!bOrientToCentralAxis)
-				Rotation = Transf.Rotator();
+				Rotation = FRotator::ZeroRotator;
 
-			ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
+			ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 		}
 
 	Transforms = ResultTransforms;

@@ -16,7 +16,7 @@ public:
 	UIPProcedureSpiral();
 
 #if WITH_EDITOR
-	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
+	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 #endif
 
 #if WITH_EDITORONLY_DATA
@@ -39,5 +39,9 @@ public:
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
 		bool bOrientToCentralAxis;
+
+	/** Should instances be placed evenly along spiral? */
+	//UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
+	//	bool bPlaceEvenly;
 #endif
 };

@@ -14,7 +14,7 @@ UIPProcedureAlignByDirection::UIPProcedureAlignByDirection()
 }
 
 #if WITH_EDITOR
-void UIPProcedureAlignByDirection::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureAlignByDirection::RunProcedure(TArray<FTransform>& Transforms)
 {
 	TArray<FTransform> ResultTransforms;
 

@@ -17,7 +17,7 @@ UIPProcedureCircle3D::UIPProcedureCircle3D()
 }
 
 #if WITH_EDITOR
-void UIPProcedureCircle3D::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 {
 	InstancesNum3D = FIntVector(
 		FMath::Clamp(InstancesNum3D.X, 1, InstancesNum3D.X),
@@ -27,43 +27,39 @@ void UIPProcedureCircle3D::RunProcedure(int32 NumIterations, TArray<FTransform>&
 	InstancesNum = InstancesNum3D.X * InstancesNum3D.Y * InstancesNum3D.Z;
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 i = 0; i < NumIterations; i++)
-		for (FTransform Transf : Transforms)
-			for (int32 X = 0; X < InstancesNum3D.X; ++X)
-				for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)
-					for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
+	for (FTransform Transf : Transforms)
+		for (int32 X = 0; X < InstancesNum3D.X; ++X)
+			for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)
+				for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
+				{
+					float RotYaw = PlacementAngle / InstancesNum3D.X;
+					float RotYawHalf = RotYaw * 0.5f;
+					RotYaw *= X;
+
+					if (bCheckerOddEven)
 					{
-						FVector Location;
-						FRotator Rotation;
-
-						float RotYaw = PlacementAngle / InstancesNum3D.X;
-						float RotYawHalf = RotYaw * 0.5f;
-						RotYaw *= X;
-						Rotation = FRotator(0, RotYaw, 0);
-
-						if (bCheckerOddEven)
+						if (bFlipOddEven)
 						{
-							if (bFlipOddEven)
-							{
-								if (Z % 2 == 0)
-									RotYaw += RotYawHalf;
-							}
-							else
-							{
-								if (!(Z % 2 == 0))
-									RotYaw += RotYawHalf;
-							}
+							if (Z % 2 == 0)
+								RotYaw += RotYawHalf;
 						}
-
-						float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
-						float LocZ = InstanceSpace.Z * Z;
-						Location = Rotation.RotateVector(FVector(LocX, 0, LocZ));
-
-						if (!bOrientToCentralAxis)
-							Rotation = FRotator::ZeroRotator;
-
-						ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
+						else
+						{
+							if (!(Z % 2 == 0))
+								RotYaw += RotYawHalf;
+						}
 					}
+
+					FRotator Rotation = FRotator(0, RotYaw, 0);
+					float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
+					float LocZ = InstanceSpace.Z * Z;
+					FVector Location = Rotation.RotateVector(FVector(LocX, 0, LocZ));
+
+					if (!bOrientToCentralAxis)
+						Rotation = FRotator::ZeroRotator;
+
+					ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
+				}
 
 	Transforms = ResultTransforms;
 }

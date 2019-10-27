@@ -10,15 +10,15 @@ UIPProcedureTransformsArray::UIPProcedureTransformsArray()
 }
 
 #if WITH_EDITOR
-void UIPProcedureTransformsArray::RunProcedure(int32 NumIterations, TArray<FTransform>& InTransforms)
+void UIPProcedureTransformsArray::RunProcedure(TArray<FTransform>& Transforms)
 {
+	InstancesNum = PlacementTransforms.Num();
 	TArray<FTransform> ResultTransforms;
-	InstancesNum = Transforms.Num();
 
 	for (FTransform Transf : Transforms)
-		for (FTransform InTransf : InTransforms)
-			ResultTransforms.Add(InTransf * Transf);
+		for (FTransform PTransf : PlacementTransforms)
+			ResultTransforms.Add(Transf * PTransf);
 
-	InTransforms = ResultTransforms;
+	Transforms = ResultTransforms;
 }
 #endif

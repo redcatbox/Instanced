@@ -14,7 +14,7 @@ UIPProcedureRandomBase::UIPProcedureRandomBase()
 }
 
 #if WITH_EDITOR
-void UIPProcedureRandomBase::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureRandomBase::RunProcedure(TArray<FTransform>& Transforms)
 {
 	bUseRandomStreamSeedEditCondition = bUseRandomStream && bUseRandomStreamEditCondition;
 	RandomStream.Initialize(RandomStreamSeed);

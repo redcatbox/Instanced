@@ -40,7 +40,7 @@ void AIPBaseInstancedActor::RunGeneration()
 						Transforms.Add(FTransform());
 
 						for (UIPProcedureComponent* PComp : PComps)
-							PComp->RunProcedure(PComp->InstancesNum, Transforms);
+							PComp->RunProcedure(Transforms);
 					}
 				}
 
@@ -51,27 +51,29 @@ void AIPBaseInstancedActor::RunGeneration()
 
 void AIPBaseInstancedActor::UpdateInstances(TArray<FTransform>& Transforms, UInstancedStaticMeshComponent* ISMComponentRef)
 {
-	if (UHierarchicalInstancedStaticMeshComponent* HISMComponentRef = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComponentRef))
-	{
+	UHierarchicalInstancedStaticMeshComponent* HISMComponentRef = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComponentRef);
+
+	if (HISMComponentRef)
 		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = false;
-		HISMComponentRef->ClearInstances();
 
-		for (FTransform Transf : Transforms)
-			HISMComponentRef->AddInstance(Transf);
-
-		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = true;
-		HISMComponentRef->BuildTreeIfOutdated(true, true);
-		HISMComponentRef->Modify();
-	}
-	else
+	if (ISMComponentRef->GetInstanceCount() != Transforms.Num())
 	{
 		ISMComponentRef->ClearInstances();
 
 		for (FTransform Transf : Transforms)
 			ISMComponentRef->AddInstance(Transf);
-
-		ISMComponentRef->Modify();
 	}
+	else
+		for (int32 i = 0; i < Transforms.Num(); i++)
+			ISMComponentRef->UpdateInstanceTransform(i, Transforms[i], false, false, false);
+
+	if (HISMComponentRef)
+	{
+		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = true;
+		HISMComponentRef->BuildTreeIfOutdated(true, true);
+	}
+
+	ISMComponentRef->Modify();
 }
 
 void AIPBaseInstancedActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)

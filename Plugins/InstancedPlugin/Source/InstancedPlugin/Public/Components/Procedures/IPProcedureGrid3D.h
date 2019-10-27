@@ -14,6 +14,6 @@ public:
 	//UIPProcedureGrid3D();
 
 #if WITH_EDITOR
-	virtual void RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms) override;
+	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 #endif
 };

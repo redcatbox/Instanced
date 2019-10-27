@@ -6,13 +6,12 @@ UIPProcedureInitialTransform::UIPProcedureInitialTransform()
 {
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
-
 	InitialTransform = FTransform();
 #endif
 }
 
 #if WITH_EDITOR
-void UIPProcedureInitialTransform::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureInitialTransform::RunProcedure(TArray<FTransform>& Transforms)
 {
 	TArray<FTransform> ResultTransforms;
 

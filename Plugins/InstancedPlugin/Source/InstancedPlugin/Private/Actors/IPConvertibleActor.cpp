@@ -70,7 +70,7 @@ void AIPConvertibleActor::ConvertToInstances()
 			{
 				FTransform Transform = SMActor->GetActorTransform();
 				Transform = Transform.GetRelativeTransform(TAActor->GetActorTransform());
-				TAActor->IPProcedureTransformsArray->Transforms.Add(Transform);
+				TAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
 
 				// Destroy old static mesh actors
 				SMActor->MarkPackageDirty();
@@ -118,7 +118,7 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 						FActorSpawnParameters SpawnInfo;
 						SpawnInfo.OverrideLevel = this->GetLevel();
 						SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-						FName FolderName = *(FString(TEXT("INSTANCED_"))
+						FName FolderName = *(FString(TEXT("Instanced_"))
 							.Append(SelectedActor->GetName())
 							.Append(FString(TEXT("_")))
 							.Append(HISMComp->GetName()));

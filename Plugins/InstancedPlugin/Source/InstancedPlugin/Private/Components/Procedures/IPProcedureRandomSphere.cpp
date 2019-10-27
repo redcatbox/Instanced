@@ -17,21 +17,18 @@ UIPProcedureRandomSphere::UIPProcedureRandomSphere()
 }
 
 #if WITH_EDITOR
-void UIPProcedureRandomSphere::RunProcedure(int32 NumIterations, TArray<FTransform>& Transforms)
+void UIPProcedureRandomSphere::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Super::RunProcedure(NumIterations, Transforms);
+	Super::RunProcedure(Transforms);
 	BoxExtent = BoxExtent.GetAbs();
 	TArray<FTransform> ResultTransforms;
 
-	for (int32 i = 0; i < NumIterations; i++)
-		for (FTransform Transf : Transforms)
+	for (FTransform Transf : Transforms)
+		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			UIPFunctionLibrary::MutateRandomSeed(RandomStream);
-			FVector Location;
-			FRotator Rotation;
-
-			//Location
-			Location = FMath::VRand() * BoxExtent;
+			FVector Location = FMath::VRand() * BoxExtent;
+			FRotator Rotation = Transf.Rotator();
 
 			if (bUseRandomStream)
 				Location = RandomStream.VRand() * BoxExtent;
@@ -39,13 +36,10 @@ void UIPProcedureRandomSphere::RunProcedure(int32 NumIterations, TArray<FTransfo
 			if (!bOnSurfaceOnly)
 				Location = Location * UIPFunctionLibrary::RandomVectorInDelta(FVector(1.f, 1.f, 1.f), false, bUseRandomStream, RandomStream);
 
-			//Rotation
-			Rotation = Transf.Rotator();
-
 			if (bOrientToCenter)
 				Rotation += FRotationMatrix::MakeFromX(Location.GetSafeNormal()).Rotator();
 
-			ResultTransforms.Add(Transf * FTransform(Rotation, Location, Transf.GetScale3D()));
+			ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 		}
 
 	Transforms = ResultTransforms;
