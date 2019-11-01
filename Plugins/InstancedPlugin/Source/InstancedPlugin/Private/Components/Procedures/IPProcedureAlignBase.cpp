@@ -1,20 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Components/Procedures/IPProcedureAlignByDirection.h"
-#include "CollisionQueryParams.h"
+#include "Components/Procedures/IPProcedureAlignBase.h"
 
-UIPProcedureAlignByDirection::UIPProcedureAlignByDirection()
+UIPProcedureAlignBase::UIPProcedureAlignBase()
 {
 #if WITH_EDITORONLY_DATA
-	AlignDirection = FVector(0.f, 0.f, -1000.f);
+	bInstancesNumEditCondition = false;
+	bAlignToSurface = false;
+	bReverse = false;
+	bTraceComplex = false;
+	bIgnoreSelf = true;
+	DrawTime = 5.f;
 #endif
 }
 
 #if WITH_EDITOR
-void UIPProcedureAlignByDirection::RunProcedure(TArray<FTransform>& Transforms)
+void UIPProcedureAlignBase::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Super::RunProcedure(Transforms);
-
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
@@ -23,18 +25,17 @@ void UIPProcedureAlignByDirection::RunProcedure(TArray<FTransform>& Transforms)
 		FQuat Rotation = Transf.GetRotation();
 
 		//Trace
-		FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, GetOwner());
-		TraceParams.bReturnPhysicalMaterial = false;
-		FHitResult TraceOutHit(ForceInit);
 		FVector TraceStart = Location + GetOwner()->GetActorLocation();
-		FVector TraceEnd = TraceStart + AlignDirection;
-		bool bHit = GetWorld()->LineTraceSingleByChannel(
-			TraceOutHit,
-			TraceStart,
-			TraceEnd,
-			ECC_Visibility,
-			TraceParams
-		);
+		FVector TraceDirection = Location.GetSafeNormal();
+
+		if (bReverse)
+		{
+			TraceDirection = -TraceDirection;
+		}
+
+		FVector TraceEnd = TraceStart + TraceDirection;
+		FHitResult TraceOutHit(ForceInit);
+		bool bHit = UKismetSystemLibrary::LineTraceSingle(GetOwner(), TraceStart, TraceEnd, TraceChannel, bTraceComplex, ActorsToIgnore, DrawDebugType, TraceOutHit, bIgnoreSelf, FLinearColor::Red, FLinearColor::Green, DrawTime);
 
 		if (bHit)
 		{

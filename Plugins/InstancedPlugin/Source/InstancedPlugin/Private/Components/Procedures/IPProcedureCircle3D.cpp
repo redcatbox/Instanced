@@ -28,8 +28,11 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		for (int32 X = 0; X < InstancesNum3D.X; ++X)
+		{
 			for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)
+			{
 				for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 				{
 					float RotYaw = PlacementAngle / InstancesNum3D.X;
@@ -41,12 +44,16 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 						if (bFlipOddEven)
 						{
 							if (Z % 2 == 0)
+							{
 								RotYaw += RotYawHalf;
+							}
 						}
 						else
 						{
 							if (!(Z % 2 == 0))
+							{
 								RotYaw += RotYawHalf;
+							}
 						}
 					}
 
@@ -56,10 +63,15 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 					FVector Location = Rotation.RotateVector(FVector(LocX, 0, LocZ));
 
 					if (!bOrientToCentralAxis)
+					{
 						Rotation = FRotator::ZeroRotator;
+					}
 
 					ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 				}
+			}
+		}
+	}
 
 	Transforms = ResultTransforms;
 }

@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureTransformsArray.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureTransformsArray : public UIPProcedureComponent
 {
 	GENERATED_BODY()
@@ -19,7 +19,7 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Array of transforms for instances */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
 		TArray<FTransform> PlacementTransforms;
 #endif
 };

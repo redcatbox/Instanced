@@ -24,6 +24,7 @@ void UIPProcedureRandomSphere::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			UIPFunctionLibrary::MutateRandomSeed(RandomStream);
@@ -31,16 +32,23 @@ void UIPProcedureRandomSphere::RunProcedure(TArray<FTransform>& Transforms)
 			FRotator Rotation = Transf.Rotator();
 
 			if (bUseRandomStream)
+			{
 				Location = RandomStream.VRand() * BoxExtent;
+			}
 
 			if (!bOnSurfaceOnly)
+			{
 				Location = Location * UIPFunctionLibrary::RandomVectorInDelta(FVector(1.f, 1.f, 1.f), false, bUseRandomStream, RandomStream);
+			}
 
 			if (bOrientToCenter)
+			{
 				Rotation += FRotationMatrix::MakeFromX(Location.GetSafeNormal()).Rotator();
+			}
 
 			ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 		}
+	}
 
 	Transforms = ResultTransforms;
 }

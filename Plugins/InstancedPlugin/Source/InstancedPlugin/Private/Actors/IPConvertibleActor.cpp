@@ -23,8 +23,7 @@ void AIPConvertibleActor::ConvertToInstances()
 
 	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
 	{
-		AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(*Iter);
-		if (SMActor)
+		if (AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(*Iter))
 		{
 			StaticMeshActors.Add(SMActor);
 			StaticMeshes.AddUnique(SMActor->GetStaticMeshComponent()->GetStaticMesh());
@@ -55,8 +54,8 @@ void AIPConvertibleActor::ConvertToInstances()
 		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		FTransform SpawnTransform = GetActorTransform();
 		AActor* Actor = GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
-		AIPTransformsArrayActor* TAActor = Cast<AIPTransformsArrayActor>(Actor);
-		if (TAActor)
+
+		if (AIPTransformsArrayActor* TAActor = Cast<AIPTransformsArrayActor>(Actor))
 		{
 			// Get mesh and material from the first selected static mesh actor
 			TAActor->HISMComponent->SetStaticMesh(StaticMeshActors[0]->GetStaticMeshComponent()->GetStaticMesh());
@@ -92,7 +91,7 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
 	{
 		AActor* SelectedActor = Cast<AActor>(*Iter);
-		TArray<UActorComponent*> AComponents = SelectedActor->GetComponentsByClass(UHierarchicalInstancedStaticMeshComponent::StaticClass());
+		TArray<UActorComponent*> AComponents = SelectedActor->GetComponentsByClass(UInstancedStaticMeshComponent::StaticClass());
 
 		if (AComponents.Num() > 0)
 		{
@@ -101,19 +100,19 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 
 			for (UActorComponent* AComp : AComponents)
 			{
-				UHierarchicalInstancedStaticMeshComponent* HISMComp = Cast<UHierarchicalInstancedStaticMeshComponent>(AComp);
-				if (HISMComp)
+				if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(AComp))
 				{
-					int32 IC = HISMComp->GetInstanceCount();
-					if (IC > 0)
+					if (ISMComp->GetInstanceCount() > 0)
 					{
-						// Get mesh and material from HISM component
-						UStaticMesh* StaticMesh = HISMComp->GetStaticMesh();
+						// Get mesh and material from ISM component
+						UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
 						TArray<UMaterialInterface*> Materials;
-						int32 NumMaterials = HISMComp->GetNumMaterials();
+						int32 NumMaterials = ISMComp->GetNumMaterials();
 
 						for (int32 i = 0; i < NumMaterials; i++)
-							Materials.Add(HISMComp->GetMaterial(i));
+						{
+							Materials.Add(ISMComp->GetMaterial(i));
+						}
 
 						FActorSpawnParameters SpawnInfo;
 						SpawnInfo.OverrideLevel = this->GetLevel();
@@ -121,19 +120,21 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 						FName FolderName = *(FString(TEXT("Instanced_"))
 							.Append(SelectedActor->GetName())
 							.Append(FString(TEXT("_")))
-							.Append(HISMComp->GetName()));
+							.Append(ISMComp->GetName()));
 
-						for (int32 i = 0; i < IC; i++)
+						for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
 						{
 							FTransform Transform;
-							HISMComp->GetInstanceTransform(i, Transform);
+							ISMComp->GetInstanceTransform(i, Transform);
 							Transform *= SelectedActor->GetActorTransform();
 							AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
 							AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
 							SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
 
 							for (int32 j = 0; j < NumMaterials; j++)
+							{
 								SMActor->GetStaticMeshComponent()->SetMaterial(j, Materials[j]);
+							}
 
 							SMActor->RegisterAllComponents();
 							SMActor->SetFolderPath(FolderName);
@@ -146,7 +147,7 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 						bool WasDestroyed = SelectedActor->GetWorld()->EditorDestroyActor(SelectedActor, false);
 						checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SelectedActor->GetClass()->GetName(), *SelectedActor->GetActorLabel());
 
-						UE_LOG(LogTemp, Log, TEXT("%d instances successfully converted to StaticMeshActors!"), IC);
+						UE_LOG(LogTemp, Log, TEXT("%d instances successfully converted to StaticMeshActors!"), ISMComp->GetInstanceCount());
 					}
 					else
 					{

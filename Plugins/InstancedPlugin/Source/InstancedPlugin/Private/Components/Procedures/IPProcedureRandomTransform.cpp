@@ -46,7 +46,9 @@ FRotator UIPProcedureRandomTransform::RandomizeRotationByFixedRotatorSteps(FRota
 	int32 Steps = FMath::RandRange(StepsMin, StepsMax);
 
 	if (bUseRandomStream)
+	{
 		Steps = RandomStream.RandRange(StepsMin, StepsMax);
+	}
 
 	return Rotation + FixedRotator * Steps;
 }
@@ -57,9 +59,13 @@ FVector UIPProcedureRandomTransform::RandomizeScale(FVector Scale)
 	FVector NewScale = UIPFunctionLibrary::RandomVectorInMinMax(RandomScaleMin, RandomScaleMax, bUseRandomStream, RandomStream);
 
 	if (bRandomizeScaleUniformly)
+	{
 		return Scale * FVector(NewScale.X, NewScale.X, NewScale.X);
+	}
 	else
+	{
 		return Scale * NewScale;
+	}
 }
 
 void UIPProcedureRandomTransform::RunProcedure(TArray<FTransform>& Transforms)
@@ -88,6 +94,7 @@ void UIPProcedureRandomTransform::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			FVector Location = Transf.GetLocation();
@@ -95,19 +102,28 @@ void UIPProcedureRandomTransform::RunProcedure(TArray<FTransform>& Transforms)
 			FVector Scale = Transf.GetScale3D();
 
 			if (bRandomLocation)
+			{
 				Location = RandomizeLocation(Location);
+			}
 
 			if (bRandomRotation)
+			{
 				Rotation = RandomizeRotation(Rotation);
+			}
 
 			if (bRandomRotationByFixedRotatorSteps)
+			{
 				Rotation = RandomizeRotationByFixedRotatorSteps(Rotation);
+			}
 
 			if (bRandomScale)
+			{
 				Scale = RandomizeScale(Scale);
+			}
 
 			ResultTransforms.Add(FTransform(Rotation, Location, Scale));
 		}
+	}
 
 	Transforms = ResultTransforms;
 }

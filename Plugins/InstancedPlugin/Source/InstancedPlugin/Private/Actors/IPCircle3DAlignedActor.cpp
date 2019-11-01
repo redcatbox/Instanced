@@ -17,16 +17,16 @@ AIPCircle3DAlignedActor::AIPCircle3DAlignedActor()
 	IPProcedureCircle3D->bIsEditorOnly = true;
 	IPProcedureCircle3D->ExecutionOrder = 1;
 
-	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
-	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
-	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
-	IPProcedureRandomTransform->bIsEditorOnly = true;
-	IPProcedureRandomTransform->ExecutionOrder = 2;
-
 	IPProcedureAlignFromAxis = CreateDefaultSubobject<UIPProcedureAlignFromAxis>(TEXT("IPProcedureAlignFromAxis"));
 	IPProcedureAlignFromAxis->SetupAttachment(HISMComponent);
 	IPProcedureAlignFromAxis->Mobility = EComponentMobility::Static;
 	IPProcedureAlignFromAxis->bIsEditorOnly = true;
-	IPProcedureAlignFromAxis->ExecutionOrder = 3;
+	IPProcedureAlignFromAxis->ExecutionOrder = 2;
+
+	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
+	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
+	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
+	IPProcedureRandomTransform->bIsEditorOnly = true;
+	IPProcedureRandomTransform->ExecutionOrder = 3;
 #endif
 }

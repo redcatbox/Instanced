@@ -5,7 +5,7 @@
 #include "IPProcedureGrid3DBase.h"
 #include "IPProcedureRectangle3D.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureRectangle3D : public UIPProcedureGrid3DBase
 {
 	GENERATED_BODY()
@@ -18,16 +18,20 @@ public:
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Override world axes with custom axes */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
+	/** Do not create corner meshes */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bNoCornerMeshes;
 
+	/** Create only corner meshes */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
+		bool bOnlyCornerMeshes;
+
 	/** Override world axes with custom axes */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bOrientOutside;
 
 	/** Override world axes with custom axes */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bOrientOutside"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bOrientOutside"))
 		bool bReverseOrientation;
 #endif
 };

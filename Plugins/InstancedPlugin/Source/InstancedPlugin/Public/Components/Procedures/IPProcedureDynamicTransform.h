@@ -5,13 +5,14 @@
 #include "IPProcedureDynamicComponent.h"
 #include "IPProcedureDynamicTransform.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureDynamicTransform : public UIPProcedureDynamicComponent
 {
 	GENERATED_BODY()
 
 public:
 	UIPProcedureDynamicTransform();
+	virtual void BeginPlay() override;
 	virtual void RunProcedureDynamic() override;
 
 #if WITH_EDITOR
@@ -19,22 +20,22 @@ public:
 #endif
 
 	UPROPERTY()
-		UInstancedStaticMeshComponent* ISMParentComp;
+		UInstancedStaticMeshComponent* ParentISMComp;
 
 	/** Dynamic transformation amount */
-	UPROPERTY(EditAnywhere, Category = DynamicTransform)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform)
 		FTransform DynamicTransformDelta;
 
-	/** Max distance to aIPly dynamic transformation */
-	UPROPERTY(EditAnywhere, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
+	/** Max distance to apply dynamic transformation */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
 		float DynamicDistance;
 
 	/** Near factor for dynamic transformation distance */
-	UPROPERTY(EditAnywhere, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
 		float DynamicNearFactor;
 
 	/** Far factor for dynamic transformation distance */
-	UPROPERTY(EditAnywhere, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
 		float DynamicFarFactor;
 
 	UPROPERTY()

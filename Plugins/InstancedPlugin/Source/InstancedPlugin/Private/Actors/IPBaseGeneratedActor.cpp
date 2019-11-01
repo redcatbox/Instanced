@@ -22,6 +22,8 @@ void AIPBaseGeneratedActor::RunGeneration()
 	this->Modify();
 }
 
+void AIPBaseGeneratedActor::DrawDebugInfo() {}
+
 void AIPBaseGeneratedActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);

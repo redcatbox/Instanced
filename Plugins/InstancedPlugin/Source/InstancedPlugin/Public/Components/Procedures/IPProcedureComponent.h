@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
+#include "Components/InstancedStaticMeshComponent.h"
 #include "Objects/IPFunctionLibrary.h"
 #include "IPProcedureComponent.generated.h"
 
@@ -19,11 +20,14 @@ public:
 	UFUNCTION()
 		virtual void RunProcedure(TArray<FTransform>& Transforms);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = Instanced)
+	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
 		TArray<FTransform> BlueprintProcedure(const TArray<FTransform>& Transforms);
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
+
+	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+		virtual UInstancedStaticMeshComponent* GetParentISMComponent();
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY()

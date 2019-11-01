@@ -35,18 +35,23 @@ void AIPSplineMeshGradientActor::RunGeneration()
 	bool bLoop = SplineComponent->IsClosedLoop();
 
 	if (SplineMeshComponents.Num() > 1)
+	{
 		for (int32 i = 1; i < SplineMeshComponents.Num(); i++)
 		{
 			SplineMeshComponents[i]->UnregisterComponent();
 			SplineMeshComponents[i]->DestroyComponent();
 		}
+	}
 
 	SplineMeshComponents.Empty();
 
 	if (!bLoop)
+	{
 		SplinePointsNumber = SplinePointsNumber - 1;
+	}
 
 	if (SplineMeshComponent->GetStaticMesh())
+	{
 		for (int32 i = 0; i < SplinePointsNumber; i++)
 		{
 			//Create new component
@@ -55,7 +60,9 @@ void AIPSplineMeshGradientActor::RunGeneration()
 			FName ComponentName = *(FString(TEXT("SplineMeshComponent")).Append(FString::SanitizeFloat(FPlatformTime::Seconds())));
 
 			if (i == 0)
+			{
 				SplineMeshComponents.Add(SplineMeshComponent);
+			}
 			else
 			{
 				SplineMeshComponents.Insert(DuplicateObject<USplineMeshComponent>(SplineMeshComponent, this, ComponentName), IndexCurrent);
@@ -65,7 +72,9 @@ void AIPSplineMeshGradientActor::RunGeneration()
 			}
 
 			if (bLoop && i == SplinePointsNumber - 1)
+			{
 				IndexNext = 0;
+			}
 
 			//Location
 			FVector StartPos;
@@ -93,21 +102,19 @@ void AIPSplineMeshGradientActor::RunGeneration()
 
 			for (int32 j = 0; j < SplineMeshComponents[IndexCurrent]->GetNumMaterials(); j++)
 			{
-				UMaterialInterface* Material = SplineMeshComponents[IndexCurrent]->GetMaterial(j);
-
-				if (Material)
+				if (UMaterialInterface* Material = SplineMeshComponents[IndexCurrent]->GetMaterial(j))
 				{
 					UMaterialInstanceDynamic* MID = SplineMeshComponents[IndexCurrent]->CreateDynamicMaterialInstance(j, Material);
-					float GradientStart = bInverseGradient ? 
+					float GradientStart = bInverseGradient ?
 						SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexCurrent) / SplineLength : 1.f - SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexCurrent) / SplineLength;
-					float GradientEnd = bInverseGradient ? 
+					float GradientEnd = bInverseGradient ?
 						SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexNext) / SplineLength : 1.f - SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexNext) / SplineLength;
 					MID->SetScalarParameterValue(TEXT("GradientStart"), GradientStart);
 					MID->SetScalarParameterValue(TEXT("GradientEnd"), GradientEnd);
 				}
 			}
 		}
-
+	}
 	//for (auto& Obj : SplineMeshComponents)
 	//{
 	//	UE_LOG(LogTemp, Log, TEXT("name = %s"), *Obj->GetName());
@@ -118,7 +125,10 @@ void AIPSplineMeshGradientActor::PostEditChangeProperty(FPropertyChangedEvent& P
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 	FName PropertyName = (PropertyChangedEvent.Property != NULL) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
+	
 	if (PropertyName == TEXT("Transform") || TEXT("bInverseGradient"))
+	{
 		OnConstruction(this->GetActorTransform());
+	}
 }
 #endif

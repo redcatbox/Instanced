@@ -6,7 +6,7 @@
 #include "Components/SplineComponent.h"
 #include "IPProcedureSplinePlacement.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureSplinePlacement : public UIPProcedureComponent
 {
 	GENERATED_BODY()
@@ -29,23 +29,23 @@ public:
 		bool bPlaceBetweenPointsEditCondition;
 
 	/** Should instances be oriented by spline? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bOrientBySplineEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bOrientBySplineEditCondition"))
 		bool bOrientBySpline;
 
 	/** Should instances be placed between spline points? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPointsEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPointsEditCondition"))
 		bool bPlaceBetweenPoints;
 
 	/** Should instances be oriented from point to point? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
 		bool bOrientByPoints;
 
 	/** Should instances be scaled between points? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
 		bool bScaleBetweenPoints;
 
 	/** Size of instance on X axis to scale between points */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
 		float XSizeToScale;
 #endif
 };

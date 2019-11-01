@@ -2,24 +2,25 @@
 
 #pragma once
 
-#include "IPProcedureComponent.h"
-#include "IPProcedureInitialTransform.generated.h"
+#include "IPProcedureTransformBase.h"
+#include "IPProcedureTransformReplace.generated.h"
 
 UCLASS(NotBlueprintable, ClassGroup=(Procedure), Meta = (BlueprintSpawnableComponent))
-class INSTANCEDPLUGIN_API UIPProcedureInitialTransform : public UIPProcedureComponent
+class INSTANCEDPLUGIN_API UIPProcedureTransformReplace : public UIPProcedureTransformBase
 {
 	GENERATED_BODY()
 
 public:
-	UIPProcedureInitialTransform();
+	UIPProcedureTransformReplace();
 
 #if WITH_EDITOR
 	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
+	virtual FTransform Operation(FTransform& A, FTransform& B) override;
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Initial instances transform. Applied to all instances! */
+	/** Transform to replace with */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
-		FTransform InitialTransform;
+		FTransform ReplacementTransform;
 #endif
 };

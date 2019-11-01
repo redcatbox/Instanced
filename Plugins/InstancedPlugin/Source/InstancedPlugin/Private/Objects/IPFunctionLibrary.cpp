@@ -113,3 +113,11 @@ FRotator UIPFunctionLibrary::ClampRotator(FRotator Rotator, FRotator RotatorMin,
 		FMath::Clamp(Rotator.Roll, RotatorMin.Roll, RotatorMax.Roll));
 }
 // Rotators
+
+FTransform UIPFunctionLibrary::AddTransforms(FTransform& A, FTransform& B)
+{
+	return FTransform(
+		A.Rotator() + B.Rotator(),
+		A.GetLocation() + B.GetLocation(),
+		A.GetScale3D() + B.GetScale3D());
+}

@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "IPProcedureComponent.h"
+#include "IPProcedureAlignBase.h"
 #include "IPProcedureAlignFromAxis.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
-class INSTANCEDPLUGIN_API UIPProcedureAlignFromAxis : public UIPProcedureComponent
+UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+class INSTANCEDPLUGIN_API UIPProcedureAlignFromAxis : public UIPProcedureAlignBase
 {
 	GENERATED_BODY()
 
@@ -19,23 +19,15 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Axis start */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
 		FVector AlignAxisStart;
 
 	/** Axis end */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
 		FVector AlignAxisEnd;
 
 	/** Distance to align at */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ClampMin = "0", UIMin = "0"))
 		float AlignDistance;
-
-	/** Should reverse alignment? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
-		bool bReverse;
-
-	/** Should orient to surface? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
-		bool bOrientToSurface;
 #endif
 };

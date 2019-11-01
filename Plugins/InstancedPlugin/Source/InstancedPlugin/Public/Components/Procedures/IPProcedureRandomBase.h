@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureRandomBase.generated.h"
 
-UCLASS(Abstract, ClassGroup = (Procedure))
+UCLASS(Abstract, NotBlueprintable, ClassGroup = (Procedure))
 class INSTANCEDPLUGIN_API UIPProcedureRandomBase : public UIPProcedureComponent
 {
 	GENERATED_BODY()
@@ -25,11 +25,11 @@ public:
 		bool bUseRandomStreamSeedEditCondition;
 
 	/** Should random stream be used for randomization? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStreamEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStreamEditCondition"))
 		bool bUseRandomStream;
 
 	/** Random stream seed value */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStreamSeedEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStreamSeedEditCondition"))
 		int32 RandomStreamSeed;
 
 	UPROPERTY()

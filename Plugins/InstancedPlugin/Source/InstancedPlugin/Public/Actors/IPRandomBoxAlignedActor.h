@@ -23,11 +23,11 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Should random stream be used for randomization? */
-	UPROPERTY(EditAnywhere, Category = Generation)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation)
 		bool bUseRandomStream;
 
 	/** Random stream seed value */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (EditCondition = "bUseRandomStream"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (EditCondition = "bUseRandomStream"))
 		int32 RandomStreamSeed;
 
 	UPROPERTY(VisibleDefaultsOnly)

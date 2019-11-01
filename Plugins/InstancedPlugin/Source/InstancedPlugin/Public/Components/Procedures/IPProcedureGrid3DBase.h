@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureGrid3DBase.generated.h"
 
-UCLASS(Abstract, ClassGroup = (Procedure))
+UCLASS(Abstract, NotBlueprintable, ClassGroup = (Procedure))
 class INSTANCEDPLUGIN_API UIPProcedureGrid3DBase : public UIPProcedureComponent
 {
 	GENERATED_BODY()
@@ -19,35 +19,35 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Number of instances to create */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
 		FIntVector InstancesNum3D;
 
 	/** Space of every instance from it's center */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
 		FVector InstanceSpace;
 
 	/** Should instances be offset on half space from it's center? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bHalfSpaceOffset;
 
 	/** Override world axes with custom axes */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bUseCustomAxes;
 
 	/** Custom X axis */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
 		FVector CustomAxis_X;
 
 	/** Custom Y axis */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
 		FVector CustomAxis_Y;
 
 	/** Custom Z axis */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
 		FVector CustomAxis_Z;
 
 	/** Orient by custom axes */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseCustomAxes"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseCustomAxes"))
 		bool bOrientByCustomAxes;
 #endif
 };

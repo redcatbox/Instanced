@@ -6,12 +6,8 @@
 UIPProcedureAlignFromPoint::UIPProcedureAlignFromPoint()
 {
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
-
 	AlignPoint = FVector::ZeroVector;
 	AlignDistance = 1000.f;
-	bReverse = false;
-	bOrientToSurface = false;
 #endif
 }
 
@@ -23,7 +19,7 @@ void UIPProcedureAlignFromPoint::RunProcedure(TArray<FTransform>& Transforms)
 	for (FTransform Transf : Transforms)
 	{
 		FVector Location = Transf.GetLocation();
-		FRotator Rotation = Transf.Rotator();
+		FQuat Rotation = Transf.GetRotation();
 
 		//Trace
 		FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, GetOwner());
@@ -31,8 +27,12 @@ void UIPProcedureAlignFromPoint::RunProcedure(TArray<FTransform>& Transforms)
 		FHitResult TraceOutHit(ForceInit);
 		FVector TraceStart = Location + GetOwner()->GetActorLocation();
 		FVector TraceDirection = (Location - AlignPoint).GetSafeNormal();
+		
 		if (bReverse)
+		{
 			TraceDirection = -TraceDirection;
+		}
+
 		FVector TraceEnd = TraceStart + TraceDirection * AlignDistance;
 		bool bHit = GetWorld()->LineTraceSingleByChannel(
 			TraceOutHit,
@@ -43,10 +43,14 @@ void UIPProcedureAlignFromPoint::RunProcedure(TArray<FTransform>& Transforms)
 		);
 
 		if (bHit)
+		{
 			Location = TraceOutHit.Location - GetOwner()->GetActorLocation();
+		}
 
-		if (bOrientToSurface)
-			Rotation += FRotationMatrix::MakeFromZ(TraceOutHit.Normal).Rotator();
+		if (bAlignToSurface)
+		{
+			Rotation *= GetParentISMComponent()->GetComponentTransform().InverseTransformRotation(FRotationMatrix::MakeFromZ(TraceOutHit.Normal).ToQuat());
+		}
 
 		ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));
 	}

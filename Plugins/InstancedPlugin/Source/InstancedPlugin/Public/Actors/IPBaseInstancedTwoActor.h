@@ -31,27 +31,27 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Distribution between first and second instances */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
 		float Distribution;
 
 	/** First instance contribution */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
 		float Contribution1;
 
 	/** Second instance contribution */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
 		float Contribution2;
 
 	/** Should randomize instances? */
-	UPROPERTY(EditAnywhere, Category = Generation)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation)
 		bool bRandomizeInstances;
 
 	/** Should random stream be used for randomization? */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (EditCondition = "bRandomizeInstances"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (EditCondition = "bRandomizeInstances"))
 		bool bUseRandomStream;
 
 	/** Random stream seed value */
-	UPROPERTY(EditAnywhere, Category = Generation, Meta = (EditCondition = "bUseRandomStream"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (EditCondition = "bUseRandomStream"))
 		int32 RandomStreamSeed;
 
 	UPROPERTY()

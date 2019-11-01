@@ -20,6 +20,7 @@ void UIPProcedureSpiral::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			//if (bPlaceEvenly)
@@ -35,10 +36,13 @@ void UIPProcedureSpiral::RunProcedure(TArray<FTransform>& Transforms)
 			Location = Rotation.RotateVector(Location);
 
 			if (!bOrientToCentralAxis)
+			{
 				Rotation = FRotator::ZeroRotator;
+			}
 
 			ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 		}
+	}
 
 	Transforms = ResultTransforms;
 }

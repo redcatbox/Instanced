@@ -32,16 +32,20 @@ void AIPSplineMeshActor::RunGeneration()
 	bool bLoop = SplineComponent->IsClosedLoop();
 
 	if (SplineMeshComponents.Num() > 1)
+	{
 		for (int32 i = 1; i < SplineMeshComponents.Num(); i++)
 		{
 			SplineMeshComponents[i]->UnregisterComponent();
 			SplineMeshComponents[i]->DestroyComponent();
 		}
+	}
 
 	SplineMeshComponents.Empty();
 
 	if (!bLoop)
+	{
 		SplinePointsNumber = SplinePointsNumber - 1;
+	}
 
 	for (int32 i = 0; i < SplinePointsNumber; i++)
 	{
@@ -51,17 +55,20 @@ void AIPSplineMeshActor::RunGeneration()
 		FName ComponentName = *(FString(TEXT("SplineMeshComponent")).Append(FString::SanitizeFloat(FPlatformTime::Seconds())));
 
 		if (i == 0)
+		{
 			SplineMeshComponents.Add(SplineMeshComponent);
+		}
 		else
 		{
 			SplineMeshComponents.Insert(DuplicateObject<USplineMeshComponent>(SplineMeshComponent, this, ComponentName), IndexCurrent);
 			SplineMeshComponents[i]->SetupAttachment(RootComponent);
 			SplineMeshComponents[i]->RegisterComponent();
-			//SplineMeshComponents[i]->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetIncludingScale, NAME_None);
 		}
 
 		if (bLoop && i == SplinePointsNumber - 1)
+		{
 			IndexNext = 0;
+		}
 
 		//Location
 		FVector StartPos;
@@ -95,7 +102,10 @@ void AIPSplineMeshActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyC
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 	FName PropertyName = (PropertyChangedEvent.Property != NULL) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
+	
 	if (PropertyName == TEXT("Transform"))
+	{
 		OnConstruction(this->GetActorTransform());
+	}
 }
 #endif

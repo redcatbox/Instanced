@@ -25,7 +25,9 @@ void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 		InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
 	}
 	else
+	{
 		bInstancesNumEditCondition = true;
+	}
 
 	if (bOrientBySpline)
 	{
@@ -33,7 +35,9 @@ void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 		bPlaceBetweenPoints = false;
 	}
 	else
+	{
 		bPlaceBetweenPointsEditCondition = true;
+	}
 
 	if (bPlaceBetweenPoints)
 	{
@@ -41,7 +45,9 @@ void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 		bOrientBySpline = false;
 	}
 	else
+	{
 		bOrientBySplineEditCondition = true;
+	}
 
 	XSizeToScale = FMath::Clamp(XSizeToScale, 0.f, 1000000.f);
 
@@ -53,10 +59,13 @@ void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 		InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
 
 		if (bLoop)
+		{
 			InstancesNum++;
+		}
 	}
 
 	for (FTransform Transf : Transforms)
+	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			FVector Location;
@@ -78,9 +87,13 @@ void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 				if (bLoop)
 				{
 					if (i != InstancesNum)
+					{
 						NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
+					}
 					else
+					{
 						NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
+					}
 				}
 
 				Location = (CurrentLocation + NextLocation) * 0.5;
@@ -92,21 +105,29 @@ void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 			Rotation = Transf.Rotator();
 
 			if (bOrientBySpline && !bPlaceBetweenPoints)
+			{
 				Rotation += SplineComponent->GetRotationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
+			}
 			else
+			{
 				if (bPlaceBetweenPoints && bOrientByPoints)
+				{
 					Rotation += FRotationMatrix::MakeFromX((NextLocation - CurrentLocation).GetSafeNormal()).Rotator();
+				}
+			}
 
 			//Scale
 			Scale = Transf.GetScale3D();
 
 			if (bPlaceBetweenPoints && bOrientByPoints && bScaleBetweenPoints)
+			{
 				Scale.X = Scale.X * (NextLocation - CurrentLocation).Size() / XSizeToScale;
+			}
 
 			FTransform NewTransf = FTransform(Rotation, Location, Scale);
 			ResultTransforms.Add(NewTransf);
 		}
-
+	}
 	Transforms = ResultTransforms;
 }
 #endif

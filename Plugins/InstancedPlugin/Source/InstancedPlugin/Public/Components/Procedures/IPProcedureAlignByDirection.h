@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "IPProcedureComponent.h"
+#include "IPProcedureAlignBase.h"
 #include "IPProcedureAlignByDirection.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
-class INSTANCEDPLUGIN_API UIPProcedureAlignByDirection : public UIPProcedureComponent
+UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+class INSTANCEDPLUGIN_API UIPProcedureAlignByDirection : public UIPProcedureAlignBase
 {
 	GENERATED_BODY()
 
@@ -19,11 +19,7 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Direction to align */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
 		FVector AlignDirection;
-
-	/** Should orient to surface? */
-	UPROPERTY(EditAnywhere, Category = "Procedure | Parameters")
-		bool bOrientToSurface;
 #endif
 };

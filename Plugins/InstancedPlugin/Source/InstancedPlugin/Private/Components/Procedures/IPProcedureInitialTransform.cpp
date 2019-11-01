@@ -16,7 +16,9 @@ void UIPProcedureInitialTransform::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		ResultTransforms.Add(Transf * InitialTransform);
+	}
 
 	Transforms = ResultTransforms;
 }

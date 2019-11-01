@@ -16,8 +16,12 @@ void UIPProcedureTransformsArray::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		for (FTransform PTransf : PlacementTransforms)
+		{
 			ResultTransforms.Add(Transf * PTransf);
+		}
+	}
 
 	Transforms = ResultTransforms;
 }

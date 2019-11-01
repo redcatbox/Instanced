@@ -48,4 +48,8 @@ public:
 	/** Clamp rotator between min and max rotators */
 	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		static FRotator ClampRotator(FRotator Rotator, FRotator RotatorMin, FRotator RotatorMax);
+
+	/** Add transforms */
+	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
+		static FTransform AddTransforms(FTransform& A, FTransform& B);
 };

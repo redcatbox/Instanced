@@ -23,6 +23,7 @@ void UIPProcedureRandomBox::RunProcedure(TArray<FTransform>& Transforms)
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
+	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
 			UIPFunctionLibrary::MutateRandomSeed(RandomStream);
@@ -36,6 +37,7 @@ void UIPProcedureRandomBox::RunProcedure(TArray<FTransform>& Transforms)
 
 			ResultTransforms.Add(Transf * FTransform(Transf.Rotator(), Location, FVector::OneVector));
 		}
+	}
 
 	Transforms = ResultTransforms;
 }
