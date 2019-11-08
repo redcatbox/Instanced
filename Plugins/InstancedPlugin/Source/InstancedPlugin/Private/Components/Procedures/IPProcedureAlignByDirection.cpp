@@ -13,37 +13,35 @@ UIPProcedureAlignByDirection::UIPProcedureAlignByDirection()
 #if WITH_EDITOR
 void UIPProcedureAlignByDirection::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Super::RunProcedure(Transforms);
-
 	TArray<FTransform> ResultTransforms;
 
 	for (FTransform Transf : Transforms)
 	{
 		FVector Location = Transf.GetLocation();
-		FQuat Rotation = Transf.GetRotation();
+		FVector TraceStart = GetParentISMComponent()->GetComponentTransform().TransformPosition(Location);
+		FVector TraceDirection = GetParentISMComponent()->GetComponentTransform().TransformVector(AlignDirection.GetSafeNormal());
 
-		//Trace
-		FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, GetOwner());
-		TraceParams.bReturnPhysicalMaterial = false;
+		if (bReverse)
+		{
+			TraceDirection = -TraceDirection;
+		}
+
+		float TraceDistance = AlignDirection.Size();
+		FVector TraceEnd = TraceStart + TraceDirection * TraceDistance;
+
 		FHitResult TraceOutHit(ForceInit);
-		FVector TraceStart = Location + GetOwner()->GetActorLocation();
-		FVector TraceEnd = TraceStart + AlignDirection;
-		bool bHit = GetWorld()->LineTraceSingleByChannel(
-			TraceOutHit,
-			TraceStart,
-			TraceEnd,
-			ECC_Visibility,
-			TraceParams
-		);
+		bool bHit = UKismetSystemLibrary::LineTraceSingle(GetOwner(), TraceStart, TraceEnd, TraceChannel, bTraceComplex, ActorsToIgnore, DrawDebugType, TraceOutHit, bIgnoreSelf, FLinearColor::Red, FLinearColor::Green, DrawTime);
 
 		if (bHit)
 		{
-			Location = TraceOutHit.Location - GetOwner()->GetActorLocation();
+			Location = GetParentISMComponent()->GetComponentTransform().InverseTransformPosition(TraceOutHit.Location);
 		}
+
+		FQuat Rotation = Transf.GetRotation();
 
 		if (bAlignToSurface)
 		{
-			Rotation *= GetParentISMComponent()->GetComponentTransform().InverseTransformRotation(FRotationMatrix::MakeFromZ(TraceOutHit.Normal).ToQuat());
+			Rotation = FRotationMatrix::MakeFromZ(GetParentISMComponent()->GetComponentTransform().InverseTransformVectorNoScale(TraceOutHit.Normal)).ToQuat();
 		}
 
 		ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));

@@ -5,12 +5,13 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureTransformBase.generated.h"
 
+#if WITH_EDITOR
 USTRUCT(BlueprintType)
 struct FPerInstanceTransform
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ClampMin = "-1", UIMin = "-1"))
 		int32 InstanceId;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties, MakeEditWidget = true))
@@ -18,12 +19,26 @@ struct FPerInstanceTransform
 
 	FPerInstanceTransform()
 	{
-		InstanceId = -1;
+		InstanceId = 0;
 		NewTransform = FTransform();
 	}
 };
 
-UCLASS(Abstract, NotBlueprintable, ClassGroup=(Procedure))
+USTRUCT()
+struct FSortByInstanceId
+{
+	GENERATED_BODY()
+
+	FSortByInstanceId() {}
+
+	bool operator()(const FPerInstanceTransform& A, const FPerInstanceTransform& B) const
+	{
+		return A.InstanceId < B.InstanceId;
+	}
+};
+#endif
+
+UCLASS(Abstract)
 class INSTANCEDPLUGIN_API UIPProcedureTransformBase : public UIPProcedureComponent
 {
 	GENERATED_BODY()
@@ -31,26 +46,9 @@ class INSTANCEDPLUGIN_API UIPProcedureTransformBase : public UIPProcedureCompone
 public:
 	UIPProcedureTransformBase();
 
-#if WITH_EDITOR
-	UFUNCTION()
-		virtual FTransform Operation(FTransform& A, FTransform& B);
-#endif
-
 #if WITH_EDITORONLY_DATA
-	/** Transform */
+	/** Transforms to use in operation. If contains any with InstanceId = -1, that one will be applied to all instances. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
-		TArray<FPerInstanceTransform> InstancesTransforms;
-
-	/** Apply to location */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bApplyToLocation;
-
-	/** Apply to rotation */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bApplyToRotation;
-
-	/** Apply to location */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bApplyToScale;
+		TArray<FPerInstanceTransform> OperationTransforms;
 #endif
 };

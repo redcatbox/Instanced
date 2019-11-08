@@ -8,7 +8,7 @@
 #include "Objects/IPFunctionLibrary.h"
 #include "IPProcedureComponent.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), AutoExpandCategories = ("Procedure | Execution", "Procedure | Parameters"))
+UCLASS(Blueprintable, ClassGroup = (InstancingProcedure), Meta = (BlueprintSpawnableComponent), AutoExpandCategories = ("Procedure | Execution", "Procedure | Parameters"))
 class INSTANCEDPLUGIN_API UIPProcedureComponent : public USceneComponent
 {
 	GENERATED_BODY()

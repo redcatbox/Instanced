@@ -3,21 +3,16 @@
 #pragma once
 
 #include "IPProcedureComponent.h"
-//#include "CollisionQueryParams.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "IPProcedureAlignBase.generated.h"
 
-UCLASS(Abstract, NotBlueprintable, ClassGroup = (Procedure), AutoExpandCategories = ("Procedure | TraceParameters"))
+UCLASS(Abstract, AutoExpandCategories = ("Procedure | TraceParameters"))
 class INSTANCEDPLUGIN_API UIPProcedureAlignBase : public UIPProcedureComponent
 {
 	GENERATED_BODY()
 
 public:
 	UIPProcedureAlignBase();
-
-#if WITH_EDITOR
-	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
-#endif
 
 #if WITH_EDITORONLY_DATA
 	/** Should orient to surface? */

@@ -5,7 +5,7 @@
 #include "IPProcedureGrid3DBase.h"
 #include "IPProcedureGrid3D.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureGrid3D : public UIPProcedureGrid3DBase
 {
 	GENERATED_BODY()

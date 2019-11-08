@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureGrid3DBase.generated.h"
 
-UCLASS(Abstract, NotBlueprintable, ClassGroup = (Procedure))
+UCLASS(Abstract)
 class INSTANCEDPLUGIN_API UIPProcedureGrid3DBase : public UIPProcedureComponent
 {
 	GENERATED_BODY()

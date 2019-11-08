@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureDynamicComponent.generated.h"
 
-UCLASS(Blueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Blueprintable, Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureDynamicComponent : public UIPProcedureComponent
 {
 	GENERATED_BODY()

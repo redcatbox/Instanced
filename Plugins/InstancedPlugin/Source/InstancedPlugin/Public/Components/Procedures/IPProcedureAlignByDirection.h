@@ -5,7 +5,7 @@
 #include "IPProcedureAlignBase.h"
 #include "IPProcedureAlignByDirection.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureAlignByDirection : public UIPProcedureAlignBase
 {
 	GENERATED_BODY()

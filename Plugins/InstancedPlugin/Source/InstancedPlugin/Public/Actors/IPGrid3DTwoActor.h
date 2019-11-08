@@ -8,7 +8,7 @@
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPGrid3DTwoActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS(Blueprintable, ClassGroup = (Instanced))
 class INSTANCEDPLUGIN_API AIPGrid3DTwoActor : public AIPBaseInstancedTwoActor
 {
 	GENERATED_BODY()

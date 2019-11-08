@@ -7,13 +7,5 @@ UIPProcedureTransformBase::UIPProcedureTransformBase()
 {
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
-	bApplyToLocation = true;
-	bApplyToRotation = true;
-	bApplyToScale = true;
 #endif
-}
-
-FTransform UIPProcedureTransformBase::Operation(FTransform& A, FTransform& B)
-{
-	return FTransform();
 }

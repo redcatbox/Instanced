@@ -5,7 +5,7 @@
 #include "IPProcedureRandomBase.h"
 #include "IPProcedureRandomBox.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureRandomBox : public UIPProcedureRandomBase
 {
 	GENERATED_BODY()

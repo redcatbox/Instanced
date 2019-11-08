@@ -5,11 +5,8 @@
 #include "IPBaseInstancedActor.h"
 #include "IPInstancedActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS(Blueprintable, ClassGroup = (Instanced))
 class INSTANCEDPLUGIN_API AIPInstancedActor : public AIPBaseInstancedActor
 {
 	GENERATED_BODY()
-
-//public:
-	//AIPInstancedActor();
 };

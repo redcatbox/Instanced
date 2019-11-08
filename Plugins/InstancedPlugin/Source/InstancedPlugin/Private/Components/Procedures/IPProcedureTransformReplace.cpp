@@ -2,29 +2,30 @@
 
 #include "Components/Procedures/IPProcedureTransformReplace.h"
 
-UIPProcedureTransformReplace::UIPProcedureTransformReplace()
-{
-#if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
-	ReplacementTransform = FTransform();
-#endif
-}
-
 #if WITH_EDITOR
 void UIPProcedureTransformReplace::RunProcedure(TArray<FTransform>& Transforms)
 {
-	TArray<FTransform> ResultTransforms;
-
-	for (FTransform Transf : Transforms)
+	if (OperationTransforms.Num() > 0)
 	{
-		ResultTransforms.Add(ReplacementTransform);
+		Algo::Sort(OperationTransforms, FSortByInstanceId());
+		TArray<FTransform> ResultTransforms = Transforms;
+
+		for (FPerInstanceTransform PIT : OperationTransforms)
+		{
+			if (PIT.InstanceId > -1)
+			{
+				ResultTransforms[PIT.InstanceId] = PIT.NewTransform;
+			}
+			else
+			{
+				for (int32 i = 0; i < ResultTransforms.Num(); i++)
+				{
+					ResultTransforms[i] = PIT.NewTransform;
+				}
+			}
+		}
+
+		Transforms = ResultTransforms;
 	}
-
-	Transforms = ResultTransforms;
-}
-
-FTransform UIPProcedureTransformReplace::Operation(FTransform& A, FTransform& B)
-{
-	return FTransform();
 }
 #endif

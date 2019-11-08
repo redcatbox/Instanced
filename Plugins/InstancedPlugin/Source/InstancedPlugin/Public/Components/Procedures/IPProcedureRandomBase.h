@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureRandomBase.generated.h"
 
-UCLASS(Abstract, NotBlueprintable, ClassGroup = (Procedure))
+UCLASS(Abstract)
 class INSTANCEDPLUGIN_API UIPProcedureRandomBase : public UIPProcedureComponent
 {
 	GENERATED_BODY()

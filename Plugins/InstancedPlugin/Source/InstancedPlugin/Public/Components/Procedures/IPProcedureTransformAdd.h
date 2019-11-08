@@ -5,7 +5,7 @@
 #include "IPProcedureTransformBase.h"
 #include "IPProcedureTransformAdd.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup=(Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureTransformAdd : public UIPProcedureTransformBase
 {
 	GENERATED_BODY()
@@ -15,14 +15,12 @@ public:
 
 #if WITH_EDITOR
 	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
-	virtual FTransform Operation(FTransform& A, FTransform& B) override;
+
+	UFUNCTION()
+		FTransform Operation(FTransform& A, FTransform& B);
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Transform to add */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
-		FTransform AdditionalTransform;
-
 	/** Increment by instance id */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bPerInstanceIncremental;

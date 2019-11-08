@@ -7,7 +7,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureSpiral.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureSpiral : public UIPProcedureComponent
 {
 	GENERATED_BODY()

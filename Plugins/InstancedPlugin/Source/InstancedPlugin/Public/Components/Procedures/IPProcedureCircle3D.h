@@ -5,7 +5,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureCircle3D.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureCircle3D : public UIPProcedureComponent
 {
 	GENERATED_BODY()

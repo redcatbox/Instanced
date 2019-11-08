@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
@@ -5,7 +6,7 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureTransformsArray.generated.h"
 
-UCLASS(NotBlueprintable, ClassGroup = (Procedure), Meta = (BlueprintSpawnableComponent))
+UCLASS(Meta = (BlueprintSpawnableComponent))
 class INSTANCEDPLUGIN_API UIPProcedureTransformsArray : public UIPProcedureComponent
 {
 	GENERATED_BODY()
