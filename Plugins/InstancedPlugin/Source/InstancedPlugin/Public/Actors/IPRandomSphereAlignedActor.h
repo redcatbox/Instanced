@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IPInstancedHISMActor.h"
-#include "Components/Procedures/IPProcedureInitialTransform.h"
+#include "Components/Procedures/IPProcedureTransformMultiply.h"
 #include "Components/Procedures/IPProcedureRandomSphere.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "Components/Procedures/IPProcedureAlignFromPoint.h"
@@ -31,7 +31,7 @@ public:
 		int32 RandomStreamSeed;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		UIPProcedureInitialTransform* IPProcedureInitialTransform;
+		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		UIPProcedureRandomSphere* IPProcedureRandomSphere;

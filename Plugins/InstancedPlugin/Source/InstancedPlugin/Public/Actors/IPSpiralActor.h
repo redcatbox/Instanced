@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IPInstancedHISMActor.h"
-#include "Components/Procedures/IPProcedureInitialTransform.h"
+#include "Components/Procedures/IPProcedureTransformMultiply.h"
 #include "Components/Procedures/IPProcedureSpiral.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPSpiralActor.generated.h"
@@ -18,7 +18,7 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)
-		UIPProcedureInitialTransform* IPProcedureInitialTransform;
+		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		UIPProcedureSpiral* IPProcedureSpiral;

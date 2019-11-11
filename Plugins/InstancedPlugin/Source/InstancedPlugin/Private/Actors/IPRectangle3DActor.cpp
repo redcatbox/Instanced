@@ -5,11 +5,12 @@
 AIPRectangle3DActor::AIPRectangle3DActor()
 {
 #if WITH_EDITORONLY_DATA
-	IPProcedureInitialTransform = CreateDefaultSubobject<UIPProcedureInitialTransform>(TEXT("IPProcedureInitialTransform"));
-	IPProcedureInitialTransform->SetupAttachment(HISMComponent);
-	IPProcedureInitialTransform->Mobility = EComponentMobility::Static;
-	IPProcedureInitialTransform->bIsEditorOnly = true;
-	IPProcedureInitialTransform->ExecutionOrder = 0;
+	IPProcedureTransformMultiply = CreateDefaultSubobject<UIPProcedureTransformMultiply>(TEXT("IPProcedureTransformMultiply"));
+	IPProcedureTransformMultiply->SetupAttachment(HISMComponent);
+	IPProcedureTransformMultiply->Mobility = EComponentMobility::Static;
+	IPProcedureTransformMultiply->bIsEditorOnly = true;
+	IPProcedureTransformMultiply->ExecutionOrder = 0;
+	IPProcedureTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
 
 	IPProcedureRectangle3D = CreateDefaultSubobject<UIPProcedureRectangle3D>(TEXT("IPProcedureRectangle3D"));
 	IPProcedureRectangle3D->SetupAttachment(HISMComponent);

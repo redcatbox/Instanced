@@ -4,7 +4,7 @@
 
 #include "IPInstancedHISMActor.h"
 #include "Components/SplineComponent.h"
-#include "Components/Procedures/IPProcedureInitialTransform.h"
+#include "Components/Procedures/IPProcedureTransformMultiply.h"
 #include "Components/Procedures/IPProcedureSplinePlacement.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPSplinePlacementActor.generated.h"
@@ -22,7 +22,7 @@ public:
 		USplineComponent* SplineComponent;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		UIPProcedureInitialTransform* IPProcedureInitialTransform;
+		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		UIPProcedureSplinePlacement* IPProcedureSplinePlacement;

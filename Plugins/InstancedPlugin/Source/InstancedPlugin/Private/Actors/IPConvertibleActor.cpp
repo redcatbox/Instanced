@@ -10,8 +10,6 @@
 #include "Editor.h"
 #endif
 
-//AIPConvertibleActor::AIPConvertibleActor() {}
-
 #if WITH_EDITOR
 void AIPConvertibleActor::ConvertToInstances()
 {

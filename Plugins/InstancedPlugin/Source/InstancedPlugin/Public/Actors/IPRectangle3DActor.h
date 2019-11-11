@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IPInstancedHISMActor.h"
-#include "Components/Procedures/IPProcedureInitialTransform.h"
+#include "Components/Procedures/IPProcedureTransformMultiply.h"
 #include "Components/Procedures/IPProcedureRectangle3D.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPRectangle3DActor.generated.h"
@@ -18,7 +18,7 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)
-		UIPProcedureInitialTransform* IPProcedureInitialTransform;
+		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		UIPProcedureRectangle3D* IPProcedureRectangle3D;

@@ -22,6 +22,12 @@ struct FPerInstanceTransform
 		InstanceId = 0;
 		NewTransform = FTransform();
 	}
+
+	FPerInstanceTransform(int32 InstId, FTransform NewTransf)
+	{
+		InstanceId = InstId;
+		NewTransform = NewTransf;
+	}
 };
 
 USTRUCT()

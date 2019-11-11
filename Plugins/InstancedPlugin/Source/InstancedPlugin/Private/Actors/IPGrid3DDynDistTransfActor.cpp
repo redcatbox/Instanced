@@ -5,7 +5,6 @@
 AIPGrid3DDynDistTransfActor::AIPGrid3DDynDistTransfActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 	IPProcedureDynamicTransform = CreateDefaultSubobject<UIPProcedureDynamicTransform>(TEXT("IPProcedureDynamicTransform"));
 	IPProcedureDynamicTransform->SetupAttachment(HISMComponent);
 }

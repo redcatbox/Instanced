@@ -5,11 +5,12 @@
 AIPRandomSphereAlignedActor::AIPRandomSphereAlignedActor()
 {
 #if WITH_EDITORONLY_DATA
-	IPProcedureInitialTransform = CreateDefaultSubobject<UIPProcedureInitialTransform>(TEXT("IPProcedureInitialTransform"));
-	IPProcedureInitialTransform->SetupAttachment(HISMComponent);
-	IPProcedureInitialTransform->Mobility = EComponentMobility::Static;
-	IPProcedureInitialTransform->bIsEditorOnly = true;
-	IPProcedureInitialTransform->ExecutionOrder = 0;
+	IPProcedureTransformMultiply = CreateDefaultSubobject<UIPProcedureTransformMultiply>(TEXT("IPProcedureTransformMultiply"));
+	IPProcedureTransformMultiply->SetupAttachment(HISMComponent);
+	IPProcedureTransformMultiply->Mobility = EComponentMobility::Static;
+	IPProcedureTransformMultiply->bIsEditorOnly = true;
+	IPProcedureTransformMultiply->ExecutionOrder = 0;
+	IPProcedureTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
 
 	IPProcedureRandomSphere = CreateDefaultSubobject<UIPProcedureRandomSphere>(TEXT("IPProcedureRandomSphere"));
 	IPProcedureRandomSphere->SetupAttachment(HISMComponent);

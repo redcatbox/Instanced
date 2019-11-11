@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IPBaseInstancedTwoActor.h"
-#include "Components/Procedures/IPProcedureInitialTransform.h"
+#include "Components/Procedures/IPProcedureTransformMultiply.h"
 #include "Components/Procedures/IPProcedureGrid3D.h"
 #include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPGrid3DTwoActor.generated.h"
@@ -22,7 +22,7 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly)
-		UIPProcedureInitialTransform* IPProcedureInitialTransform;
+		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		UIPProcedureGrid3D* IPProcedureGrid3D;
