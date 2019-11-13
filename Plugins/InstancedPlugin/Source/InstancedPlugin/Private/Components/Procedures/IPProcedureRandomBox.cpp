@@ -7,11 +7,6 @@ UIPProcedureRandomBox::UIPProcedureRandomBox()
 #if WITH_EDITORONLY_DATA
 	BoxExtent = FVector(500.f, 500.f, 500.f);
 	bOnSurfaceOnly = false;
-
-	bUseRandomStreamEditCondition = true;
-	bUseRandomStream = false;
-	bUseRandomStreamSeedEditCondition = false;
-	RandomStreamSeed = 0;
 #endif
 }
 

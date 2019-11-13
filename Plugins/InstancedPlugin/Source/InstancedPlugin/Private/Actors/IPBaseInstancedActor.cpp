@@ -83,38 +83,4 @@ void AIPBaseInstancedActor::UpdateInstances(TArray<FTransform>& Transforms, UIns
 
 	ISMComponentRef->Modify();
 }
-
-void AIPBaseInstancedActor::DrawDebugInfo()
-{
-	TArray<UActorComponent*> ACompISMCs = GetComponentsByClass(UInstancedStaticMeshComponent::StaticClass());
-
-	if (ACompISMCs.Num() > 0)
-	{
-		for (UActorComponent* ACompISM : ACompISMCs)
-		{
-			if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(ACompISM))
-			{
-				for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
-				{
-					FTransform Transf;
-					ISMComp->GetInstanceTransform(i, Transf, true);
-					DrawDebugString(GetWorld(), Transf.GetLocation(), FString::FromInt(i), this, FColor::White, 0.f, false, 1.f);
-				}
-			}
-		}
-	}
-}
-
-void AIPBaseInstancedActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
-	//if (bUseInstancingRandomSeed)
-	//{
-	//	ISMComponent->InstancingRandomSeed = InstancingRandomSeed;
-	//	ISMComponent->Modify();
-	//}
-
-	RunGeneration();
-}
 #endif

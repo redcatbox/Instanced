@@ -21,9 +21,6 @@ public:
 	UFUNCTION(CallInEditor, Category = InstancedPlugin)
 		virtual void RunGeneration();
 
-	UFUNCTION(CallInEditor, Category = InstancedPlugin)
-		virtual void DrawDebugInfo();
-
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 

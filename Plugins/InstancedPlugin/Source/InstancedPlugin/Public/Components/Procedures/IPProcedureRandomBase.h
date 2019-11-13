@@ -18,18 +18,12 @@ public:
 #endif
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY()
-		bool bUseRandomStreamEditCondition;
-
-	UPROPERTY()
-		bool bUseRandomStreamSeedEditCondition;
-
 	/** Should random stream be used for randomization? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStreamEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bUseRandomStream;
 
 	/** Random stream seed value */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStreamSeedEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bUseRandomStream"))
 		int32 RandomStreamSeed;
 
 	UPROPERTY()

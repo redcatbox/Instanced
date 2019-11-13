@@ -5,9 +5,7 @@
 UIPProcedureRandomBase::UIPProcedureRandomBase()
 {
 #if WITH_EDITORONLY_DATA
-	bUseRandomStreamEditCondition = true;
 	bUseRandomStream = false;
-	bUseRandomStreamSeedEditCondition = bUseRandomStream && bUseRandomStreamEditCondition;
 	RandomStreamSeed = 0;
 	RandomStream.Initialize(RandomStreamSeed);
 #endif
@@ -16,7 +14,6 @@ UIPProcedureRandomBase::UIPProcedureRandomBase()
 #if WITH_EDITOR
 void UIPProcedureRandomBase::RunProcedure(TArray<FTransform>& Transforms)
 {
-	bUseRandomStreamSeedEditCondition = bUseRandomStream && bUseRandomStreamEditCondition;
 	RandomStream.Initialize(RandomStreamSeed);
 }
 #endif

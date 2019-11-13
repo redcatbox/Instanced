@@ -8,11 +8,6 @@ UIPProcedureRandomSphere::UIPProcedureRandomSphere()
 	BoxExtent = FVector(500.f, 500.f, 500.f);
 	bOnSurfaceOnly = false;
 	bOrientToCenter = false;
-
-	bUseRandomStreamEditCondition = true;
-	bUseRandomStream = false;
-	bUseRandomStreamSeedEditCondition = false;
-	RandomStreamSeed = 0;
 #endif
 }
 

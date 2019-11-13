@@ -16,10 +16,6 @@ AIPRandomBoxAlignedActor::AIPRandomBoxAlignedActor()
 	IPProcedureRandomBox->SetupAttachment(HISMComponent);
 	IPProcedureRandomBox->Mobility = EComponentMobility::Static;
 	IPProcedureRandomBox->bIsEditorOnly = true;
-	IPProcedureRandomBox->bUseRandomStreamEditCondition = false;
-	IPProcedureRandomBox->bUseRandomStreamSeedEditCondition = false;
-	IPProcedureRandomBox->bUseRandomStream = bUseRandomStream;
-	IPProcedureRandomBox->RandomStreamSeed = RandomStreamSeed;
 	IPProcedureRandomBox->ExecutionOrder = 1;
 
 	IPProcedureAlignByDirection = CreateDefaultSubobject<UIPProcedureAlignByDirection>(TEXT("IPProcedureAlignByDirection"));
@@ -32,24 +28,6 @@ AIPRandomBoxAlignedActor::AIPRandomBoxAlignedActor()
 	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
 	IPProcedureRandomTransform->bIsEditorOnly = true;
-	IPProcedureRandomTransform->bUseRandomStreamEditCondition = false;
-	IPProcedureRandomTransform->bUseRandomStream = bUseRandomStream;
-	IPProcedureRandomTransform->RandomStreamSeed = RandomStreamSeed;
 	IPProcedureRandomTransform->ExecutionOrder = 3;
-
-	bUseRandomStream = false;
-	RandomStreamSeed = 0;
 #endif
 }
-
-#if WITH_EDITOR
-void AIPRandomBoxAlignedActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
-	IPProcedureRandomBox->bUseRandomStreamEditCondition = false;
-	IPProcedureRandomBox->bUseRandomStreamSeedEditCondition = false;
-
-	RunGeneration();
-}
-#endif

@@ -34,20 +34,8 @@ public:
 
 #if WITH_EDITOR
 	virtual void RunGeneration() override;
-	virtual void DrawDebugInfo() override;
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 	UFUNCTION()
 		virtual void UpdateInstances(TArray<FTransform>& Transforms, UInstancedStaticMeshComponent* ISMComponentRef);
 #endif
-
-//#if WITH_EDITORONLY_DATA
-	///** Should random seed be used? */
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation)
-	//	bool bUseInstancingRandomSeed;
-
-	///** Random seed value */
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (EditCondition = "bUseInstancingRandomSeed"))
-	//	int32 InstancingRandomSeed;
-//#endif
 };

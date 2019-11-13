@@ -16,10 +16,6 @@ AIPRandomSphereAlignedActor::AIPRandomSphereAlignedActor()
 	IPProcedureRandomSphere->SetupAttachment(HISMComponent);
 	IPProcedureRandomSphere->Mobility = EComponentMobility::Static;
 	IPProcedureRandomSphere->bIsEditorOnly = true;
-	IPProcedureRandomSphere->bUseRandomStreamEditCondition = false;
-	IPProcedureRandomSphere->bUseRandomStreamSeedEditCondition = false;
-	IPProcedureRandomSphere->bUseRandomStream = bUseRandomStream;
-	IPProcedureRandomSphere->RandomStreamSeed = RandomStreamSeed;
 	IPProcedureRandomSphere->ExecutionOrder = 1;
 
 	IPProcedureAlignFromPoint = CreateDefaultSubobject<UIPProcedureAlignFromPoint>(TEXT("IPProcedureAlignFromPoint"));
@@ -32,28 +28,6 @@ AIPRandomSphereAlignedActor::AIPRandomSphereAlignedActor()
 	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
 	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
 	IPProcedureRandomTransform->bIsEditorOnly = true;
-	IPProcedureRandomTransform->bUseRandomStreamEditCondition = false;
-	IPProcedureRandomTransform->bUseRandomStream = bUseRandomStream;
-	IPProcedureRandomTransform->RandomStreamSeed = RandomStreamSeed;
 	IPProcedureRandomTransform->ExecutionOrder = 3;
-
-	bUseRandomStream = false;
-	RandomStreamSeed = 0;
 #endif
 }
-
-#if WITH_EDITOR
-void AIPRandomSphereAlignedActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
-	IPProcedureRandomSphere->bUseRandomStreamEditCondition = false;
-	IPProcedureRandomSphere->bUseRandomStreamSeedEditCondition = false;
-	IPProcedureRandomSphere->bUseRandomStream = bUseRandomStream;
-	IPProcedureRandomSphere->RandomStreamSeed = RandomStreamSeed;
-	IPProcedureRandomTransform->bUseRandomStream = bUseRandomStream;
-	IPProcedureRandomTransform->RandomStreamSeed = RandomStreamSeed;
-
-	RunGeneration();
-}
-#endif

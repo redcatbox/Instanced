@@ -17,19 +17,7 @@ class INSTANCEDPLUGIN_API AIPRandomSphereAlignedActor : public AIPInstancedHISMA
 public:
 	AIPRandomSphereAlignedActor();
 
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
-
 #if WITH_EDITORONLY_DATA
-	/** Should random stream be used for randomization? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation)
-		bool bUseRandomStream;
-
-	/** Random stream seed value */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Generation, Meta = (EditCondition = "bUseRandomStream"))
-		int32 RandomStreamSeed;
-
 	UPROPERTY(VisibleDefaultsOnly)
 		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
