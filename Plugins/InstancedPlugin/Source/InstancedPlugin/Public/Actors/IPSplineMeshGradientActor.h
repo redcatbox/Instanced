@@ -21,18 +21,18 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		USplineMeshComponent* SplineMeshComponent;
 
 	UPROPERTY()
 		TArray<USplineMeshComponent*> SplineMeshComponents;
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		USplineComponent* SplineComponent;
 
 	/** Should reverse gradient direction? */
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = Generation)
 		bool bInverseGradient;
 #endif
 };

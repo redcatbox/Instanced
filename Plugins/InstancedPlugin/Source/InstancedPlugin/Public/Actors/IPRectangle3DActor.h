@@ -17,13 +17,13 @@ public:
 	AIPRectangle3DActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureRectangle3D* IPProcedureRectangle3D;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureRandomTransform* IPProcedureRandomTransform;
 #endif
 };

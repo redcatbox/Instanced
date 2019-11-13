@@ -18,16 +18,16 @@ public:
 	AIPSplinePlacementActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Components)
 		USplineComponent* SplineComponent;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureSplinePlacement* IPProcedureSplinePlacement;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureRandomTransform* IPProcedureRandomTransform;
 #endif
 };

@@ -17,13 +17,13 @@ public:
 	AIPSpiralActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureSpiral* IPProcedureSpiral;
 
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
 		UIPProcedureRandomTransform* IPProcedureRandomTransform;
 #endif
 };

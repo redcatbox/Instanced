@@ -23,10 +23,10 @@ public:
 		virtual void DistributeToTwoTransforms(TArray<FTransform>& Transforms, TArray<FTransform>& Transforms1, TArray<FTransform>& Transforms2);
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Components)
 		UInstancedStaticMeshComponent* HISMComponent1;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Components)
 		UInstancedStaticMeshComponent* HISMComponent2;
 
 #if WITH_EDITORONLY_DATA
