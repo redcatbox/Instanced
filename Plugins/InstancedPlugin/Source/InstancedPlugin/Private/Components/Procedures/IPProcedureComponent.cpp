@@ -18,9 +18,12 @@ UIPProcedureComponent::UIPProcedureComponent()
 #if WITH_EDITOR
 void UIPProcedureComponent::RunProcedure(TArray<FTransform>& Transforms)
 {
-	Transforms = BlueprintProcedure(Transforms);
+	TArray<FTransform> ResultTransforms = BlueprintProcedure(Transforms);
 
-	//TArray<FTransform> ResultTransforms;
+	if (ResultTransforms.Num() > 0)
+	{
+		Transforms = ResultTransforms;
+	}
 
 	//for (FTransform Transf : Transforms)
 	//{

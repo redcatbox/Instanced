@@ -6,10 +6,11 @@ UIPProcedureRectangle3D::UIPProcedureRectangle3D()
 {
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
-	bNoCornerMeshes = false;
-	bOnlyCornerMeshes = false;
-	bOrientOutside = false;
-	bReverseOrientation = false;
+	bCornersMeshes = true;
+	bOrientCornersMeshesAround = false;
+	bSidesMeshes = true;
+	bOrientSidesMeshesOutside = false;
+	bReverseSidesMeshesOrientation = false;
 #endif
 }
 
@@ -27,7 +28,7 @@ void UIPProcedureRectangle3D::RunProcedure(TArray<FTransform>& Transforms)
 			{
 				for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 				{
-					if ((X == 0) || (X == InstancesNum3D.X - 1) || (Y == 0) || (Y == InstancesNum3D.Y - 1))
+					if (X == 0 || X == InstancesNum3D.X - 1 || Y == 0 || Y == InstancesNum3D.Y - 1)
 					{
 						FVector Location = InstanceSpace * FVector(X, Y, Z);
 
@@ -42,42 +43,82 @@ void UIPProcedureRectangle3D::RunProcedure(TArray<FTransform>& Transforms)
 						}
 
 						FRotator Rotation = FRotator::ZeroRotator;
+						bool bCornerMeshesCond = (X == 0 && Y == 0)
+							|| (X == 0 && Y == InstancesNum3D.Y - 1)
+							|| (X == InstancesNum3D.X - 1 && Y == 0)
+							|| (X == InstancesNum3D.X - 1 && Y == InstancesNum3D.Y - 1);
 
-						if (bOrientOutside)
+						if (bCornersMeshes && bCornerMeshesCond)
 						{
-							if (X == 0)
+							if (bOrientCornersMeshesAround)
 							{
-								Rotation = FRotator(0.f, 0.f, 180.f);
+								if (X == InstancesNum3D.X - 1 && Y == 0)
+								{
+									Rotation = FRotator(0.f, 90.f, 0.f);
+								}
+
+								if (X == InstancesNum3D.X - 1 && Y == InstancesNum3D.Y - 1)
+								{
+									Rotation = FRotator(0.f, 180.f, 0.f);
+								}
+
+								if (X == 0 && Y == InstancesNum3D.Y - 1)
+								{
+									Rotation = FRotator(0.f, 270.f, 0.f);
+								}
 							}
 
-							if (X == InstancesNum3D.X - 1)
-							{
-								Rotation = FRotator(0.f, 0.f, 0.f);
-							}
-
-							if (Y == 0)
-							{
-								Rotation = FRotator(0.f, 0.f, -90.f);
-							}
-
-							if (Y == InstancesNum3D.Y - 1)
-							{
-								Rotation = FRotator(0.f, 0.f, 90.f);
-							}
-
-							if (bReverseOrientation)
-							{
-								Rotation = Rotation.GetInverse();
-							}
+							ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 						}
 
-						ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
+						if (bSidesMeshes && !bCornerMeshesCond)
+						{
+							if (bOrientSidesMeshesOutside)
+							{
+								if (bReverseSidesMeshesOrientation)
+								{
+									if (X == InstancesNum3D.X - 1)
+									{
+										Rotation = FRotator(0.f, 180.f, 0.f);
+									}
+
+									if (Y == 0)
+									{
+										Rotation = FRotator(0.f, 90.f, 0.f);
+									}
+
+									if (Y == InstancesNum3D.Y - 1)
+									{
+										Rotation = FRotator(0.f, -90.f, 0.f);
+									}
+								}
+								else
+								{
+									if (X == 0)
+									{
+										Rotation = FRotator(0.f, 180.f, 0.f);
+									}
+
+									if (Y == 0)
+									{
+										Rotation = FRotator(0.f, -90.f, 0.f);
+									}
+
+									if (Y == InstancesNum3D.Y - 1)
+									{
+										Rotation = FRotator(0.f, 90.f, 0.f);
+									}
+								}
+							}
+
+							ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
+						}
 					}
 				}
 			}
 		}
-
-		Transforms = ResultTransforms;
 	}
+
+	Transforms = ResultTransforms;
 }
 #endif

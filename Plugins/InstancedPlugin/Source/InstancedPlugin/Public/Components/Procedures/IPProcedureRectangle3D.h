@@ -18,20 +18,24 @@ public:
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Do not create corner meshes */
+	/** Create corner meshes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bNoCornerMeshes;
+		bool bCornersMeshes;
 
-	/** Create only corner meshes */
+	/** Orient corner meshes around the object */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bOnlyCornerMeshes;
+		bool bOrientCornersMeshesAround;
 
-	/** Override world axes with custom axes */
+	/** Create sides meshes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bOrientOutside;
+		bool bSidesMeshes;
 
-	/** Override world axes with custom axes */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bOrientOutside"))
-		bool bReverseOrientation;
+	/** Orient sides meshes outside */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
+		bool bOrientSidesMeshesOutside;
+
+	/** Orient sides meshes inside */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bOrientSidesMeshesOutside"))
+		bool bReverseSidesMeshesOrientation;
 #endif
 };

@@ -19,11 +19,7 @@ void UIPProcedureTransformAdd::RunProcedure(TArray<FTransform>& Transforms)
 
 		for (FPerInstanceTransform PIT : OperationTransforms)
 		{
-			if (PIT.InstanceId > -1)
-			{
-				ResultTransforms[PIT.InstanceId] = Operation(ResultTransforms[PIT.InstanceId], PIT.NewTransform);
-			}
-			else
+			if (PIT.InstanceId <= -1)
 			{
 				for (int32 i = 0; i < ResultTransforms.Num(); i++)
 				{
@@ -41,6 +37,10 @@ void UIPProcedureTransformAdd::RunProcedure(TArray<FTransform>& Transforms)
 						ResultTransforms[i] = Operation(ResultTransforms[i], PIT.NewTransform);
 					}
 				}
+			}
+			else if (PIT.InstanceId < ResultTransforms.Num())
+			{
+				ResultTransforms[PIT.InstanceId] = Operation(ResultTransforms[PIT.InstanceId], PIT.NewTransform);
 			}
 		}
 

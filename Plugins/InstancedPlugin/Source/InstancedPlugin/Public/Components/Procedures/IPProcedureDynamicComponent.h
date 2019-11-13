@@ -13,9 +13,9 @@ class INSTANCEDPLUGIN_API UIPProcedureDynamicComponent : public UIPProcedureComp
 public:
 	UIPProcedureDynamicComponent();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
 		virtual void RunProcedureDynamic();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = Instanced)
+	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
 		void BlueprintProcedureDynamic();
 };

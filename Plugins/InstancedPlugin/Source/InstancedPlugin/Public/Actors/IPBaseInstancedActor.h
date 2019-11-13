@@ -4,7 +4,7 @@
 
 #include "IPBaseGeneratedActor.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
-#include "Components/Procedures/IPProcedureComponent.h"
+#include "Components/Procedures/IPProcedureDynamicComponent.h"
 #include "IPBaseInstancedActor.generated.h"
 
 #if WITH_EDITOR

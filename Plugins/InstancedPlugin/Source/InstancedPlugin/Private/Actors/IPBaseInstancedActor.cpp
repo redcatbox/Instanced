@@ -68,21 +68,11 @@ void AIPBaseInstancedActor::UpdateInstances(TArray<FTransform>& Transforms, UIns
 		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = false;
 	}
 
-	if (ISMComponentRef->GetInstanceCount() != Transforms.Num())
-	{
-		ISMComponentRef->ClearInstances();
+	ISMComponentRef->ClearInstances();
 
-		for (FTransform Transf : Transforms)
-		{
-			ISMComponentRef->AddInstance(Transf);
-		}
-	}
-	else
+	for (FTransform Transf : Transforms)
 	{
-		for (int32 i = 0; i < Transforms.Num(); i++)
-		{
-			ISMComponentRef->UpdateInstanceTransform(i, Transforms[i], false, false, false);
-		}
+		ISMComponentRef->AddInstance(Transf);
 	}
 
 	if (HISMComponentRef)
