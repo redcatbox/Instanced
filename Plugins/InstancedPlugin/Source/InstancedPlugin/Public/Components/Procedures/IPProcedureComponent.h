@@ -20,11 +20,11 @@ public:
 	UFUNCTION()
 		virtual void RunProcedure(TArray<FTransform>& Transforms);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
-		TArray<FTransform> BlueprintProcedure(const TArray<FTransform>& Transforms);
-
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
+
+	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
+		TArray<FTransform> BlueprintProcedure(const TArray<FTransform>& Transforms);
 
 	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
 		virtual UInstancedStaticMeshComponent* GetParentISMComponent();
@@ -40,9 +40,9 @@ public:
 	/** Process this procedure or not */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution")
 		bool bEnabled;
+#endif
 
 	/** Order in procedures execution chain */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Execution")
 		int32 ExecutionOrder;
-#endif
 };

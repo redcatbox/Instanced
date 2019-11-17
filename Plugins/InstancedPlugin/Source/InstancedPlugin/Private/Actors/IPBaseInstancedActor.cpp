@@ -2,14 +2,6 @@
 
 #include "Actors/IPBaseInstancedActor.h"
 
-AIPBaseInstancedActor::AIPBaseInstancedActor()
-{
-	//#if WITH_EDITORONLY_DATA
-	//	bUseInstancingRandomSeed = false;
-	//	InstancingRandomSeed = 0;
-	//#endif
-}
-
 #if WITH_EDITOR
 void AIPBaseInstancedActor::RunGeneration()
 {
@@ -53,34 +45,29 @@ void AIPBaseInstancedActor::RunGeneration()
 					}
 				}
 
-				UpdateInstances(Transforms, ISMComp);
+				UHierarchicalInstancedStaticMeshComponent* HISMComp = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComp);
+
+				if (HISMComp)
+				{
+					HISMComp->bAutoRebuildTreeOnInstanceChanges = false;
+				}
+
+				ISMComp->ClearInstances();
+
+				for (FTransform Transf : Transforms)
+				{
+					ISMComp->AddInstance(Transf);
+				}
+
+				if (HISMComp)
+				{
+					HISMComp->bAutoRebuildTreeOnInstanceChanges = true;
+					HISMComp->BuildTreeIfOutdated(true, true);
+				}
+
+				ISMComp->Modify();
 			}
 		}
 	}
-}
-
-void AIPBaseInstancedActor::UpdateInstances(TArray<FTransform>& Transforms, UInstancedStaticMeshComponent* ISMComponentRef)
-{
-	UHierarchicalInstancedStaticMeshComponent* HISMComponentRef = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComponentRef);
-
-	if (HISMComponentRef)
-	{
-		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = false;
-	}
-
-	ISMComponentRef->ClearInstances();
-
-	for (FTransform Transf : Transforms)
-	{
-		ISMComponentRef->AddInstance(Transf);
-	}
-
-	if (HISMComponentRef)
-	{
-		HISMComponentRef->bAutoRebuildTreeOnInstanceChanges = true;
-		HISMComponentRef->BuildTreeIfOutdated(true, true);
-	}
-
-	ISMComponentRef->Modify();
 }
 #endif

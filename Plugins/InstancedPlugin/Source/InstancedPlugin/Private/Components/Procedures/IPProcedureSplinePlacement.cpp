@@ -7,7 +7,6 @@ UIPProcedureSplinePlacement::UIPProcedureSplinePlacement()
 #if WITH_EDITORONLY_DATA
 	bOrientBySplineEditCondition = true;
 	bPlaceBetweenPointsEditCondition = true;
-
 	bOrientBySpline = false;
 	bPlaceBetweenPoints = false;
 	bOrientByPoints = false;
@@ -19,115 +18,140 @@ UIPProcedureSplinePlacement::UIPProcedureSplinePlacement()
 #if WITH_EDITOR
 void UIPProcedureSplinePlacement::RunProcedure(TArray<FTransform>& Transforms)
 {
-	if (bPlaceBetweenPoints)
-	{
-		bInstancesNumEditCondition = false;
-		InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
-	}
-	else
-	{
-		bInstancesNumEditCondition = true;
-	}
+	USplineComponent* SplineComponent = GetParentSplineComponent();
 
-	if (bOrientBySpline)
+	if (SplineComponent)
 	{
-		bPlaceBetweenPointsEditCondition = false;
-		bPlaceBetweenPoints = false;
-	}
-	else
-	{
-		bPlaceBetweenPointsEditCondition = true;
-	}
-
-	if (bPlaceBetweenPoints)
-	{
-		bOrientBySplineEditCondition = false;
-		bOrientBySpline = false;
-	}
-	else
-	{
-		bOrientBySplineEditCondition = true;
-	}
-
-	XSizeToScale = FMath::Clamp(XSizeToScale, 0.f, 1000000.f);
-
-	TArray<FTransform> ResultTransforms;
-	bool bLoop = SplineComponent->IsClosedLoop();
-
-	if (bPlaceBetweenPoints)
-	{
-		InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
-
-		if (bLoop)
+		if (bPlaceBetweenPoints)
 		{
-			InstancesNum++;
+			bInstancesNumEditCondition = false;
+			InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
 		}
-	}
-
-	for (FTransform Transf : Transforms)
-	{
-		for (int32 i = 0; i < InstancesNum; i++)
+		else
 		{
-			FVector Location;
-			FRotator Rotation;
-			FVector Scale;
+			bInstancesNumEditCondition = true;
+		}
 
-			//Location
-			float Distance = SplineComponent->GetSplineLength() * i / (InstancesNum - 1);
-			Location = SplineComponent->GetLocationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
+		if (bOrientBySpline)
+		{
+			bPlaceBetweenPointsEditCondition = false;
+			bPlaceBetweenPoints = false;
+		}
+		else
+		{
+			bPlaceBetweenPointsEditCondition = true;
+		}
 
-			FVector CurrentLocation;
-			FVector NextLocation;
+		if (bPlaceBetweenPoints)
+		{
+			bOrientBySplineEditCondition = false;
+			bOrientBySpline = false;
+		}
+		else
+		{
+			bOrientBySplineEditCondition = true;
+		}
 
-			if (bPlaceBetweenPoints)
+		XSizeToScale = FMath::Clamp(XSizeToScale, 0.f, 1000000.f);
+
+		TArray<FTransform> ResultTransforms;
+		bool bLoop = SplineComponent->IsClosedLoop();
+
+		if (bPlaceBetweenPoints)
+		{
+			InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
+
+			if (bLoop)
 			{
-				CurrentLocation = SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::Local);
-				NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
+				InstancesNum++;
+			}
+		}
 
-				if (bLoop)
+		for (FTransform Transf : Transforms)
+		{
+			for (int32 i = 0; i < InstancesNum; i++)
+			{
+				FVector Location;
+				FRotator Rotation;
+				FVector Scale;
+
+				//Location
+				float Distance = SplineComponent->GetSplineLength() * i / (InstancesNum - 1);
+				Location = SplineComponent->GetLocationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
+
+				FVector CurrentLocation;
+				FVector NextLocation;
+
+				if (bPlaceBetweenPoints)
 				{
-					if (i != InstancesNum)
+					CurrentLocation = SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::Local);
+					NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
+
+					if (bLoop)
 					{
-						NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
+						if (i != InstancesNum)
+						{
+							NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
+						}
+						else
+						{
+							NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
+						}
 					}
-					else
+
+					Location = (CurrentLocation + NextLocation) * 0.5;
+				}
+
+				Location += Transf.GetLocation();
+
+				//Rotation
+				Rotation = Transf.Rotator();
+
+				if (bOrientBySpline && !bPlaceBetweenPoints)
+				{
+					Rotation += SplineComponent->GetRotationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
+				}
+				else
+				{
+					if (bPlaceBetweenPoints && bOrientByPoints)
 					{
-						NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
+						Rotation += FRotationMatrix::MakeFromX((NextLocation - CurrentLocation).GetSafeNormal()).Rotator();
 					}
 				}
 
-				Location = (CurrentLocation + NextLocation) * 0.5;
-			}
+				//Scale
+				Scale = Transf.GetScale3D();
 
-			Location += Transf.GetLocation();
-
-			//Rotation
-			Rotation = Transf.Rotator();
-
-			if (bOrientBySpline && !bPlaceBetweenPoints)
-			{
-				Rotation += SplineComponent->GetRotationAtDistanceAlongSpline(Distance, ESplineCoordinateSpace::Local);
-			}
-			else
-			{
-				if (bPlaceBetweenPoints && bOrientByPoints)
+				if (bPlaceBetweenPoints && bOrientByPoints && bScaleBetweenPoints)
 				{
-					Rotation += FRotationMatrix::MakeFromX((NextLocation - CurrentLocation).GetSafeNormal()).Rotator();
+					Scale.X = Scale.X * (NextLocation - CurrentLocation).Size() / XSizeToScale;
 				}
+
+				FTransform NewTransf = FTransform(Rotation, Location, Scale);
+				ResultTransforms.Add(NewTransf);
 			}
-
-			//Scale
-			Scale = Transf.GetScale3D();
-
-			if (bPlaceBetweenPoints && bOrientByPoints && bScaleBetweenPoints)
-			{
-				Scale.X = Scale.X * (NextLocation - CurrentLocation).Size() / XSizeToScale;
-			}
-
-			FTransform NewTransf = FTransform(Rotation, Location, Scale);
-			ResultTransforms.Add(NewTransf);
 		}
+
+		Transforms = ResultTransforms;
 	}
-	Transforms = ResultTransforms;
 }
 #endif
+
+USplineComponent* UIPProcedureSplinePlacement::GetParentSplineComponent()
+{
+	TArray<USceneComponent*> ParentComps;
+	GetParentComponents(ParentComps);
+
+	if (ParentComps.Num() > 0)
+	{
+		for (USceneComponent* SComp : ParentComps)
+		{
+			if (USplineComponent* ParentSplineComponent = Cast<USplineComponent>(SComp))
+			{
+				return ParentSplineComponent;
+			}
+		}
+	}
+
+	return nullptr;
+}

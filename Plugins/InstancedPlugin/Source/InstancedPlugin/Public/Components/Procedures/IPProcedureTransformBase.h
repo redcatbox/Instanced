@@ -5,7 +5,6 @@
 #include "IPProcedureComponent.h"
 #include "IPProcedureTransformBase.generated.h"
 
-#if WITH_EDITOR
 USTRUCT(BlueprintType)
 struct FPerInstanceTransform
 {
@@ -42,7 +41,6 @@ struct FSortByInstanceId
 		return A.InstanceId < B.InstanceId;
 	}
 };
-#endif
 
 UCLASS(Abstract)
 class INSTANCEDPLUGIN_API UIPProcedureTransformBase : public UIPProcedureComponent

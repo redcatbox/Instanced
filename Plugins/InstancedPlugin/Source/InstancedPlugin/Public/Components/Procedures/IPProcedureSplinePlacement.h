@@ -18,10 +18,10 @@ public:
 	virtual void RunProcedure(TArray<FTransform>& Transforms) override;
 #endif
 
-#if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = "Procedure | Parameters")
-		USplineComponent* SplineComponent;
+	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+		virtual USplineComponent* GetParentSplineComponent();
 
+#if WITH_EDITORONLY_DATA
 	UPROPERTY()
 		bool bOrientBySplineEditCondition;
 

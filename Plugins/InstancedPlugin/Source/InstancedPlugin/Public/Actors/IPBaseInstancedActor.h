@@ -4,10 +4,9 @@
 
 #include "IPBaseGeneratedActor.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
-#include "Components/Procedures/IPProcedureDynamicComponent.h"
+#include "Components/Procedures/IPProcedureComponent.h"
 #include "IPBaseInstancedActor.generated.h"
 
-#if WITH_EDITOR
 USTRUCT()
 struct FSortByExecutionOrder
 {
@@ -22,7 +21,6 @@ struct FSortByExecutionOrder
 		return ExecutionOrderA < ExecutionOrderB;
 	}
 };
-#endif
 
 UCLASS(Abstract, ClassGroup = (Instanced))
 class INSTANCEDPLUGIN_API AIPBaseInstancedActor : public AIPBaseGeneratedActor
@@ -30,12 +28,7 @@ class INSTANCEDPLUGIN_API AIPBaseInstancedActor : public AIPBaseGeneratedActor
 	GENERATED_BODY()
 
 public:
-	AIPBaseInstancedActor();
-
 #if WITH_EDITOR
 	virtual void RunGeneration() override;
-
-	UFUNCTION()
-		virtual void UpdateInstances(TArray<FTransform>& Transforms, UInstancedStaticMeshComponent* ISMComponentRef);
 #endif
 };

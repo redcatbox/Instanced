@@ -10,6 +10,8 @@ AIPSplinePlacementActor::AIPSplinePlacementActor()
 	SplineComponent->Mobility = EComponentMobility::Static;
 	SplineComponent->bIsEditorOnly = true;
 
+	HISMComponent->SetupAttachment(SplineComponent);
+
 	IPProcedureTransformMultiply = CreateDefaultSubobject<UIPProcedureTransformMultiply>(TEXT("IPProcedureTransformMultiply"));
 	IPProcedureTransformMultiply->SetupAttachment(HISMComponent);
 	IPProcedureTransformMultiply->Mobility = EComponentMobility::Static;
@@ -20,7 +22,6 @@ AIPSplinePlacementActor::AIPSplinePlacementActor()
 	IPProcedureSplinePlacement = CreateDefaultSubobject<UIPProcedureSplinePlacement>(TEXT("IPProcedureSplinePlacement"));
 	IPProcedureSplinePlacement->SetupAttachment(HISMComponent);
 	IPProcedureSplinePlacement->Mobility = EComponentMobility::Static;
-	IPProcedureSplinePlacement->SplineComponent = SplineComponent;
 	IPProcedureSplinePlacement->bIsEditorOnly = true;
 	IPProcedureSplinePlacement->ExecutionOrder = 1;
 
