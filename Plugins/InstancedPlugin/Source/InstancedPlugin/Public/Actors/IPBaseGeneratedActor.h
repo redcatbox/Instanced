@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Objects/IPFunctionLibrary.h"
 #include "Components/SceneComponent.h"
-#include "DrawDebugHelpers.h"
 #include "IPBaseGeneratedActor.generated.h"
 
 UCLASS(Abstract, ClassGroup = (Instanced))

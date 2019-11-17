@@ -10,6 +10,20 @@
 #include "Editor.h"
 #endif
 
+AIPConvertibleActor::AIPConvertibleActor()
+{
+	// Default root
+	DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));
+	RootComponent = DefaultSceneRoot;
+	DefaultSceneRoot->Mobility = EComponentMobility::Static;
+
+#if WITH_EDITORONLY_DATA
+	DefaultSceneRoot->bVisualizeComponent = true;
+	bIsEditorOnlyActor = true;
+	bRemoveOriginal = true;
+#endif
+}
+
 #if WITH_EDITOR
 void AIPConvertibleActor::ConvertToInstances()
 {
@@ -37,48 +51,52 @@ void AIPConvertibleActor::ConvertToInstances()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No StaticMeshActors selected! Please select few StaticMeshActors to proceed."));
 	}
-	else if (StaticMeshes.Num() > 1)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("StaticMeshActors have different static meshes! Please select StaticMeshActors with the same static meshes."));
-	}
 	else
 	{
 		GEditor->SelectNone(false, true);
 		UE_LOG(LogTemp, Warning, TEXT("Processing convertation..."));
 		UE_LOG(LogTemp, Warning, TEXT("Note: Material(s) from first selected StaticMeshActor will be used for all instances!"));
 
-		FActorSpawnParameters SpawnInfo;
-		SpawnInfo.OverrideLevel = this->GetLevel();
-		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		FTransform SpawnTransform = GetActorTransform();
-		AActor* Actor = GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
-
-		if (AIPTransformsArrayActor* TAActor = Cast<AIPTransformsArrayActor>(Actor))
+		for (UStaticMesh* SM : StaticMeshes)
 		{
-			// Get mesh and material from the first selected static mesh actor
-			TAActor->HISMComponent->SetStaticMesh(StaticMeshActors[0]->GetStaticMeshComponent()->GetStaticMesh());
-			int32 NumMaterials = StaticMeshActors[0]->GetStaticMeshComponent()->GetNumMaterials();
-			for (int32 i = 0; i < NumMaterials; i++)
-				TAActor->HISMComponent->SetMaterial(i, StaticMeshActors[0]->GetStaticMeshComponent()->GetMaterial(i));
+			FActorSpawnParameters SpawnInfo;
+			SpawnInfo.OverrideLevel = this->GetLevel();
+			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			FTransform SpawnTransform = GetActorTransform();
+			AActor* Actor = GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
 
-			TAActor->HISMComponent->Modify();
-
-			for (AStaticMeshActor* SMActor : StaticMeshActors)
+			if (AIPTransformsArrayActor* TAActor = Cast<AIPTransformsArrayActor>(Actor))
 			{
-				FTransform Transform = SMActor->GetActorTransform();
-				Transform = Transform.GetRelativeTransform(TAActor->GetActorTransform());
-				TAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
+				for (AStaticMeshActor* SMActor : StaticMeshActors)
+				{
+					if (SM == SMActor->GetStaticMeshComponent()->GetStaticMesh())
+					{
+						TAActor->HISMComponent->SetStaticMesh(SM);
+						int32 NumMaterials = SMActor->GetStaticMeshComponent()->GetNumMaterials();
 
-				// Destroy old static mesh actors
-				SMActor->MarkPackageDirty();
-				bool WasDestroyed = SMActor->GetWorld()->EditorDestroyActor(SMActor, false);
-				checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SMActor->GetClass()->GetName(), *SMActor->GetActorLabel());
+						for (int32 i = 0; i < NumMaterials; i++)
+						{
+							TAActor->HISMComponent->SetMaterial(i, SMActor->GetStaticMeshComponent()->GetMaterial(i));
+						}
+
+						FTransform Transform = SMActor->GetActorTransform();
+						Transform = Transform.GetRelativeTransform(TAActor->GetActorTransform());
+						TAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
+
+						if (bRemoveOriginal)
+						{
+							SMActor->MarkPackageDirty();
+							bool WasDestroyed = SMActor->GetWorld()->EditorDestroyActor(SMActor, false);
+							checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SMActor->GetClass()->GetName(), *SMActor->GetActorLabel());
+						}
+					}
+				}
+
+				TAActor->RunGeneration();
 			}
-
-			TAActor->RunGeneration();
-			TAActor->IPProcedureTransformsArray->Modify();
-			UE_LOG(LogTemp, Log, TEXT("%d StaticMeshActors successfully converted to instances!"), StaticMeshActors.Num());
 		}
+
+		UE_LOG(LogTemp, Log, TEXT("%d StaticMeshActors successfully converted to instances."), StaticMeshActors.Num());
 	}
 }
 
@@ -102,7 +120,6 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 				{
 					if (ISMComp->GetInstanceCount() > 0)
 					{
-						// Get mesh and material from ISM component
 						UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
 						TArray<UMaterialInterface*> Materials;
 						int32 NumMaterials = ISMComp->GetNumMaterials();
@@ -140,10 +157,12 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 							GEditor->SelectActor(SMActor, true, false);
 						}
 
-						// Destroy old static mesh actors
-						SelectedActor->MarkPackageDirty();
-						bool WasDestroyed = SelectedActor->GetWorld()->EditorDestroyActor(SelectedActor, false);
-						checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SelectedActor->GetClass()->GetName(), *SelectedActor->GetActorLabel());
+						if (bRemoveOriginal)
+						{
+							SelectedActor->MarkPackageDirty();
+							bool WasDestroyed = SelectedActor->GetWorld()->EditorDestroyActor(SelectedActor, false);
+							checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SelectedActor->GetClass()->GetName(), *SelectedActor->GetActorLabel());
+						}
 
 						UE_LOG(LogTemp, Log, TEXT("%d instances successfully converted to StaticMeshActors!"), ISMComp->GetInstanceCount());
 					}
