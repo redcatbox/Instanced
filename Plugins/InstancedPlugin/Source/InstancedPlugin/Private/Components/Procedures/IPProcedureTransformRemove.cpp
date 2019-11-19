@@ -11,8 +11,6 @@ void UIPProcedureTransformRemove::RunProcedure(TArray<FTransform>& Transforms)
 
 		for (FPerInstanceTransform PIT : OperationTransforms)
 		{
-			PIT.bNewTransformEditCond = false;
-
 			if (PIT.InstanceId > -1 && PIT.InstanceId < Transforms.Num())
 			{
 				Transforms.RemoveAt(PIT.InstanceId);
