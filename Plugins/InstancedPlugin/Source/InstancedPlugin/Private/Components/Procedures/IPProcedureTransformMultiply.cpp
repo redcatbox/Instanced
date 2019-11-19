@@ -8,24 +8,21 @@ void UIPProcedureTransformMultiply::RunProcedure(TArray<FTransform>& Transforms)
 	if (OperationTransforms.Num() > 0)
 	{
 		Algo::Sort(OperationTransforms, FSortByInstanceId());
-		TArray<FTransform> ResultTransforms = Transforms;
 
 		for (FPerInstanceTransform PIT : OperationTransforms)
 		{
 			if (PIT.InstanceId <= -1)
 			{
-				for (int32 i = 0; i < ResultTransforms.Num(); i++)
+				for (int32 i = 0; i < Transforms.Num(); i++)
 				{
-					ResultTransforms[i] = ResultTransforms[i] * PIT.NewTransform;
+					Transforms[i] = Transforms[i] * PIT.NewTransform;
 				}
 			}
-			else if (PIT.InstanceId < ResultTransforms.Num())
+			else if (PIT.InstanceId < Transforms.Num())
 			{
-				ResultTransforms[PIT.InstanceId] = ResultTransforms[PIT.InstanceId] * PIT.NewTransform;
+				Transforms[PIT.InstanceId] = Transforms[PIT.InstanceId] * PIT.NewTransform;
 			}
 		}
-
-		Transforms = ResultTransforms;
 	}
 }
 #endif

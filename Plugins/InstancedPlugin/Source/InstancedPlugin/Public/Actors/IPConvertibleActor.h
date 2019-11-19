@@ -16,9 +16,11 @@ public:
 	AIPConvertibleActor();
 
 #if WITH_EDITOR
+	/** Convert static meshes to instances */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = Convertation)
 		virtual void ConvertToInstances();
 
+	/** Convert instances to static meshes */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = Convertation)
 		virtual void ConvertToStaticMeshes();
 #endif

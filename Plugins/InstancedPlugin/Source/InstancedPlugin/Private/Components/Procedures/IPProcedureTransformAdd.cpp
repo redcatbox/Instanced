@@ -15,13 +15,12 @@ void UIPProcedureTransformAdd::RunProcedure(TArray<FTransform>& Transforms)
 	if (OperationTransforms.Num() > 0)
 	{
 		Algo::Sort(OperationTransforms, FSortByInstanceId());
-		TArray<FTransform> ResultTransforms = Transforms;
 
 		for (FPerInstanceTransform PIT : OperationTransforms)
 		{
 			if (PIT.InstanceId <= -1)
 			{
-				for (int32 i = 0; i < ResultTransforms.Num(); i++)
+				for (int32 i = 0; i < Transforms.Num(); i++)
 				{
 					if (bPerInstanceIncremental)
 					{
@@ -30,21 +29,19 @@ void UIPProcedureTransformAdd::RunProcedure(TArray<FTransform>& Transforms)
 							PIT.NewTransform.GetLocation() * i,
 							PIT.NewTransform.GetScale3D() * i
 						);
-						ResultTransforms[i] = Operation(ResultTransforms[i], IncrementalTransform);
+						Transforms[i] = Operation(Transforms[i], IncrementalTransform);
 					}
 					else
 					{
-						ResultTransforms[i] = Operation(ResultTransforms[i], PIT.NewTransform);
+						Transforms[i] = Operation(Transforms[i], PIT.NewTransform);
 					}
 				}
 			}
-			else if (PIT.InstanceId < ResultTransforms.Num())
+			else if (PIT.InstanceId < Transforms.Num())
 			{
-				ResultTransforms[PIT.InstanceId] = Operation(ResultTransforms[PIT.InstanceId], PIT.NewTransform);
+				Transforms[PIT.InstanceId] = Operation(Transforms[PIT.InstanceId], PIT.NewTransform);
 			}
 		}
-
-		Transforms = ResultTransforms;
 	}
 }
 

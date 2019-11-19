@@ -20,7 +20,6 @@ void UIPProcedureTransformsContribution::RunProcedure(TArray<FTransform>& Transf
 
 	if (Transforms.Num() <= 1)
 	{
-		ResultTransforms = Transforms;
 		return;
 	}
 
