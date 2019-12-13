@@ -8,7 +8,7 @@ public class InstancedEditorTarget : TargetRules
 	public InstancedEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
-
-		ExtraModuleNames.AddRange( new string[] { "Instanced" } );
+		DefaultBuildSettings = BuildSettingsVersion.V2;
+		ExtraModuleNames.Add("Instanced");
 	}
 }

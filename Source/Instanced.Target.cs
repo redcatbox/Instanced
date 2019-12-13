@@ -8,7 +8,7 @@ public class InstancedTarget : TargetRules
 	public InstancedTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-
-		ExtraModuleNames.AddRange( new string[] { "Instanced" } );
+		DefaultBuildSettings = BuildSettingsVersion.V2;
+		ExtraModuleNames.Add("Instanced");
 	}
 }

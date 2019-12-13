@@ -6,7 +6,8 @@
 void AIPBaseInstancedActor::RunGeneration()
 {
 	Super::RunGeneration();
-	TArray<UActorComponent*> ACompISMCs = GetComponentsByClass(UInstancedStaticMeshComponent::StaticClass());
+	TArray<UActorComponent*> ACompISMCs;
+	GetComponents(UInstancedStaticMeshComponent::StaticClass(), ACompISMCs);
 
 	if (ACompISMCs.Num() > 0)
 	{

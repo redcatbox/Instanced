@@ -107,7 +107,8 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
 	{
 		AActor* SelectedActor = Cast<AActor>(*Iter);
-		TArray<UActorComponent*> AComponents = SelectedActor->GetComponentsByClass(UInstancedStaticMeshComponent::StaticClass());
+		TArray<UActorComponent*> AComponents;
+		SelectedActor->GetComponents(UInstancedStaticMeshComponent::StaticClass(), AComponents);
 
 		if (AComponents.Num() > 0)
 		{
