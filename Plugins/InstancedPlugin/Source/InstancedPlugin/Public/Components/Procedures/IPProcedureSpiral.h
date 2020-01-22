@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Dmitriy Barannik aka redbox, 2020
 
 /** https://en.wikipedia.org/wiki/Archimedean_spiral */
 

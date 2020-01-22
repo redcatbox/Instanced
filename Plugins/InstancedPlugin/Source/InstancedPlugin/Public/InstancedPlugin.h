@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Dmitriy Barannik aka redbox, 2020
 
 #pragma once
 

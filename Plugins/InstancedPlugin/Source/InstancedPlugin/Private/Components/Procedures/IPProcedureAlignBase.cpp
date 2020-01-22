@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Dmitriy Barannik aka redbox, 2020
 
 #include "Components/Procedures/IPProcedureAlignBase.h"
 

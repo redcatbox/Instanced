@@ -1,29 +1,30 @@
 {
-  "FileVersion": 3,
-  "Version": 1,
-  "VersionName": "1.0",
-  "FriendlyName": "InstancedPlugin",
-  "Description": "",
-  "Category": "Instanced",
-  "CreatedBy": "Dmitriy Barannik aka redbox",
-  "CreatedByURL": "",
-  "DocsURL": "",
-  "MarketplaceURL": "",
-  "SupportURL": "",
-  "EngineVersion": "4.24.0",
-  "CanContainContent": true,
-  "IsBetaVersion": false,
-  "Installed": true,
-  "Modules": [
-    {
-      "Name": "InstancedPlugin",
-      "Type": "Runtime",
-      "LoadingPhase": "Default",
-      "WhitelistPlatforms": [
-        "Win64",
-        "Win32",
-        "Android"
-      ]
-    }
-  ]
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "InstancedPlugin",
+	"Description": "",
+	"Category": "Instanced",
+	"CreatedBy": "Dmitriy Barannik aka redbox",
+	"CreatedByURL": "",
+	"DocsURL": "https://github.com/redcatbox/Instanced/wiki",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"EngineVersion": "4.24.0",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "InstancedPlugin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Win32",
+				"Android"
+			]
+		}
+	]
 }
