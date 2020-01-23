@@ -113,7 +113,7 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 		if (AComponents.Num() > 0)
 		{
 			GEditor->SelectNone(false, true);
-			UE_LOG(LogTemp, Warning, TEXT("Processing convertation..."));
+			UE_LOG(LogTemp, Warning, TEXT("%d ISM components found. Processing convertation..."), AComponents.Num());
 
 			for (UActorComponent* AComp : AComponents)
 			{
@@ -121,6 +121,7 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 				{
 					if (ISMComp->GetInstanceCount() > 0)
 					{
+						UE_LOG(LogTemp, Warning, TEXT("%s with %d instances."), *ISMComp->GetName(), ISMComp->GetInstanceCount());
 						UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
 						TArray<UMaterialInterface*> Materials;
 						int32 NumMaterials = ISMComp->GetNumMaterials();
@@ -142,7 +143,7 @@ void AIPConvertibleActor::ConvertToStaticMeshes()
 						{
 							FTransform Transform;
 							ISMComp->GetInstanceTransform(i, Transform);
-							Transform *= SelectedActor->GetActorTransform();
+							Transform *= ISMComp->GetComponentTransform();
 							AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
 							AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
 							SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
