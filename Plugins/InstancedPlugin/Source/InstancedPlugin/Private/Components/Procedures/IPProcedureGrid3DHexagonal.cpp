@@ -57,7 +57,7 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(TArray<FTransform>& Transforms)
 				for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 				{
 					//Hexagon space X/Y = 115.5/100
-					FVector Location = FVector(InstanceSpace.X * 0.75 * X, InstanceSpace.Y * Y, InstanceSpace.Z * Z);
+					FVector Location = FVector(InstanceSpaceInternal.X * 0.75 * X, InstanceSpaceInternal.Y * Y, InstanceSpaceInternal.Z * Z);
 
 					if (bFlipOddEven_X)
 					{
@@ -67,7 +67,7 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(TArray<FTransform>& Transforms)
 						}
 						else
 						{
-							Location.Y += InstanceSpace.Y * 0.5;
+							Location.Y += InstanceSpaceInternal.Y * 0.5;
 						}
 					}
 					else
@@ -78,13 +78,13 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(TArray<FTransform>& Transforms)
 						}
 						else
 						{
-							Location.Y += InstanceSpace.Y * 0.5;
+							Location.Y += InstanceSpaceInternal.Y * 0.5;
 						}
 					}
 
 					if (bHalfSpaceOffset)
 					{
-						Location = Location + InstanceSpace * 0.5;
+						Location = Location + InstanceSpaceInternal * 0.5;
 					}
 
 					ResultTransforms.Add(Transf * FTransform(Transf.Rotator(), Location, FVector::OneVector));

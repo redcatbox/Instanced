@@ -5,11 +5,9 @@
 UIPProcedureCircle3D::UIPProcedureCircle3D()
 {
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
 
 	InstancesNum3D = FIntVector(1, 1, 1);
 	PlacementAngle = 360.f;
-	InstanceSpace = FVector(100.f, 100.f, 100.f);
 	bOrientToCentralAxis = false;
 	bCheckerOddEven = false;
 	bFlipOddEven = false;
@@ -19,6 +17,8 @@ UIPProcedureCircle3D::UIPProcedureCircle3D()
 #if WITH_EDITOR
 void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 {
+	Super::RunProcedure(Transforms);
+
 	InstancesNum3D = FIntVector(
 		FMath::Clamp(InstancesNum3D.X, 1, InstancesNum3D.X),
 		FMath::Clamp(InstancesNum3D.Y, 1, InstancesNum3D.Y),
@@ -58,8 +58,8 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 					}
 
 					FRotator Rotation = FRotator(0, RotYaw, 0);
-					float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
-					float LocZ = InstanceSpace.Z * Z;
+					float LocX = InstanceSpaceInternal.X + InstanceSpaceInternal.Y * Y;
+					float LocZ = InstanceSpaceInternal.Z * Z;
 					FVector Location = Rotation.RotateVector(FVector(LocX, 0, LocZ));
 
 					if (!bOrientToCentralAxis)

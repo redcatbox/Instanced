@@ -19,31 +19,33 @@ void UIPProcedureAlignFromAxis::RunProcedure(TArray<FTransform>& Transforms)
 	for (FTransform Transf : Transforms)
 	{
 		FVector Location = Transf.GetLocation();
-		FVector TraceStart = GetParentISMComponent()->GetComponentTransform().TransformPosition(Location);
-		FVector TraceDirection = AlignAxisStart - AlignAxisEnd;
-		TraceDirection = -FVector::CrossProduct(FVector::CrossProduct(Location, TraceDirection), TraceDirection).GetSafeNormal();
-		TraceDirection = GetParentISMComponent()->GetComponentTransform().TransformVector(TraceDirection);
-
-		if (bReverse)
-		{
-			TraceDirection = -TraceDirection;
-		}
-
-		FVector TraceEnd = TraceStart + TraceDirection * AlignDistance;
-
-		FHitResult TraceOutHit(ForceInit);
-		bool bHit = UKismetSystemLibrary::LineTraceSingle(GetOwner(), TraceStart, TraceEnd, TraceChannel, bTraceComplex, ActorsToIgnore, DrawDebugType, TraceOutHit, bIgnoreSelf, FLinearColor::Red, FLinearColor::Green, DrawTime);
-
-		if (bHit)
-		{
-			Location = GetParentISMComponent()->GetComponentTransform().InverseTransformPosition(TraceOutHit.Location);
-		}
-
 		FQuat Rotation = Transf.GetRotation();
 
-		if (bAlignToSurface)
+		if (UInstancedStaticMeshComponent* ParentISMComp = GetParentISMComponent())
 		{
-			Rotation = FRotationMatrix::MakeFromZ(GetParentISMComponent()->GetComponentTransform().InverseTransformVectorNoScale(TraceOutHit.Normal)).ToQuat();
+			FVector TraceStart = ParentISMComp->GetComponentTransform().TransformPosition(Location);
+			FVector TraceDirection = AlignAxisStart - AlignAxisEnd;
+			TraceDirection = -FVector::CrossProduct(FVector::CrossProduct(Location, TraceDirection), TraceDirection).GetSafeNormal();
+			TraceDirection = ParentISMComp->GetComponentTransform().TransformVector(TraceDirection);
+
+			if (bReverse)
+			{
+				TraceDirection = -TraceDirection;
+			}
+
+			FVector TraceEnd = TraceStart + TraceDirection * AlignDistance;
+			FHitResult TraceOutHit(ForceInit);
+			bool bHit = UKismetSystemLibrary::LineTraceSingle(GetOwner(), TraceStart, TraceEnd, TraceChannel, bTraceComplex, ActorsToIgnore, DrawDebugType, TraceOutHit, bIgnoreSelf, FLinearColor::Red, FLinearColor::Green, DrawTime);
+
+			if (bHit)
+			{
+				Location = ParentISMComp->GetComponentTransform().InverseTransformPosition(TraceOutHit.Location);
+			}
+
+			if (bAlignToSurface)
+			{
+				Rotation = FRotationMatrix::MakeFromZ(ParentISMComp->GetComponentTransform().InverseTransformVectorNoScale(TraceOutHit.Normal)).ToQuat();
+			}
 		}
 
 		ResultTransforms.Add(FTransform(Rotation, Location, Transf.GetScale3D()));

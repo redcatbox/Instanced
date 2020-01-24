@@ -13,9 +13,7 @@ UIPProcedureTransformBase::UIPProcedureTransformBase()
 #if WITH_EDITOR
 void UIPProcedureTransformBase::CopyTransforms()
 {
-	UInstancedStaticMeshComponent* ParentISM = GetParentISMComponent();
-	
-	if (ParentISM)
+	if (UInstancedStaticMeshComponent* ParentISM = GetParentISMComponent())
 	{
 		OperationTransforms.Empty();
 

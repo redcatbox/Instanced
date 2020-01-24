@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "IPProcedureComponent.h"
+#include "IPProcedureInstanceSpaceBase.h"
 #include "IPProcedureCircle3D.generated.h"
 
 UCLASS(Meta = (BlueprintSpawnableComponent))
-class INSTANCEDPLUGIN_API UIPProcedureCircle3D : public UIPProcedureComponent
+class INSTANCEDPLUGIN_API UIPProcedureCircle3D : public UIPProcedureInstanceSpaceBase
 {
 	GENERATED_BODY()
 
@@ -25,10 +25,6 @@ public:
 	/** Angle to place instances in */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		float PlacementAngle;
-
-	/** Space of every instance from it's center */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		FVector InstanceSpace;
 
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")

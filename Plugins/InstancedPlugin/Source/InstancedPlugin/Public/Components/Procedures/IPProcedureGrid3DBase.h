@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "IPProcedureComponent.h"
+#include "IPProcedureInstanceSpaceBase.h"
 #include "IPProcedureGrid3DBase.generated.h"
 
 UCLASS(Abstract)
-class INSTANCEDPLUGIN_API UIPProcedureGrid3DBase : public UIPProcedureComponent
+class INSTANCEDPLUGIN_API UIPProcedureGrid3DBase : public UIPProcedureInstanceSpaceBase
 {
 	GENERATED_BODY()
 
@@ -21,14 +21,6 @@ public:
 	/** Number of instances to create */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
 		FIntVector InstancesNum3D;
-
-	/** Space of every instance from it's center */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
-		FVector InstanceSpace;
-
-	/** Should instances be offset on half space from it's center? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bHalfSpaceOffset;
 
 	/** Override world axes with custom axes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
