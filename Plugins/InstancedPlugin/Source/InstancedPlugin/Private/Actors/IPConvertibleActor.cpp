@@ -3,6 +3,7 @@
 #include "Actors/IPConvertibleActor.h"
 #include "Engine/Selection.h"
 #include "Engine/StaticMeshActor.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Actors/IPTransformsArrayActor.h"
 
@@ -21,6 +22,22 @@ AIPConvertibleActor::AIPConvertibleActor()
 	DefaultSceneRoot->bVisualizeComponent = true;
 	bIsEditorOnlyActor = true;
 	bRemoveOriginal = true;
+
+	TextIndicator = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextIndicator"));
+	TextIndicator->SetupAttachment(RootComponent);
+	TextIndicator->SetRelativeLocation(FVector(0.f, 0.f, 50.f));
+	TextIndicator->SetText(TEXT("Convertible"));
+	TextIndicator->bAlwaysRenderAsText = true;
+	TextIndicator->bHiddenInGame = true;
+	TextIndicator->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
+	TextIndicator->VerticalAlignment = EVerticalTextAligment::EVRTA_TextCenter;
+	TextIndicator->SetWorldSize(50.f);
+	TextIndicator->SetTextRenderColor(FColor::White);
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> TextMaterialObj(TEXT("/InstancedPlugin/Materials/UnlitText.UnlitText"));
+	if (TextMaterialObj.Object)
+	{
+		TextIndicator->SetTextMaterial(TextMaterialObj.Object);
+	}
 #endif
 }
 

@@ -8,8 +8,8 @@ UIPProcedureInstanceSpaceBase::UIPProcedureInstanceSpaceBase()
 	bInstancesNumEditCondition = false;
 	bInstanceSpaceEditCond = true;
 	InstanceSpace = FVector(100.f);
-	InstanceSpaceInternal = InstanceSpace;
 	bInstanceSpaceFromMeshBounds = false;
+	bInstanceSpaceFromMeshBoundsWithCurrentScale = true;
 	bHalfSpaceOffset = false;
 #endif
 }
@@ -23,12 +23,19 @@ void UIPProcedureInstanceSpaceBase::RunProcedure(TArray<FTransform>& Transforms)
 	{
 		if (UInstancedStaticMeshComponent* ParentISMComp = GetParentISMComponent())
 		{
-			InstanceSpaceInternal = ParentISMComp->GetStaticMesh()->GetBounds().GetBox().GetSize();
+			UStaticMesh* SM = ParentISMComp->GetStaticMesh();
+			if (SM)
+			{
+				InstanceSpace = SM->GetBounds().GetBox().GetSize();
+
+				if (bInstanceSpaceFromMeshBoundsWithCurrentScale)
+				{
+					FTransform Transf = FTransform();
+					ParentISMComp->GetInstanceTransform(0, Transf);
+					InstanceSpace = InstanceSpace * Transf.GetScale3D();
+				}
+			}
 		}
-	}
-	else
-	{
-		InstanceSpaceInternal = InstanceSpace;
 	}
 }
 #endif

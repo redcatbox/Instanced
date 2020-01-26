@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "IPBaseGeneratedActor.h"
+#include "Components/TextRenderComponent.h"
 #include "IPConvertibleActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced), HideCategories = (Actor, Collision, Cooking, Input, LOD, Rendering, Replication), AutoExpandCategories = (Convertation))
@@ -29,6 +30,9 @@ public:
 	/** Should remove original objects after convertation? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Convertation)
 		bool bRemoveOriginal;
+
+	UPROPERTY()
+		UTextRenderComponent* TextIndicator;
 #endif
 
 	UPROPERTY()

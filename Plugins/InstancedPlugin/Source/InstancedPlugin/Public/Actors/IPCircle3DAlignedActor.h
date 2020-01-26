@@ -5,8 +5,8 @@
 #include "IPInstancedHISMActor.h"
 #include "Components/Procedures/IPProcedureTransformMultiply.h"
 #include "Components/Procedures/IPProcedureCircle3D.h"
-#include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "Components/Procedures/IPProcedureAlignFromAxis.h"
+#include "Components/Procedures/IPProcedureRandomTransform.h"
 #include "IPCircle3DAlignedActor.generated.h"
 
 UCLASS(ClassGroup = (Instanced))
@@ -25,9 +25,9 @@ public:
 		UIPProcedureCircle3D* IPProcedureCircle3D;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureRandomTransform* IPProcedureRandomTransform;
+		UIPProcedureAlignFromAxis* IPProcedureAlignFromAxis;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureAlignFromAxis* IPProcedureAlignFromAxis;
+		UIPProcedureRandomTransform* IPProcedureRandomTransform;
 #endif
 };

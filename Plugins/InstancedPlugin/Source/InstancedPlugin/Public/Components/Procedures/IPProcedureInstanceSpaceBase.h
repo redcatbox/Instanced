@@ -19,12 +19,16 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	/** Space of every instance from it's center */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties, EditCondition = "bInstanceSpaceEditCond"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bInstanceSpaceEditCond"))
 		FVector InstanceSpace;
 
 	/** Should set instance space from mesh bounds? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bInstanceSpaceFromMeshBounds;
+
+	/** Should instance space include current scale? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bInstanceSpaceFromMeshBounds"))
+		bool bInstanceSpaceFromMeshBoundsWithCurrentScale;
 
 	/** Should instances be offset on half space from it's center? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
@@ -34,7 +38,4 @@ public:
 protected:
 	UPROPERTY()
 		bool bInstanceSpaceEditCond;
-
-	UPROPERTY()
-		FVector InstanceSpaceInternal;
 };

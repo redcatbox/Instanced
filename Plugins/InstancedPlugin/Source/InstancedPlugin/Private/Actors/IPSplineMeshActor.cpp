@@ -70,26 +70,29 @@ void AIPSplineMeshActor::RunGeneration()
 			IndexNext = 0;
 		}
 
-		//Location
-		FVector StartPos;
-		FVector StartTangent;
-		FVector EndPos;
-		FVector EndTangent;
-		SplineComponent->GetLocationAndTangentAtSplinePoint(IndexCurrent, StartPos, StartTangent, ESplineCoordinateSpace::Local);
-		SplineComponent->GetLocationAndTangentAtSplinePoint(IndexNext, EndPos, EndTangent, ESplineCoordinateSpace::Local);
-		SplineMeshComponents[IndexCurrent]->SetStartAndEnd(StartPos, StartTangent, EndPos, EndTangent, true);
+		if (SplineMeshComponents[IndexCurrent])
+		{
+			//Location
+			FVector StartPos;
+			FVector StartTangent;
+			FVector EndPos;
+			FVector EndTangent;
+			SplineComponent->GetLocationAndTangentAtSplinePoint(IndexCurrent, StartPos, StartTangent, ESplineCoordinateSpace::Local);
+			SplineComponent->GetLocationAndTangentAtSplinePoint(IndexNext, EndPos, EndTangent, ESplineCoordinateSpace::Local);
+			SplineMeshComponents[IndexCurrent]->SetStartAndEnd(StartPos, StartTangent, EndPos, EndTangent, true);
 
-		//Rotation
-		float StartRoll = SplineComponent->GetRotationAtSplinePoint(IndexCurrent, ESplineCoordinateSpace::Local).Roll;
-		float EndRoll = SplineComponent->GetRotationAtSplinePoint(IndexNext, ESplineCoordinateSpace::Local).Roll;
-		SplineMeshComponents[IndexCurrent]->SetStartRoll(StartRoll, true);
-		SplineMeshComponents[IndexCurrent]->SetEndRoll(EndRoll, true);
+			//Rotation
+			float StartRoll = SplineComponent->GetRotationAtSplinePoint(IndexCurrent, ESplineCoordinateSpace::Local).Roll;
+			float EndRoll = SplineComponent->GetRotationAtSplinePoint(IndexNext, ESplineCoordinateSpace::Local).Roll;
+			SplineMeshComponents[IndexCurrent]->SetStartRoll(StartRoll, true);
+			SplineMeshComponents[IndexCurrent]->SetEndRoll(EndRoll, true);
 
-		//Scale
-		FVector2D StartScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexCurrent));
-		FVector2D EndScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexNext));
-		SplineMeshComponents[IndexCurrent]->SetStartScale(StartScale);
-		SplineMeshComponents[IndexCurrent]->SetEndScale(EndScale);
+			//Scale
+			FVector2D StartScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexCurrent));
+			FVector2D EndScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexNext));
+			SplineMeshComponents[IndexCurrent]->SetStartScale(StartScale);
+			SplineMeshComponents[IndexCurrent]->SetEndScale(EndScale);
+		}
 	}
 
 	//for (auto& Obj : SplineMeshComponents)
@@ -102,7 +105,7 @@ void AIPSplineMeshActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyC
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 	FName PropertyName = (PropertyChangedEvent.Property != NULL) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
-	
+
 	if (PropertyName == TEXT("Transform"))
 	{
 		OnConstruction(this->GetActorTransform());

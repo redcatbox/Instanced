@@ -25,9 +25,9 @@ public:
 		UIPProcedureRandomSphere* IPProcedureRandomSphere;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureRandomTransform* IPProcedureRandomTransform;
+		UIPProcedureAlignFromPoint* IPProcedureAlignFromPoint;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureAlignFromPoint* IPProcedureAlignFromPoint;
+		UIPProcedureRandomTransform* IPProcedureRandomTransform;
 #endif
 };

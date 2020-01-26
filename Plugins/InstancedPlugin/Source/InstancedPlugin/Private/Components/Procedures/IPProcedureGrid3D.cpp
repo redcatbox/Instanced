@@ -16,11 +16,11 @@ void UIPProcedureGrid3D::RunProcedure(TArray<FTransform>& Transforms)
 			{
 				for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 				{
-					FVector Location = InstanceSpaceInternal * FVector(X, Y, Z);
+					FVector Location = InstanceSpace * FVector(X, Y, Z);
 
 					if (bHalfSpaceOffset)
 					{
-						Location += InstanceSpaceInternal * 0.5;
+						Location += InstanceSpace * 0.5;
 					}
 
 					if (bUseCustomAxes)

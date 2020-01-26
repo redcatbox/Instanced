@@ -5,7 +5,7 @@
 UIPProcedureGrid3DBase::UIPProcedureGrid3DBase()
 {
 #if WITH_EDITORONLY_DATA
-	InstancesNum3D = FIntVector(1, 1, 1);
+	InstancesNum3D = FIntVector(1);
 	bUseCustomAxes = false;
 	CustomAxis_X = FVector(100.f, 0.f, 0.f);
 	CustomAxis_Y = FVector(0.f, 100.f, 0.f);
