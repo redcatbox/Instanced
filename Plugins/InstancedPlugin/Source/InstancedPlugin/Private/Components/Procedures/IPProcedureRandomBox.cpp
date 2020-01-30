@@ -5,7 +5,7 @@
 UIPProcedureRandomBox::UIPProcedureRandomBox()
 {
 #if WITH_EDITORONLY_DATA
-	BoxExtent = FVector(500.f, 500.f, 500.f);
+	BoxExtent = FVector(500.f);
 	bOnSurfaceOnly = false;
 #endif
 }

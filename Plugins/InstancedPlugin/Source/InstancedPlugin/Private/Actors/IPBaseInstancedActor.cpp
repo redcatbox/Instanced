@@ -47,18 +47,27 @@ void AIPBaseInstancedActor::RunGeneration()
 				}
 
 				UHierarchicalInstancedStaticMeshComponent* HISMComp = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComp);
-
 				if (HISMComp)
 				{
 					HISMComp->bAutoRebuildTreeOnInstanceChanges = false;
 				}
 
-				ISMComp->ClearInstances();
+				//if (ISMComp->GetInstanceCount() != Transforms.Num()) // causes editor crash on copy/paste or duplicate!
+				//{
+					ISMComp->ClearInstances();
 
-				for (FTransform Transf : Transforms)
-				{
-					ISMComp->AddInstance(Transf);
-				}
+					for (FTransform Transf : Transforms)
+					{
+						ISMComp->AddInstance(Transf);
+					}
+				//}
+				//else
+				//{
+				//	for (int32 i = 0; i < Transforms.Num(); i++)
+				//	{
+				//		ISMComp->UpdateInstanceTransform(i, Transforms[i], false, false, false);
+				//	}
+				//}
 
 				if (HISMComp)
 				{

@@ -26,7 +26,7 @@ AIPConvertibleActor::AIPConvertibleActor()
 	TextIndicator = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextIndicator"));
 	TextIndicator->SetupAttachment(RootComponent);
 	TextIndicator->SetRelativeLocation(FVector(0.f, 0.f, 50.f));
-	TextIndicator->SetText(TEXT("Convertible"));
+	TextIndicator->SetText(FText::FromString("Convertible"));
 	TextIndicator->bAlwaysRenderAsText = true;
 	TextIndicator->bHiddenInGame = true;
 	TextIndicator->HorizontalAlignment = EHorizTextAligment::EHTA_Center;

@@ -24,15 +24,15 @@ public:
 
 	/** Arc 1st point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
-		FVector ArcFirstPoint;
+		FVector Point1;
 
 	/** Arc 2nd point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
-		FVector ArcSecondPoint;
+		FVector Point2;
 
 	/** Arc 3rd point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (MakeEditWidget = true))
-		FVector ArcThirdPoint;
+		FVector Point3;
 
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")

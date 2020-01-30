@@ -19,6 +19,7 @@ AIPBaseGeneratedActor::AIPBaseGeneratedActor()
 #if WITH_EDITOR
 void AIPBaseGeneratedActor::RunGeneration()
 {
+	//UE_LOG(LogTemp, Warning, TEXT("RunGeneration()"));
 	this->Modify();
 }
 
@@ -28,3 +29,10 @@ void AIPBaseGeneratedActor::PostEditChangeProperty(FPropertyChangedEvent& Proper
 	RunGeneration();
 }
 #endif
+
+//void AIPBaseGeneratedActor::OnConstruction(const FTransform& Transform)
+//{
+//#if WITH_EDITOR
+//	RunGeneration();
+//#endif
+//}

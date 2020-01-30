@@ -15,6 +15,7 @@ class INSTANCEDPLUGIN_API AIPBaseGeneratedActor : public AActor
 
 public:
 	AIPBaseGeneratedActor();
+	//virtual void OnConstruction(const FTransform& Transform) override;
 
 #if WITH_EDITOR
 	UFUNCTION(CallInEditor, Category = InstancedPlugin)

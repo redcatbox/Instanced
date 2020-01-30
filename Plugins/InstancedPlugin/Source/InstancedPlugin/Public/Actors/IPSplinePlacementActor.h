@@ -16,6 +16,7 @@ class INSTANCEDPLUGIN_API AIPSplinePlacementActor : public AIPInstancedHISMActor
 
 public:
 	AIPSplinePlacementActor();
+	virtual void OnConstruction(const FTransform& Transform) override;
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly, Category = Components)

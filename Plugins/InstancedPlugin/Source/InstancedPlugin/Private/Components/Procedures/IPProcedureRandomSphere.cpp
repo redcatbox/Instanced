@@ -5,7 +5,7 @@
 UIPProcedureRandomSphere::UIPProcedureRandomSphere()
 {
 #if WITH_EDITORONLY_DATA
-	BoxExtent = FVector(500.f, 500.f, 500.f);
+	BoxExtent = FVector(500.f);
 	bOnSurfaceOnly = false;
 	bOrientToCenter = false;
 #endif
@@ -33,7 +33,7 @@ void UIPProcedureRandomSphere::RunProcedure(TArray<FTransform>& Transforms)
 
 			if (!bOnSurfaceOnly)
 			{
-				Location = Location * UIPFunctionLibrary::RandomVectorInDelta(FVector(1.f, 1.f, 1.f), false, bUseRandomStream, RandomStream);
+				Location = Location * UIPFunctionLibrary::RandomVectorInDelta(FVector::OneVector, false, bUseRandomStream, RandomStream);
 			}
 
 			if (bOrientToCenter)

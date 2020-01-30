@@ -32,3 +32,10 @@ AIPSplinePlacementActor::AIPSplinePlacementActor()
 	IPProcedureRandomTransform->ExecutionOrder = 2;
 #endif
 }
+
+void AIPSplinePlacementActor::OnConstruction(const FTransform& Transform)
+{
+#if WITH_EDITOR
+	RunGeneration();
+#endif
+}

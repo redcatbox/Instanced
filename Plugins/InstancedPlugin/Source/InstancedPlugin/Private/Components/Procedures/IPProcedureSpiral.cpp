@@ -6,7 +6,7 @@ UIPProcedureSpiral::UIPProcedureSpiral()
 {
 #if WITH_EDITORONLY_DATA
 	InitialLinearVelocity = FVector(100.f, 0.f, 0.f);
-	LinearAcceleration = FVector(0.f, 0.f, 0.f);
+	LinearAcceleration = FVector(0.f);
 	AngularVelocity = FVector(0.f, 0.f, 360.f);
 	Time = 1.f;
 	bOrientToCentralAxis = false;

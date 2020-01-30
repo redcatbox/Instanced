@@ -22,9 +22,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (ShowOnlyInnerProperties))
 		FIntVector InstancesNum3D;
 
-	/** Angle to place instances in */
+	/** Angle to place instances from */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		float PlacementAngle;
+		float StartAngle;
+
+	/** Angle to place instances to */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
+		float EndAngle;
+
+	/** Should offset instances to align with the end of placement angle? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
+		bool bAlignWithAngleEnd;
 
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
