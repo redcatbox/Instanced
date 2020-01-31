@@ -18,12 +18,16 @@ public:
 
 #if WITH_EDITOR
 	/** Convert selected static meshes to instances */
-	UFUNCTION(BlueprintCallable, CallInEditor, Category = Convertation)
-		virtual void ConvertToInstances();
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Convertation | StaticMeshesToInstances")
+		virtual void ConvertStaticMeshesToInstances();
 
 	/** Convert selected instances to static meshes */
-	UFUNCTION(BlueprintCallable, CallInEditor, Category = Convertation)
-		virtual void ConvertToStaticMeshes();
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Convertation | InstancesToStaticMeshes")
+		virtual void ConvertInstancesToStaticMeshes();
+
+	///** Convert selected actors with static mesh components to static meshes */
+	//UFUNCTION(BlueprintCallable, CallInEditor, Category = "Convertation | StaticMeshComponentsToStaticMeshes")
+	//	virtual void ConvertStaticMeshComponentsToStaticMeshes();
 #endif
 
 #if WITH_EDITORONLY_DATA

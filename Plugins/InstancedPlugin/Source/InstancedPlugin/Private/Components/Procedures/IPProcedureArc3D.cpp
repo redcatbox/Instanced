@@ -109,7 +109,7 @@ void UIPProcedureArc3D::RunProcedure(TArray<FTransform>& Transforms)
 						
 						if (InstancesNum3D.X > 1)
 						{
-							RotYaw = ArcAngle / InstancesNum3D.X - 1;
+							RotYaw = ArcAngle / (InstancesNum3D.X - 1);
 						}
 
 						float RotYawHalf = RotYaw * 0.5f;
@@ -133,7 +133,7 @@ void UIPProcedureArc3D::RunProcedure(TArray<FTransform>& Transforms)
 							}
 						}
 
-						FRotator Rotation = FRotator(0, RotYaw, 0);
+						FRotator Rotation = FRotator(0, RotYaw + Point1Angle, 0);
 						float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
 						float LocZ = InstanceSpace.Z * Z;
 						FVector Location = Rotation.RotateVector(FVector(LocX, 0, LocZ)) + ArcCenter;
