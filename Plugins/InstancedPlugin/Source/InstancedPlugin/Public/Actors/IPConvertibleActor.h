@@ -17,7 +17,7 @@ public:
 	AIPConvertibleActor();
 
 #if WITH_EDITOR
-	/** Convert selected static meshes to instances */
+	/** Convert selected StaticMeshActors or actors with StaticMeshComponents to instances */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Convertation | StaticMeshesToInstances")
 		virtual void ConvertStaticMeshesToInstances();
 
@@ -25,13 +25,13 @@ public:
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Convertation | InstancesToStaticMeshes")
 		virtual void ConvertInstancesToStaticMeshes();
 
-	///** Convert selected actors with static mesh components to static meshes */
-	//UFUNCTION(BlueprintCallable, CallInEditor, Category = "Convertation | StaticMeshComponentsToStaticMeshes")
-	//	virtual void ConvertStaticMeshComponentsToStaticMeshes();
+	/** Check selected actors and instances contain negative scale values */
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Checks | NegativeScaleValues")
+		virtual void CheckNegativeScaleValues();
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Should remove original objects after convertation? */
+	/** Remove original objects after convertation. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Convertation)
 		bool bRemoveOriginal;
 

@@ -45,219 +45,339 @@ AIPConvertibleActor::AIPConvertibleActor()
 void AIPConvertibleActor::ConvertStaticMeshesToInstances()
 {
 	USelection* Selection = GEditor->GetSelectedActors();
-	TArray<AStaticMeshActor*> StaticMeshActors;
-	TArray<UStaticMesh*> StaticMeshes;
+	TArray<AActor*> SelectedActors;
+	TArray<UStaticMeshComponent*> ProcessedSMComps;
+	TArray < AIPTransformsArrayActor*> IPTAActors;
+	TArray<AActor*> OriginalActorsToDestroy;
+	TArray<UStaticMesh*> SMs;
 	TArray<ULevel*> Levels;
 	Levels.AddUnique(this->GetLevel());
 
 	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
 	{
-		if (AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(*Iter))
+		if (AActor* SelectedActor = Cast<AActor>(*Iter))
 		{
-			StaticMeshActors.Add(SMActor);
-			StaticMeshes.AddUnique(SMActor->GetStaticMeshComponent()->GetStaticMesh());
-			Levels.AddUnique(SMActor->GetLevel());
+			SelectedActors.Add(SelectedActor);
+			Levels.AddUnique(SelectedActor->GetLevel());
 		}
 	}
 
-	if (Levels.Num() > 1)
+	if (Levels.Num() != 1)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Selected actors are not in the same sublevel! Please select actors from the same sublevel."));
+		UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+		return;
 	}
-	else if (StaticMeshActors.Num() == 0)
+
+	for (AActor* SelectedActor : SelectedActors)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No StaticMeshActors selected! Please select few StaticMeshActors to proceed."));
+		TArray<UActorComponent*> AComponents;
+		SelectedActor->GetComponents(UStaticMeshComponent::StaticClass(), AComponents);
+
+		if (AComponents.Num() > 0)
+		{
+			for (UActorComponent* AComp : AComponents)
+			{
+				UStaticMeshComponent* SMComp = Cast<UStaticMeshComponent>(AComp);
+				UStaticMesh* SM = SMComp->GetStaticMesh();
+
+				if (SMComp && SM)
+				{
+					ProcessedSMComps.Add(SMComp);
+					SMs.AddUnique(SM);
+				}
+			}
+		}
+	}
+
+	if (ProcessedSMComps.Num() > 0 && SMs.Num() > 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Processing convertation. Material(s) from first found StaticMeshComponent will be used for all instances!"));
+		GEditor->SelectNone(false, true);
+
+		for (UStaticMesh* SM : SMs)
+		{
+			FActorSpawnParameters SpawnInfo;
+			SpawnInfo.OverrideLevel = this->GetLevel();
+			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			FTransform SpawnTransform = this->GetActorTransform();
+			AActor* Actor = GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
+			AIPTransformsArrayActor* IPTAActor = Cast<AIPTransformsArrayActor>(Actor);
+			IPTAActors.AddUnique(IPTAActor);
+
+			for (UStaticMeshComponent* SMComp : ProcessedSMComps)
+			{
+				if (SM == SMComp->GetStaticMesh())
+				{
+					IPTAActor->HISMComponent->SetStaticMesh(SM);
+					int32 NumMaterials = SMComp->GetNumMaterials();
+
+					for (int32 i = 0; i < NumMaterials; i++)
+					{
+						IPTAActor->HISMComponent->SetMaterial(i, SMComp->GetMaterial(i));
+					}
+
+					FTransform Transform = SMComp->GetComponentTransform();
+
+					if (Transform.GetScale3D().GetMin() < 0)
+					{
+						UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent %s contains negative scale values!"), *SMComp->GetName());
+					}
+
+					Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
+					IPTAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
+				}
+
+				if (bRemoveOriginal)
+				{
+					OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
+				}
+			}
+
+			if (bRemoveOriginal)
+			{
+				for (AActor* ActorToDestroy : OriginalActorsToDestroy)
+				{
+					ActorToDestroy->MarkPackageDirty();
+					bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
+					checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
+				}
+			}
+		}
+
+		if (IPTAActors.Num() > 0)
+		{
+			for (AIPTransformsArrayActor* IPTAActor : IPTAActors)
+			{
+				IPTAActor->RunGeneration();
+			}
+
+			UE_LOG(LogTemp, Warning, TEXT("%d StaticMeshComponents successfully converted to instances."), ProcessedSMComps.Num());
+		}
 	}
 	else
 	{
-		GEditor->SelectNone(false, true);
-		UE_LOG(LogTemp, Warning, TEXT("Processing convertation..."));
-		UE_LOG(LogTemp, Warning, TEXT("Note: Material(s) from first selected StaticMeshActor will be used for all instances!"));
+		UE_LOG(LogTemp, Warning, TEXT("No StaticMeshComponents or valid StaticMesh properties found. Nothing to convert."));
+		UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+	}
+}
 
-		for (UStaticMesh* SM : StaticMeshes)
+void AIPConvertibleActor::ConvertInstancesToStaticMeshes()
+{
+	//USelection* Selection = GEditor->GetSelectedActors();
+	//TArray<AActor*> SelectedActors;
+	//TArray<UInstancedStaticMeshComponent*> ISMComponents;
+	//TArray<ULevel*> Levels;
+	//Levels.AddUnique(this->GetLevel());
+
+	//for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
+	//{
+	//	if (AActor* SelectedActor = Cast<AActor>(*Iter))
+	//	{
+	//		SelectedActors.Add(SelectedActor);
+	//		Levels.AddUnique(SelectedActor->GetLevel());
+	//	}
+	//}
+
+	//if (Levels.Num() != 1)
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("Selected actors are not in the same sublevel! Please select actors from the same sublevel."));
+	//	UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+	//	return;
+	//}
+
+	//for (AActor* SelectedActor : SelectedActors)
+	//{
+	//	TArray<UActorComponent*> AComponents;
+	//	SelectedActor->GetComponents(UInstancedStaticMeshComponent::StaticClass(), AComponents);
+
+	//	if (AComponents.Num() > 0)
+	//	{
+	//		for (UActorComponent* AComp : AComponents)
+	//		{
+	//			if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(AComp))
+	//			{
+	//				ISMComponents.Add(ISMComp);
+	//			}
+	//		}
+	//	}
+	//}
+
+	//if (ISMComponents.Num() == 0)
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("No ISM components found in selected actors!"));
+	//	UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+	//}
+	//else
+	//{
+	//	GEditor->SelectNone(false, true);
+	//	UE_LOG(LogTemp, Warning, TEXT("Processing convertation. %d ISM components found."), ISMComponents.Num());
+
+	//	for (UInstancedStaticMeshComponent* ISMComp : ISMComponents)
+	//	{
+	//		if (ISMComp->GetInstanceCount() > 0)
+	//		{
+	//			UE_LOG(LogTemp, Warning, TEXT("Converting %s with %d instances."), *ISMComp->GetName(), ISMComp->GetInstanceCount());
+	//			UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
+	//			TArray<UMaterialInterface*> Materials;
+	//			int32 NumMaterials = ISMComp->GetNumMaterials();
+
+	//			for (int32 i = 0; i < NumMaterials; i++)
+	//			{
+	//				Materials.Add(ISMComp->GetMaterial(i));
+	//			}
+
+	//			FActorSpawnParameters SpawnInfo;
+	//			SpawnInfo.OverrideLevel = this->GetLevel();
+	//			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	//			FName FolderName = *(FString(TEXT("Instanced_"))
+	//				.Append(ISMComp->GetOwner()->GetName())
+	//				.Append(FString(TEXT("_")))
+	//				.Append(ISMComp->GetName()));
+
+	//			for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
+	//			{
+	//				FTransform Transform;
+	//				ISMComp->GetInstanceTransform(i, Transform);
+	//				Transform *= ISMComp->GetComponentTransform();
+	//				AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
+	//				AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
+	//				SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
+
+	//				for (int32 j = 0; j < NumMaterials; j++)
+	//				{
+	//					SMActor->GetStaticMeshComponent()->SetMaterial(j, Materials[j]);
+	//				}
+
+	//				SMActor->RegisterAllComponents();
+	//				SMActor->SetFolderPath(FolderName);
+	//				SMActor->MarkPackageDirty();
+	//				GEditor->SelectActor(SMActor, true, false);
+	//			}
+
+	//			if (bRemoveOriginal)
+	//			{
+	//				ISMComp->GetOwner()->MarkPackageDirty();
+	//				bool WasDestroyed = ISMComp->GetOwner()->GetWorld()->EditorDestroyActor(ISMComp->GetOwner(), false);
+	//				checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ISMComp->GetOwner()->GetName(), *ISMComp->GetOwner()->GetActorLabel());
+	//			}
+
+	//			UE_LOG(LogTemp, Warning, TEXT("%d instances successfully converted to StaticMeshActors!"), ISMComp->GetInstanceCount());
+	//		}
+	//		else
+	//		{
+	//			UE_LOG(LogTemp, Warning, TEXT("No instances found in actor %s (%s)! Nothing to convert."), ISMComp->GetOwner()->GetName(), ISMComp->GetName());
+	//		}
+	//	}
+	//}
+}
+
+void AIPConvertibleActor::CheckNegativeScaleValues()
+{
+	USelection* Selection = GEditor->GetSelectedActors();
+	TArray<AActor*> SelectedActors;
+	TArray<UStaticMeshComponent*> ProcessedSMComps;
+	TArray<UInstancedStaticMeshComponent*> ProcessedISMComps;
+
+	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
+	{
+		if (AActor* SelectedActor = Cast<AActor>(*Iter))
+		{
+
+			SelectedActors.Add(SelectedActor);
+		}
+	}
+
+	for (AActor* SelectedActor : SelectedActors)
+	{
+		TArray<UActorComponent*> AComponents;
+		SelectedActor->GetComponents(UStaticMeshComponent::StaticClass(), AComponents);
+
+		if (AComponents.Num() > 0)
+		{
+			for (UActorComponent* AComp : AComponents)
+			{
+				UStaticMeshComponent* SMComp = Cast<UStaticMeshComponent>(AComp);
+				UStaticMesh* SM = SMComp->GetStaticMesh();
+
+				if (SMComp && SM)
+				{
+					ProcessedSMComps.Add(SMComp);
+					SMs.AddUnique(SM);
+				}
+			}
+		}
+	}
+
+	if (ProcessedSMComps.Num() > 0 && SMs.Num() > 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Processing convertation. Material(s) from first found StaticMeshComponent will be used for all instances!"));
+		GEditor->SelectNone(false, true);
+
+		for (UStaticMesh* SM : SMs)
 		{
 			FActorSpawnParameters SpawnInfo;
 			SpawnInfo.OverrideLevel = this->GetLevel();
 			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			FTransform SpawnTransform = GetActorTransform();
 			AActor* Actor = GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
+			AIPTransformsArrayActor* IPTAActor = Cast<AIPTransformsArrayActor>(Actor);
+			IPTAActors.AddUnique(IPTAActor);
 
-			if (AIPTransformsArrayActor* TAActor = Cast<AIPTransformsArrayActor>(Actor))
+			for (UStaticMeshComponent* SMComp : ProcessedSMComps)
 			{
-				for (AStaticMeshActor* SMActor : StaticMeshActors)
+				if (SM == SMComp->GetStaticMesh())
 				{
-					if (SM == SMActor->GetStaticMeshComponent()->GetStaticMesh())
+					IPTAActor->HISMComponent->SetStaticMesh(SM);
+					int32 NumMaterials = SMComp->GetNumMaterials();
+
+					for (int32 i = 0; i < NumMaterials; i++)
 					{
-						TAActor->HISMComponent->SetStaticMesh(SM);
-						int32 NumMaterials = SMActor->GetStaticMeshComponent()->GetNumMaterials();
-
-						for (int32 i = 0; i < NumMaterials; i++)
-						{
-							TAActor->HISMComponent->SetMaterial(i, SMActor->GetStaticMeshComponent()->GetMaterial(i));
-						}
-
-						FTransform Transform = SMActor->GetActorTransform();
-						Transform = Transform.GetRelativeTransform(TAActor->GetActorTransform());
-						TAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
-
-						if (bRemoveOriginal)
-						{
-							SMActor->MarkPackageDirty();
-							bool WasDestroyed = SMActor->GetWorld()->EditorDestroyActor(SMActor, false);
-							checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SMActor->GetClass()->GetName(), *SMActor->GetActorLabel());
-						}
+						IPTAActor->HISMComponent->SetMaterial(i, SMComp->GetMaterial(i));
 					}
+
+					FTransform Transform = SMComp->GetComponentTransform();
+
+					if (Transform.GetScale3D().GetMin() < 0)
+					{
+						UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent %s contains negative scale values!"), *SMComp->GetName());
+					}
+
+					Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
+					IPTAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
 				}
 
-				TAActor->RunGeneration();
+				if (bRemoveOriginal)
+				{
+					OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
+				}
+			}
+
+			if (bRemoveOriginal)
+			{
+				for (AActor* ActorToDestroy : OriginalActorsToDestroy)
+				{
+					ActorToDestroy->MarkPackageDirty();
+					bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
+					checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
+				}
 			}
 		}
 
-		UE_LOG(LogTemp, Log, TEXT("%d StaticMeshActors successfully converted to instances."), StaticMeshActors.Num());
-	}
-}
-
-void AIPConvertibleActor::ConvertInstancesToStaticMeshes()
-{
-	USelection* Selection = GEditor->GetSelectedActors();
-
-	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
-	{
-		AActor* SelectedActor = Cast<AActor>(*Iter);
-		TArray<UActorComponent*> AComponents;
-		SelectedActor->GetComponents(UInstancedStaticMeshComponent::StaticClass(), AComponents);
-
-		if (AComponents.Num() > 0)
+		if (IPTAActors.Num() > 0)
 		{
-			GEditor->SelectNone(false, true);
-			UE_LOG(LogTemp, Warning, TEXT("%d ISM components found. Processing convertation..."), AComponents.Num());
-
-			for (UActorComponent* AComp : AComponents)
+			for (AIPTransformsArrayActor* IPTAActor : IPTAActors)
 			{
-				if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(AComp))
-				{
-					if (ISMComp->GetInstanceCount() > 0)
-					{
-						UE_LOG(LogTemp, Warning, TEXT("Converting %s with %d instances."), *ISMComp->GetName(), ISMComp->GetInstanceCount());
-						UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
-						TArray<UMaterialInterface*> Materials;
-						int32 NumMaterials = ISMComp->GetNumMaterials();
-
-						for (int32 i = 0; i < NumMaterials; i++)
-						{
-							Materials.Add(ISMComp->GetMaterial(i));
-						}
-
-						FActorSpawnParameters SpawnInfo;
-						SpawnInfo.OverrideLevel = this->GetLevel();
-						SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-						FName FolderName = *(FString(TEXT("Instanced_"))
-							.Append(SelectedActor->GetName())
-							.Append(FString(TEXT("_")))
-							.Append(ISMComp->GetName()));
-
-						for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
-						{
-							FTransform Transform;
-							ISMComp->GetInstanceTransform(i, Transform);
-							Transform *= ISMComp->GetComponentTransform();
-							AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
-							AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
-							SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
-
-							for (int32 j = 0; j < NumMaterials; j++)
-							{
-								SMActor->GetStaticMeshComponent()->SetMaterial(j, Materials[j]);
-							}
-
-							SMActor->RegisterAllComponents();
-							SMActor->SetFolderPath(FolderName);
-							SMActor->MarkPackageDirty();
-							GEditor->SelectActor(SMActor, true, false);
-						}
-
-						if (bRemoveOriginal)
-						{
-							SelectedActor->MarkPackageDirty();
-							bool WasDestroyed = SelectedActor->GetWorld()->EditorDestroyActor(SelectedActor, false);
-							checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SelectedActor->GetClass()->GetName(), *SelectedActor->GetActorLabel());
-						}
-
-						UE_LOG(LogTemp, Log, TEXT("%d instances successfully converted to StaticMeshActors!"), ISMComp->GetInstanceCount());
-					}
-					else
-					{
-						UE_LOG(LogTemp, Warning, TEXT("No instances found! Nothing to convert."));
-					}
-				}
+				IPTAActor->RunGeneration();
 			}
+
+			UE_LOG(LogTemp, Warning, TEXT("%d StaticMeshComponents successfully converted to instances."), ProcessedSMComps.Num());
 		}
 	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No StaticMeshComponents or valid StaticMesh properties found. Nothing to convert."));
+		UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+	}
 }
-
-//void AIPConvertibleActor::ConvertStaticMeshComponentsToStaticMeshes()
-//{
-//	USelection* Selection = GEditor->GetSelectedActors();
-//
-//	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
-//	{
-//		AActor* SelectedActor = Cast<AActor>(*Iter);
-//		TArray<UActorComponent*> AComponents;
-//		SelectedActor->GetComponents(UStaticMeshComponent::StaticClass(), AComponents);
-//
-//		if (AComponents.Num() > 0)
-//		{
-//			GEditor->SelectNone(false, true);
-//			UE_LOG(LogTemp, Warning, TEXT("%d SM components found. Processing convertation..."), AComponents.Num());
-//
-//			for (UActorComponent* AComp : AComponents)
-//			{
-//				if (UStaticMeshComponent* SMComp = Cast<UStaticMeshComponent>(AComp))
-//				{
-//					UStaticMesh* StaticMesh = SMComp->GetStaticMesh();
-//					TArray<UMaterialInterface*> Materials;
-//					int32 NumMaterials = SMComp->GetNumMaterials();
-//
-//					for (int32 i = 0; i < NumMaterials; i++)
-//					{
-//						Materials.Add(SMComp->GetMaterial(i));
-//					}
-//
-//					FActorSpawnParameters SpawnInfo;
-//					SpawnInfo.OverrideLevel = this->GetLevel();
-//					SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-//
-//					FName FolderName = *(FString(TEXT("SM_"))
-//						.Append(SelectedActor->GetName())
-//						.Append(FString(TEXT("_")))
-//						.Append(SMComp->GetName()));
-//
-//					FTransform Transform = SMComp->GetComponentTransform();
-//					AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
-//					AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
-//					SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
-//
-//					for (int32 j = 0; j < NumMaterials; j++)
-//					{
-//						SMActor->GetStaticMeshComponent()->SetMaterial(j, Materials[j]);
-//					}
-//
-//					SMActor->RegisterAllComponents();
-//					SMActor->SetFolderPath(FolderName);
-//					SMActor->MarkPackageDirty();
-//					GEditor->SelectActor(SMActor, true, false);
-//
-//					if (bRemoveOriginal)
-//					{
-//						SelectedActor->MarkPackageDirty();
-//						bool WasDestroyed = SelectedActor->GetWorld()->EditorDestroyActor(SelectedActor, false);
-//						checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *SelectedActor->GetClass()->GetName(), *SelectedActor->GetActorLabel());
-//					}
-//				}
-//			}
-//
-//			UE_LOG(LogTemp, Log, TEXT("%d SM components successfully converted to StaticMeshActors!"), AComponents.Num());
-//		}
-//	}
-//}
 #endif

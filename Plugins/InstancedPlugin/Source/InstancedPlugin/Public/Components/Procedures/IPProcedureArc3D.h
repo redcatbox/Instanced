@@ -36,7 +36,7 @@ public:
 
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bOrientToCentralAxis;
+		bool bOrientToCenter;
 
 	/** Should make odd/even rows in checker pattern? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
