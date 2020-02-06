@@ -20,36 +20,24 @@ void UIPProcedureGrid3DHexagonal::RunProcedure(TArray<FTransform>& Transforms)
 	{
 		for (int32 X = 0; X < InstancesNum3D.X; ++X)
 		{
-			int32 LastIndex_Y;
+			int32 LastIndex_Y = InstancesNum3D.Y;
 
 			if (bSymmetrical_Y)
 			{
 				if (bFlipOddEven_X)
 				{
-					if (!(X % 2 == 0))
+					if (X % 2 == 0)
 					{
-						LastIndex_Y = InstancesNum3D.Y;
-					}
-					else
-					{
-						LastIndex_Y = InstancesNum3D.Y - 1;
+						LastIndex_Y--;
 					}
 				}
 				else
 				{
-					if (X % 2 == 0)
+					if (!(X % 2 == 0))
 					{
-						LastIndex_Y = InstancesNum3D.Y;
-					}
-					else
-					{
-						LastIndex_Y = InstancesNum3D.Y - 1;
+						LastIndex_Y--;
 					}
 				}
-			}
-			else
-			{
-				LastIndex_Y = InstancesNum3D.Y;
 			}
 
 			for (int32 Y = 0; Y < LastIndex_Y; ++Y)

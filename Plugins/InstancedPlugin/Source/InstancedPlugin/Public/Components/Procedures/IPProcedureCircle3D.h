@@ -42,8 +42,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bCheckerOddEven;
 
+	/** Should flip odd/even of Y rows? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven"))
+		bool bFlipOddEven_Y;
+
+	/** Should flip odd/even of Z rows? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven"))
+		bool bFlipOddEven_Z;
+
 	/** Should flip odd/even rows? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bFlipOddEven;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven"))
+		bool bSymmetricalEven;
 #endif
 };

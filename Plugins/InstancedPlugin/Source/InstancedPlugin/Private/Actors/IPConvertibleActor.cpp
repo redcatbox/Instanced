@@ -113,16 +113,17 @@ void AIPConvertibleActor::ConvertStaticMeshesToInstances()
 
 						if (Transform.GetScale3D().GetMin() < 0)
 						{
-							UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent %s contains negative scale values!"), *SMComp->GetName());
+							UE_LOG(LogTemp, Warning, TEXT("Negative scale value in component:"));
+							UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SMComp->GetOwner()->GetOuter()->GetOuter()->GetName(), *SMComp->GetOwner()->GetName(), *SMComp->GetName(), *Transform.GetScale3D().ToString());
 						}
 
 						Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
 						IPTAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
-					}
 
-					if (bRemoveOriginal)
-					{
-						OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
+						if (bRemoveOriginal)
+						{
+							OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
+						}
 					}
 				}
 
@@ -143,6 +144,7 @@ void AIPConvertibleActor::ConvertStaticMeshesToInstances()
 			for (AIPTransformsArrayActor* IPTAActor : IPTAActors)
 			{
 				IPTAActor->RunGeneration();
+				GEditor->SelectActor(IPTAActor, true, false);
 			}
 
 			UE_LOG(LogTemp, Warning, TEXT("%d StaticMeshComponents successfully converted to instances."), ProcessedSMComps.Num());
@@ -156,11 +158,9 @@ void AIPConvertibleActor::ConvertStaticMeshesToInstances()
 }
 
 void AIPConvertibleActor::ConvertInstancesToStaticMeshes()
-{/*
+{
 	USelection* Selection = GEditor->GetSelectedActors();
 	TArray<UInstancedStaticMeshComponent*> ProcessedISMComps;
-	TArray<UStaticMesh*> SMs;
-	TArray<ULevel*> Levels;
 	TArray<AActor*> OriginalActorsToDestroy;
 
 	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
@@ -175,179 +175,82 @@ void AIPConvertibleActor::ConvertInstancesToStaticMeshes()
 				for (UActorComponent* AComp : AComponents)
 				{
 					UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(AComp);
-					UStaticMesh* SM = ISMComp->GetStaticMesh();
 
-					if (ISMComp && SM)
+					if (ISMComp && ISMComp->GetStaticMesh() && ISMComp->GetInstanceCount() > 0)
 					{
 						ProcessedISMComps.Add(ISMComp);
-						SMs.AddUnique(SM);
-						Levels.AddUnique(SelectedActor->GetLevel());
 					}
 				}
 			}
 		}
 	}
 
-	if (ProcessedISMComps.Num() > 0 && SMs.Num() > 0)
+	if (ProcessedISMComps.Num() > 0)
 	{
 		GEditor->SelectNone(false, true);
 
-		for (ULevel* Level : Levels)
+		for (UInstancedStaticMeshComponent* ISMComp : ProcessedISMComps)
 		{
-			for (UInstancedStaticMeshComponent* ISMComp : ProcessedISMComps)
+			UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
+			TArray<UMaterialInterface*> Materials;
+			int32 NumMaterials = ISMComp->GetNumMaterials();
+
+			for (int32 i = 0; i < NumMaterials; i++)
 			{
-				if (ISMComp->GetInstanceCount() > 0)
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Converting Level = %s, Actor = %s, InstancedStaticMeshComponent = %s, InstancesCount = %d"), Level-> *ISMComp->GetName(), ISMComp->GetInstanceCount());
-					UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
-					TArray<UMaterialInterface*> Materials;
-					int32 NumMaterials = ISMComp->GetNumMaterials();
-
-					for (int32 i = 0; i < NumMaterials; i++)
-					{
-						Materials.Add(ISMComp->GetMaterial(i));
-					}
-
-					FActorSpawnParameters SpawnInfo;
-					SpawnInfo.OverrideLevel = this->GetLevel();
-					SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-					FName FolderName = *(FString(TEXT("Instanced_"))
-						.Append(ISMComp->GetOwner()->GetName())
-						.Append(FString(TEXT("_")))
-						.Append(ISMComp->GetName()));
-
-					for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
-					{
-
-					}
-
-				}
+				Materials.Add(ISMComp->GetMaterial(i));
 			}
 
-			for (UStaticMesh* SM : SMs)
+			FActorSpawnParameters SpawnInfo;
+			SpawnInfo.OverrideLevel = ISMComp->GetOwner()->GetLevel();
+			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			FName FolderName = *(FString(TEXT("Instanced_"))
+				.Append(ISMComp->GetOwner()->GetName())
+				.Append(FString(TEXT("_")))
+				.Append(ISMComp->GetName()));
+
+			for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
 			{
-				FActorSpawnParameters SpawnInfo;
-				SpawnInfo.OverrideLevel = Level;
-				SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				FTransform SpawnTransform = this->GetActorTransform();
-				AActor* Actor = GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
-				AIPTransformsArrayActor* IPTAActor = Cast<AIPTransformsArrayActor>(Actor);
-				IPTAActors.AddUnique(IPTAActor);
+				FTransform Transform;
+				ISMComp->GetInstanceTransform(i, Transform);
+				Transform *= ISMComp->GetComponentTransform();
+				AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
+				AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
+				SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
 
-				for (UStaticMeshComponent* SMComp : ProcessedSMComps)
+				for (int32 j = 0; j < NumMaterials; j++)
 				{
-					if (Level == SMComp->GetOwner()->GetLevel() && SM == SMComp->GetStaticMesh())
-					{
-						IPTAActor->HISMComponent->SetStaticMesh(SM);
-						int32 NumMaterials = SMComp->GetNumMaterials();
-
-						for (int32 i = 0; i < NumMaterials; i++)
-						{
-							IPTAActor->HISMComponent->SetMaterial(i, SMComp->GetMaterial(i));
-						}
-
-						FTransform Transform = SMComp->GetComponentTransform();
-
-						if (Transform.GetScale3D().GetMin() < 0)
-						{
-							UE_LOG(LogTemp, Warning, TEXT("StaticMeshComponent %s contains negative scale values!"), *SMComp->GetName());
-						}
-
-						Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
-						IPTAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
-					}
-
-					if (bRemoveOriginal)
-					{
-						OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
-					}
+					SMActor->GetStaticMeshComponent()->SetMaterial(j, Materials[j]);
 				}
 
-				if (bRemoveOriginal)
-				{
-					for (AActor* ActorToDestroy : OriginalActorsToDestroy)
-					{
-						ActorToDestroy->MarkPackageDirty();
-						bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
-						checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
-					}
-				}
+				SMActor->RegisterAllComponents();
+				SMActor->SetFolderPath(FolderName);
+				SMActor->MarkPackageDirty();
+				GEditor->SelectActor(SMActor, true, false);
+			}
+
+			UE_LOG(LogTemp, Warning, TEXT("%d instances successfully converted to static meshes!"), ISMComp->GetInstanceCount());
+
+			if (bRemoveOriginal)
+			{
+				OriginalActorsToDestroy.AddUnique(ISMComp->GetOwner());
 			}
 		}
 
-		if (IPTAActors.Num() > 0)
+		if (bRemoveOriginal)
 		{
-			for (AIPTransformsArrayActor* IPTAActor : IPTAActors)
+			for (AActor* ActorToDestroy : OriginalActorsToDestroy)
 			{
-				IPTAActor->RunGeneration();
+				ActorToDestroy->MarkPackageDirty();
+				bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
+				checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
 			}
-
-			UE_LOG(LogTemp, Warning, TEXT("%d StaticMeshComponents successfully converted to instances."), ProcessedSMComps.Num());
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No InstancedStaticMeshComponents or valid StaticMesh properties found. Nothing to convert."));
+		UE_LOG(LogTemp, Warning, TEXT("No InstancedStaticMeshComponents, instances or valid StaticMesh properties found. Nothing to convert."));
 		UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
 	}
-	*/
-	//	for (UInstancedStaticMeshComponent* ISMComp : ISMComponents)
-	//	{
-	//		if (ISMComp->GetInstanceCount() > 0)
-	//		{
-	//			UE_LOG(LogTemp, Warning, TEXT("Converting %s with %d instances."), *ISMComp->GetName(), ISMComp->GetInstanceCount());
-	//			UStaticMesh* StaticMesh = ISMComp->GetStaticMesh();
-	//			TArray<UMaterialInterface*> Materials;
-	//			int32 NumMaterials = ISMComp->GetNumMaterials();
-
-	//			for (int32 i = 0; i < NumMaterials; i++)
-	//			{
-	//				Materials.Add(ISMComp->GetMaterial(i));
-	//			}
-
-	//			FActorSpawnParameters SpawnInfo;
-	//			SpawnInfo.OverrideLevel = this->GetLevel();
-	//			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	//			FName FolderName = *(FString(TEXT("Instanced_"))
-	//				.Append(ISMComp->GetOwner()->GetName())
-	//				.Append(FString(TEXT("_")))
-	//				.Append(ISMComp->GetName()));
-
-	//			for (int32 i = 0; i < ISMComp->GetInstanceCount(); i++)
-	//			{
-	//				FTransform Transform;
-	//				ISMComp->GetInstanceTransform(i, Transform);
-	//				Transform *= ISMComp->GetComponentTransform();
-	//				AActor* Actor = GetWorld()->SpawnActor(AStaticMeshActor::StaticClass(), &Transform, SpawnInfo);
-	//				AStaticMeshActor* SMActor = Cast<AStaticMeshActor>(Actor);
-	//				SMActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
-
-	//				for (int32 j = 0; j < NumMaterials; j++)
-	//				{
-	//					SMActor->GetStaticMeshComponent()->SetMaterial(j, Materials[j]);
-	//				}
-
-	//				SMActor->RegisterAllComponents();
-	//				SMActor->SetFolderPath(FolderName);
-	//				SMActor->MarkPackageDirty();
-	//				GEditor->SelectActor(SMActor, true, false);
-	//			}
-
-	//			if (bRemoveOriginal)
-	//			{
-	//				ISMComp->GetOwner()->MarkPackageDirty();
-	//				bool WasDestroyed = ISMComp->GetOwner()->GetWorld()->EditorDestroyActor(ISMComp->GetOwner(), false);
-	//				checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ISMComp->GetOwner()->GetName(), *ISMComp->GetOwner()->GetActorLabel());
-	//			}
-
-	//			UE_LOG(LogTemp, Warning, TEXT("%d instances successfully converted to StaticMeshActors!"), ISMComp->GetInstanceCount());
-	//		}
-	//		else
-	//		{
-	//			UE_LOG(LogTemp, Warning, TEXT("No instances found in actor %s (%s)! Nothing to convert."), ISMComp->GetOwner()->GetName(), ISMComp->GetName());
-	//		}
-	//	}
-	//}
 }
 
 void AIPConvertibleActor::CheckNegativeScaleValues()
@@ -376,8 +279,8 @@ void AIPConvertibleActor::CheckNegativeScaleValues()
 								ISMComp->GetInstanceTransform(i, InstanceTransf);
 								if (InstanceTransf.GetScale3D().GetMin() < 0)
 								{
-									UE_LOG(LogTemp, Warning, TEXT("Instance have negative scale value:"));
-									UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> %d -> (%s)"), *SelectedActor->GetLevel()->GetPathName(), *SelectedActor->GetName(), *ISMComp->GetName(), i, *InstanceTransf.GetScale3D().ToString());
+									UE_LOG(LogTemp, Warning, TEXT("Negative scale value in instance:"));
+									UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> %d -> (%s)"), *SelectedActor->GetOuter()->GetOuter()->GetName(), *SelectedActor->GetName(), *ISMComp->GetName(), i, *InstanceTransf.GetScale3D().ToString());
 								}
 							}
 						}
@@ -387,8 +290,8 @@ void AIPConvertibleActor::CheckNegativeScaleValues()
 						FVector CompScale = SMComp->GetComponentTransform().GetScale3D();
 						if (CompScale.GetMin() < 0)
 						{
-							UE_LOG(LogTemp, Warning, TEXT("Component have negative scale value:"));
-							UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SelectedActor->GetOuter()->GetPathName(), *SelectedActor->GetName(), *SMComp->GetName(), *CompScale.ToString());
+							UE_LOG(LogTemp, Warning, TEXT("Negative scale value in component:"));
+							UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SelectedActor->GetOuter()->GetOuter()->GetName(), *SelectedActor->GetName(), *SMComp->GetName(), *CompScale.ToString());
 						}
 					}
 				}

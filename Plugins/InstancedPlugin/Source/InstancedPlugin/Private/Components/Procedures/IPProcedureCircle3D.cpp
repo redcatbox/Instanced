@@ -11,7 +11,9 @@ UIPProcedureCircle3D::UIPProcedureCircle3D()
 	bAlignWithAngleEnd = false;
 	bOrientToCentralAxis = false;
 	bCheckerOddEven = false;
-	bFlipOddEven = false;
+	bFlipOddEven_Y = false;
+	bFlipOddEven_Z = false;
+	bSymmetricalEven = false;
 #endif
 }
 
@@ -30,7 +32,27 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 
 	for (FTransform Transf : Transforms)
 	{
-		for (int32 X = 0; X < InstancesNum3D.X; ++X)
+		int32 LastIndex_X = InstancesNum3D.X;
+
+		if (bCheckerOddEven && bSymmetricalEven)
+		{
+			if (bFlipOddEven_Y)
+			{
+				if (X % 2 == 0)
+				{
+					LastIndex_X++;
+				}
+			}
+			else
+			{
+				if (!(X % 2 == 0))
+				{
+					LastIndex_X++;
+				}
+			}
+		}
+
+		for (int32 X = 0; X < LastIndex_X; ++X)
 		{
 			for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)
 			{
@@ -52,7 +74,7 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 
 					if (bCheckerOddEven)
 					{
-						if (bFlipOddEven)
+						if (bFlipOddEven_Z)
 						{
 							if (Z % 2 == 0)
 							{
