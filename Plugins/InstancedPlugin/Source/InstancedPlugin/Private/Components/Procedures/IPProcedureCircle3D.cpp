@@ -10,10 +10,9 @@ UIPProcedureCircle3D::UIPProcedureCircle3D()
 	EndAngle = 360.f;
 	bAlignWithAngleEnd = false;
 	bOrientToCentralAxis = false;
-	bCheckerOddEven = false;
-	bFlipOddEven_Y = false;
+	bCheckerOddEven_Z = false;
 	bFlipOddEven_Z = false;
-	bSymmetricalEven = false;
+	bSymmetricalEven_Z = false;
 #endif
 }
 
@@ -32,31 +31,32 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 
 	for (FTransform Transf : Transforms)
 	{
-		int32 LastIndex_X = InstancesNum3D.X;
-
-		if (bCheckerOddEven && bSymmetricalEven)
-		{
-			if (bFlipOddEven_Y)
-			{
-				if (X % 2 == 0)
-				{
-					LastIndex_X++;
-				}
-			}
-			else
-			{
-				if (!(X % 2 == 0))
-				{
-					LastIndex_X++;
-				}
-			}
-		}
-
-		for (int32 X = 0; X < LastIndex_X; ++X)
+		for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 		{
 			for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)
 			{
-				for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
+				int32 LastIndex_X = InstancesNum3D.X;
+				bool Even_Z = Z % 2 == 0;
+
+				if (bCheckerOddEven_Z && bSymmetricalEven_Z)
+				{
+					if (bFlipOddEven_Z)
+					{
+						if (Even_Z)
+						{
+							LastIndex_X--;
+						}
+					}
+					else
+					{
+						if (!Even_Z)
+						{
+							LastIndex_X--;
+						}
+					}
+				}
+
+				for (int32 X = 0; X < LastIndex_X; ++X)
 				{
 					float PlacementAngle = EndAngle - StartAngle;
 					float RotYaw = PlacementAngle / InstancesNum3D.X;
@@ -72,18 +72,18 @@ void UIPProcedureCircle3D::RunProcedure(TArray<FTransform>& Transforms)
 					float RotYawHalf = RotYaw * 0.5f;
 					RotYaw *= X;
 
-					if (bCheckerOddEven)
+					if (bCheckerOddEven_Z)
 					{
 						if (bFlipOddEven_Z)
 						{
-							if (Z % 2 == 0)
+							if (Even_Z)
 							{
 								RotYaw += RotYawHalf;
 							}
 						}
 						else
 						{
-							if (!(Z % 2 == 0))
+							if (!Even_Z)
 							{
 								RotYaw += RotYawHalf;
 							}

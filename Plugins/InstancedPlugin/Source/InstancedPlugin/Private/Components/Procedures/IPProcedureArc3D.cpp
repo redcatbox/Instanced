@@ -92,22 +92,25 @@ void UIPProcedureArc3D::RunProcedure(TArray<FTransform>& Transforms)
 							P3Angle = 360.f - P3Angle;
 						}
 
+						float P12Angle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(P1CN, P2CN)));
+						float P23Angle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(P2CN, P3CN)));
+
 						FVector UpN = FVector::CrossProduct(P1CN, P2CN);
 
-						//UE_LOG(LogTemp, Warning, TEXT("P1Angle = %f"), P1Angle);
-						//UE_LOG(LogTemp, Warning, TEXT("P2Angle = %f"), P2Angle);
-						//UE_LOG(LogTemp, Warning, TEXT("P3Angle = %f"), P3Angle);
-						//DrawDebugLine(this->GetWorld(), ArcCenter, ArcCenter + P1C, FColor::Cyan, false, 1.f, 0, 5.f);
-						//DrawDebugLine(this->GetWorld(), ArcCenter, ArcCenter + P2C, FColor::Cyan, false, 1.f, 0, 5.f);
-						//DrawDebugLine(this->GetWorld(), ArcCenter, ArcCenter + P3C, FColor::Cyan, false, 1.f, 0, 5.f);
-						//DrawDebugLine(this->GetWorld(), ArcCenter, ArcCenter + UpN * 1000.f, FColor::Yellow, false, 5.f, 0, 5.f);
+						UE_LOG(LogTemp, Warning, TEXT("P1Angle = %f"), P1Angle);
+						UE_LOG(LogTemp, Warning, TEXT("P2Angle = %f"), P2Angle);
+						UE_LOG(LogTemp, Warning, TEXT("P3Angle = %f"), P3Angle);
+						DrawDebugLine(this->GetWorld(), GetOwner()->GetActorLocation() + ArcCenter, GetOwner()->GetActorLocation() + ArcCenter + P1C, FColor::Cyan, false, 1.f, 0, 5.f);
+						DrawDebugLine(this->GetWorld(), GetOwner()->GetActorLocation() + ArcCenter, GetOwner()->GetActorLocation() + ArcCenter + P2C, FColor::Cyan, false, 1.f, 0, 5.f);
+						DrawDebugLine(this->GetWorld(), GetOwner()->GetActorLocation() + ArcCenter, GetOwner()->GetActorLocation() + ArcCenter + P3C, FColor::Cyan, false, 1.f, 0, 5.f);
+						DrawDebugLine(this->GetWorld(), GetOwner()->GetActorLocation() + ArcCenter, GetOwner()->GetActorLocation() + ArcCenter + UpN * 1000.f, FColor::Yellow, false, 5.f, 0, 5.f);
 
 						float ArcAngle = P3Angle - P1Angle;
 
-						if (((Point3.X - Point1.X)*(Point2.Y - Point1.Y) - (Point3.Y - Point1.Y)*(Point2.X - Point1.X)) < 0)
-						{
-							ArcAngle = -ArcAngle;
-						}
+						//if (((Point3.X - Point1.X)*(Point2.Y - Point1.Y) - (Point3.Y - Point1.Y)*(Point2.X - Point1.X)) < 0)
+						//{
+						//	ArcAngle = -ArcAngle;
+						//}
 
 						float RotYaw = 0.f;
 						
@@ -116,26 +119,7 @@ void UIPProcedureArc3D::RunProcedure(TArray<FTransform>& Transforms)
 							RotYaw = ArcAngle / (InstancesNum3D.X - 1);
 						}
 
-						float RotYawHalf = RotYaw * 0.5f;
 						RotYaw *= X;
-
-						if (bCheckerOddEven)
-						{
-							if (bFlipOddEven)
-							{
-								if (Z % 2 == 0)
-								{
-									RotYaw += RotYawHalf;
-								}
-							}
-							else
-							{
-								if (!(Z % 2 == 0))
-								{
-									RotYaw += RotYawHalf;
-								}
-							}
-						}
 
 						FQuat Rotation = FRotationMatrix::MakeFromZ(UpN).ToQuat() * FQuat(FRotator(0, RotYaw + P1Angle, 0));
 						InstanceSpace.X = P1C.Size();

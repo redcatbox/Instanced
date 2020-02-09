@@ -38,20 +38,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
 		bool bOrientToCentralAxis;
 
-	/** Should make odd/even rows in checker pattern? */
+	/** Should make odd/even rows by Z in checker pattern? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters")
-		bool bCheckerOddEven;
-
-	/** Should flip odd/even of Y rows? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven"))
-		bool bFlipOddEven_Y;
+		bool bCheckerOddEven_Z;
 
 	/** Should flip odd/even of Z rows? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven_Z"))
 		bool bFlipOddEven_Z;
 
 	/** Should flip odd/even rows? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven"))
-		bool bSymmetricalEven;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Procedure | Parameters", Meta = (EditCondition = "bCheckerOddEven_Z"))
+		bool bSymmetricalEven_Z;
 #endif
 };
