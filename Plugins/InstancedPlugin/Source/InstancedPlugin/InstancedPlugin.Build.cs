@@ -45,7 +45,11 @@ public class InstancedPlugin : ModuleRules
         {
             PrivateDependencyModuleNames.AddRange(
                 new string[] {
-                    "UnrealEd"
+                    "UnrealEd",
+                    "LevelEditor",
+                    "EditorStyle",
+                    "Slate",
+                    "SlateCore"
                 }
             );
         }

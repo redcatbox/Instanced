@@ -13,6 +13,7 @@ class INSTANCEDPLUGIN_API UIPFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+#if WITH_EDITOR
 	/** Generate new random seed for provided random stream */
 	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		static void MutateRandomSeed(FRandomStream& RandomStream);
@@ -48,4 +49,17 @@ public:
 	/** Clamp rotator between min and max rotators */
 	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		static FRotator ClampRotator(FRotator Rotator, FRotator RotatorMin, FRotator RotatorMax);
+
+	/** Convert selected StaticMeshActors or actors with StaticMeshComponents to instances */
+	UFUNCTION()
+		static void ConvertStaticMeshesToInstances();
+
+	/** Convert selected instances to static meshes */
+	UFUNCTION()
+		static void ConvertInstancesToStaticMeshes();
+
+	/** Check selected actors and instances contain negative scale values */
+	UFUNCTION()
+		static void CheckNegativeScaleValues();
+#endif
 };

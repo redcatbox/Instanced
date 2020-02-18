@@ -1,0 +1,24 @@
+// Dmitriy Barannik aka redbox, 2020
+
+#pragma once
+
+#include "SlateBasics.h"
+#include "EditorStyleSet.h"
+
+class FInstancedPluginCommands : public TCommands<FInstancedPluginCommands>
+{
+public:
+	FInstancedPluginCommands()
+		: TCommands<FInstancedPluginCommands>
+		(
+			TEXT("InstancedPlugin"),
+			NSLOCTEXT("Contexts", "InstancedPlugin", "InstancedPlugin Plugin"),
+			NAME_None,
+			FEditorStyle::GetStyleSetName()
+		) {}
+
+	virtual void RegisterCommands() override;
+	TSharedPtr<FUICommandInfo> PluginCommand0;
+	TSharedPtr<FUICommandInfo> PluginCommand1;
+	TSharedPtr<FUICommandInfo> PluginCommand2;
+};

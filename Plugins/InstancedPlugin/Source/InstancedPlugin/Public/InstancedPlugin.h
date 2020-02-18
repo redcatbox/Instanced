@@ -5,11 +5,21 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
+class FToolBarBuilder;
+class FMenuBuilder;
+
 class FInstancedPluginModule : public IModuleInterface
 {
 public:
-
-	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+	
+	void PluginAction0();
+	void PluginAction1();
+	void PluginAction2();
+
+private:
+	void AddToolbarExtension(FToolBarBuilder& Builder);
+	//void AddMenuExtension(FMenuBuilder& Builder);
+	TSharedPtr<FUICommandList> PluginCommands;
 };
