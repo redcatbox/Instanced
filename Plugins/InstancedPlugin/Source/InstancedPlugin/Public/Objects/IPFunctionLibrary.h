@@ -50,16 +50,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		static FRotator ClampRotator(FRotator Rotator, FRotator RotatorMin, FRotator RotatorMax);
 
-	/** Convert selected StaticMeshActors or actors with StaticMeshComponents to instances */
+	/** Replace selected StaticMeshActors or actors containing StaticMeshComponents with instances */
 	UFUNCTION()
 		static void ConvertStaticMeshesToInstances();
 
-	/** Convert selected instances to static meshes */
+	/** Replace selected instances with static meshes */
 	UFUNCTION()
 		static void ConvertInstancesToStaticMeshes();
 
-	/** Check selected actors and instances contain negative scale values */
+	/** Check selected actors and instances for containing negative scale values */
 	UFUNCTION()
-		static void CheckNegativeScaleValues();
+		static void CheckNegativeScale();
 #endif
 };

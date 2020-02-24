@@ -8,20 +8,20 @@
 void FInstancedPluginCommands::RegisterCommands()
 {
 	UI_COMMAND(PluginCommand0,
-		"ConvertStaticMeshesToInstances",
-		"Convert selected StaticMeshActors or actors with StaticMeshComponents to instances",
+		"Convert static meshes to instances",
+		"Replace selected StaticMeshActors or actors containing StaticMeshComponents with instances",
 		EUserInterfaceActionType::Button,
 		FInputGesture());
 
 	UI_COMMAND(PluginCommand1,
-		"ConvertInstancesToStaticMeshes",
-		"Convert selected instances to static meshes",
+		"Convert instances to static meshes",
+		"Replace selected instances with static meshes",
 		EUserInterfaceActionType::Button,
 		FInputGesture());
 
 	UI_COMMAND(PluginCommand2,
-		"CheckNegativeScaleValues",
-		"Check selected actors and instances contain negative scale values",
+		"Check negative scale",
+		"Check selected actors and instances for containing negative scale values",
 		EUserInterfaceActionType::Button,
 		FInputGesture());
 }

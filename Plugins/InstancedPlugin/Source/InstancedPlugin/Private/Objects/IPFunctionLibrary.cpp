@@ -337,7 +337,7 @@ void UIPFunctionLibrary::ConvertInstancesToStaticMeshes()
 	}
 }
 
-void UIPFunctionLibrary::CheckNegativeScaleValues()
+void UIPFunctionLibrary::CheckNegativeScale()
 {
 	USelection* Selection = GEditor->GetSelectedActors();
 	TArray<UStaticMeshComponent*> ProcessedSMComps;
