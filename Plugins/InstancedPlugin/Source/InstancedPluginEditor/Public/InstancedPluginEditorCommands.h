@@ -5,14 +5,14 @@
 #include "SlateBasics.h"
 #include "EditorStyleSet.h"
 
-class FInstancedPluginCommands : public TCommands<FInstancedPluginCommands>
+class FInstancedPluginEditorCommands : public TCommands<FInstancedPluginEditorCommands>
 {
 public:
-	FInstancedPluginCommands()
-		: TCommands<FInstancedPluginCommands>
+	FInstancedPluginEditorCommands()
+		: TCommands<FInstancedPluginEditorCommands>
 		(
-			TEXT("InstancedPlugin"),
-			NSLOCTEXT("Contexts", "InstancedPlugin", "InstancedPlugin Plugin"),
+			TEXT("InstancedPluginEditor"),
+			NSLOCTEXT("Contexts", "InstancedPluginEditor", "InstancedPluginEditor Plugin"),
 			NAME_None,
 			FEditorStyle::GetStyleSetName()
 		) {}

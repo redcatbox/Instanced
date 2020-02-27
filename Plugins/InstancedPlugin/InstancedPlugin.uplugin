@@ -7,7 +7,7 @@
 	"Category": "Instanced",
 	"CreatedBy": "Dmitriy Barannik aka redbox",
 	"CreatedByURL": "",
-	"DocsURL": "https://github.com/redcatbox/Instanced/wiki",
+	"DocsURL": "https://github.com/redcatbox/InstancedExample/wiki",
 	"MarketplaceURL": "",
 	"SupportURL": "",
 	"CanContainContent": true,
@@ -24,6 +24,11 @@
 				"Win32",
 				"Android"
 			]
+		},
+		{
+			"Name" : "InstancedPluginEditor",
+			"Type" : "Editor",
+			"LoadingPhase" : "Default"
 		}
 	]
 }

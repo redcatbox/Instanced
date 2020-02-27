@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class InstancedPlugin : ModuleRules
+public class InstancedPluginEditor : ModuleRules
 {
-	public InstancedPlugin(ReadOnlyTargetRules Target) : base(Target)
+	public InstancedPluginEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -35,10 +35,25 @@ public class InstancedPlugin : ModuleRules
 			new string[]
 			{
 				"CoreUObject",
-				"Engine"
+				"Engine",
+				"InstancedPlugin"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
+
+
+        if (Target.Type == TargetType.Editor)
+        {
+            PrivateDependencyModuleNames.AddRange(
+                new string[] {
+                    "UnrealEd",
+                    "LevelEditor",
+                    "EditorStyle",
+                    "Slate",
+                    "SlateCore"
+                }
+            );
+        }
 
 
         DynamicallyLoadedModuleNames.AddRange(

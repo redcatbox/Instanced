@@ -1,11 +1,11 @@
 // Dmitriy Barannik aka redbox, 2020
 
-#include "InstancedPluginCommands.h"
-#include "InstancedPlugin.h"
+#include "InstancedPluginEditorCommands.h"
+#include "InstancedPluginEditor.h"
 
 #define LOCTEXT_NAMESPACE "FInstancedPluginEditorModule"
 
-void FInstancedPluginCommands::RegisterCommands()
+void FInstancedPluginEditorCommands::RegisterCommands()
 {
 	UI_COMMAND(PluginCommand0,
 		"Convert static meshes to instances",

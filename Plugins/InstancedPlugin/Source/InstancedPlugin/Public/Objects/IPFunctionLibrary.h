@@ -49,17 +49,5 @@ public:
 	/** Clamp rotator between min and max rotators */
 	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		static FRotator ClampRotator(FRotator Rotator, FRotator RotatorMin, FRotator RotatorMax);
-
-	/** Replace selected StaticMeshActors or actors containing StaticMeshComponents with instances */
-	UFUNCTION()
-		static void ConvertStaticMeshesToInstances();
-
-	/** Replace selected instances with static meshes */
-	UFUNCTION()
-		static void ConvertInstancesToStaticMeshes();
-
-	/** Check selected actors and instances for containing negative scale values */
-	UFUNCTION()
-		static void CheckNegativeScale();
 #endif
 };
