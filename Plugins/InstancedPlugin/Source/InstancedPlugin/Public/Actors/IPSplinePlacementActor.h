@@ -4,12 +4,12 @@
 
 #include "IPInstancedHISMActor.h"
 #include "Components/SplineComponent.h"
-#include "Components/Procedures/IPProcedureTransformMultiply.h"
-#include "Components/Procedures/IPProcedureSplinePlacement.h"
-#include "Components/Procedures/IPProcedureRandomTransform.h"
+#include "Components/Operations/IPOperationTransformMultiply.h"
+#include "Components/Operations/IPOperationSplinePlacement.h"
+#include "Components/Operations/IPOperationRandomTransform.h"
 #include "IPSplinePlacementActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPSplinePlacementActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
@@ -22,13 +22,13 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = Components)
 		USplineComponent* SplineComponent;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureSplinePlacement* IPProcedureSplinePlacement;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationSplinePlacement* IPOperationSplinePlacement;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureRandomTransform* IPProcedureRandomTransform;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

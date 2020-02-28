@@ -3,9 +3,9 @@
 #include "Objects/IPEFunctionLibrary.h"
 #include "Engine/Selection.h"
 #include "Engine/StaticMeshActor.h"
-#include "UObject/ConstructorHelpers.h"
-#include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Actors/IPTransformsArrayActor.h"
+#include "Editor/GroupActor.h"
+#include "Kismet/GameplayStatics.h"
 
 #if WITH_EDITOR
 #include "Editor.h"
@@ -19,7 +19,7 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 	TArray<UStaticMeshComponent*> ProcessedSMComps;
 	TArray<UStaticMesh*> SMs;
 	TArray<ULevel*> Levels;
-	TArray < AIPTransformsArrayActor*> IPTAActors;
+	TArray<AIPTransformsArrayActor*> IPTAActors;
 	TArray<AActor*> OriginalActorsToDestroy;
 
 	for (FSelectionIterator Iter(*Selection); Iter; ++Iter)
@@ -53,61 +53,72 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 
 	if (ProcessedSMComps.Num() > 0 && SMs.Num() > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Processing convertation. Material(s) from first found StaticMeshComponent will be used for all instances!"));
+		UE_LOG(LogTemp, Warning, TEXT("Processing convertation."));
 		GEditor->SelectNone(false, true);
 
 		for (ULevel* Level : Levels)
 		{
 			for (UStaticMesh* SM : SMs)
 			{
-				FActorSpawnParameters SpawnInfo;
-				SpawnInfo.OverrideLevel = Level;
-				SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				//FTransform SpawnTransform = this->GetActorTransform();
-				FTransform SpawnTransform = FTransform();
-				AActor* Actor = Level->GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
-				AIPTransformsArrayActor* IPTAActor = Cast<AIPTransformsArrayActor>(Actor);
-				IPTAActors.AddUnique(IPTAActor);
+				TArray<UStaticMeshComponent*> SMComps;
+				TArray<FVector> Locations;
 
 				for (UStaticMeshComponent* SMComp : ProcessedSMComps)
 				{
 					if (Level == SMComp->GetOwner()->GetLevel() && SM == SMComp->GetStaticMesh())
 					{
-						IPTAActor->HISMComponent->SetStaticMesh(SM);
-						int32 NumMaterials = SMComp->GetNumMaterials();
-
-						for (int32 i = 0; i < NumMaterials; i++)
-						{
-							IPTAActor->HISMComponent->SetMaterial(i, SMComp->GetMaterial(i));
-						}
-
-						FTransform Transform = SMComp->GetComponentTransform();
-
-						if (Transform.GetScale3D().GetMin() < 0)
-						{
-							UE_LOG(LogTemp, Warning, TEXT("Negative scale value in component:"));
-							UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SMComp->GetOwner()->GetOuter()->GetOuter()->GetName(), *SMComp->GetOwner()->GetName(), *SMComp->GetName(), *Transform.GetScale3D().ToString());
-						}
-
-						Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
-						IPTAActor->IPProcedureTransformsArray->PlacementTransforms.Add(Transform);
-
-						//if (bRemoveOriginal)
-						//{
-							OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
-						//}
+						SMComps.Add(SMComp);
+						Locations.Add(SMComp->GetComponentTransform().GetLocation());
+						OriginalActorsToDestroy.AddUnique(SMComp->GetOwner());
 					}
 				}
 
-				//if (bRemoveOriginal)
-				//{
-					for (AActor* ActorToDestroy : OriginalActorsToDestroy)
+				FActorSpawnParameters SpawnInfo;
+				SpawnInfo.OverrideLevel = Level;
+				SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				FTransform SpawnTransform = FTransform();
+				FVector SpawnLocation = UIPEFunctionLibrary::GetLocationArrayAverageWithGridSnapping(Locations);
+				SpawnTransform.SetLocation(SpawnLocation);
+				AActor* Actor = Level->GetWorld()->SpawnActor(AIPTransformsArrayActor::StaticClass(), &SpawnTransform, SpawnInfo);
+				AIPTransformsArrayActor* IPTAActor = Cast<AIPTransformsArrayActor>(Actor);
+				IPTAActors.AddUnique(IPTAActor);
+
+				if (SMComps.Num() > 0)
+				{
+					IPTAActor->HISMComponent->SetStaticMesh(SM);
+					UE_LOG(LogTemp, Warning, TEXT("Material(s) from first found StaticMeshComponent will be used for all instances with the same static mesh!"));
+
+					for (int32 i = 0; i < SMComps[0]->GetNumMaterials(); i++)
 					{
-						ActorToDestroy->MarkPackageDirty();
-						bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
-						checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
+						IPTAActor->HISMComponent->SetMaterial(i, SMComps[0]->GetMaterial(i));
 					}
-				//}
+				}
+
+				for (UStaticMeshComponent* SMComp : SMComps)
+				{
+					FTransform Transform = SMComp->GetComponentTransform();
+
+					if (Transform.GetScale3D().GetMin() < 0)
+					{
+						UE_LOG(LogTemp, Warning, TEXT("Negative scale value in component:"));
+						UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SMComp->GetOwner()->GetOuter()->GetOuter()->GetName(), *SMComp->GetOwner()->GetName(), *SMComp->GetName(), *Transform.GetScale3D().ToString());
+					}
+
+					Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
+					IPTAActor->IPOperationTransformsArray->PlacementTransforms.Add(Transform);
+				}
+
+				for (AActor* ActorToDestroy : OriginalActorsToDestroy)
+				{
+					if (AGroupActor* ActorGroup = Cast<AGroupActor>(ActorToDestroy->GroupActor))
+					{
+						ActorGroup->Remove(*ActorToDestroy);
+					}
+
+					ActorToDestroy->MarkPackageDirty();
+					bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
+					checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
+				}
 			}
 		}
 
@@ -202,21 +213,15 @@ void UIPEFunctionLibrary::ConvertInstancesToStaticMeshes()
 
 			UE_LOG(LogTemp, Warning, TEXT("%d instances successfully converted to static meshes!"), ISMComp->GetInstanceCount());
 
-			//if (bRemoveOriginal)
-			//{
-				OriginalActorsToDestroy.AddUnique(ISMComp->GetOwner());
-			//}
+			OriginalActorsToDestroy.AddUnique(ISMComp->GetOwner());
 		}
 
-		//if (bRemoveOriginal)
-		//{
-			for (AActor* ActorToDestroy : OriginalActorsToDestroy)
-			{
-				ActorToDestroy->MarkPackageDirty();
-				bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
-				checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
-			}
-		//}
+		for (AActor* ActorToDestroy : OriginalActorsToDestroy)
+		{
+			ActorToDestroy->MarkPackageDirty();
+			bool WasDestroyed = ActorToDestroy->GetWorld()->EditorDestroyActor(ActorToDestroy, false);
+			checkf(WasDestroyed, TEXT("Failed to destroy Actor %s (%s)"), *ActorToDestroy->GetName(), *ActorToDestroy->GetActorLabel());
+		}
 	}
 	else
 	{
@@ -272,4 +277,31 @@ void UIPEFunctionLibrary::CheckNegativeScale()
 	}
 }
 // Convertation
+
+// Math
+FVector UIPEFunctionLibrary::GetLocationArrayAverageWithGridSnapping(const TArray<FVector>& Locations, float GridSize)
+{
+	FVector LocationSum(0, 0, 0);
+	int32 LocationCount = 0;
+
+	for (FVector L : Locations)
+	{
+		LocationSum += L;
+		LocationCount++;
+	}
+
+	FVector Average(0, 0, 0);
+
+	if (LocationCount > 0)
+	{
+		Average = LocationSum / ((float)LocationCount);
+	}
+
+	Average.X = FMath::FloorToInt(Average.X / GridSize) * GridSize;
+	Average.Y = FMath::FloorToInt(Average.Y / GridSize) * GridSize;
+	Average.Z = FMath::FloorToInt(Average.Z / GridSize) * GridSize;
+
+	return Average;
+}
+// Math
 #endif

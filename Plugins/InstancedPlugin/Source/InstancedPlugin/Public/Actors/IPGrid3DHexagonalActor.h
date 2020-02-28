@@ -3,12 +3,12 @@
 #pragma once
 
 #include "IPInstancedHISMActor.h"
-#include "Components/Procedures/IPProcedureTransformMultiply.h"
-#include "Components/Procedures/IPProcedureGrid3DHexagonal.h"
-#include "Components/Procedures/IPProcedureRandomTransform.h"
+#include "Components/Operations/IPOperationTransformMultiply.h"
+#include "Components/Operations/IPOperationGrid3DHexagonal.h"
+#include "Components/Operations/IPOperationRandomTransform.h"
 #include "IPGrid3DHexagonalActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPGrid3DHexagonalActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
@@ -17,13 +17,13 @@ public:
 	AIPGrid3DHexagonalActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureGrid3DHexagonal* IPProcedureGrid3DHexagonal;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationGrid3DHexagonal* IPOperationGrid3DHexagonal;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureRandomTransform* IPProcedureRandomTransform;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

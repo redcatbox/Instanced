@@ -5,29 +5,29 @@
 AIPRandomBoxAlignedActor::AIPRandomBoxAlignedActor()
 {
 #if WITH_EDITORONLY_DATA
-	IPProcedureTransformMultiply = CreateDefaultSubobject<UIPProcedureTransformMultiply>(TEXT("IPProcedureTransformMultiply"));
-	IPProcedureTransformMultiply->SetupAttachment(HISMComponent);
-	IPProcedureTransformMultiply->Mobility = EComponentMobility::Static;
-	IPProcedureTransformMultiply->bIsEditorOnly = true;
-	IPProcedureTransformMultiply->ExecutionOrder = 0;
-	IPProcedureTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
+	IPOperationTransformMultiply = CreateDefaultSubobject<UIPOperationTransformMultiply>(TEXT("IPOperationTransformMultiply"));
+	IPOperationTransformMultiply->SetupAttachment(HISMComponent);
+	IPOperationTransformMultiply->Mobility = EComponentMobility::Static;
+	IPOperationTransformMultiply->bIsEditorOnly = true;
+	IPOperationTransformMultiply->ExecutionOrder = 0;
+	IPOperationTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
 
-	IPProcedureRandomBox = CreateDefaultSubobject<UIPProcedureRandomBox>(TEXT("IPProcedureRandomBox"));
-	IPProcedureRandomBox->SetupAttachment(HISMComponent);
-	IPProcedureRandomBox->Mobility = EComponentMobility::Static;
-	IPProcedureRandomBox->bIsEditorOnly = true;
-	IPProcedureRandomBox->ExecutionOrder = 1;
+	IPOperationRandomBox = CreateDefaultSubobject<UIPOperationRandomBox>(TEXT("IPOperationRandomBox"));
+	IPOperationRandomBox->SetupAttachment(HISMComponent);
+	IPOperationRandomBox->Mobility = EComponentMobility::Static;
+	IPOperationRandomBox->bIsEditorOnly = true;
+	IPOperationRandomBox->ExecutionOrder = 1;
 
-	IPProcedureAlignByDirection = CreateDefaultSubobject<UIPProcedureAlignByDirection>(TEXT("IPProcedureAlignByDirection"));
-	IPProcedureAlignByDirection->SetupAttachment(HISMComponent);
-	IPProcedureAlignByDirection->Mobility = EComponentMobility::Static;
-	IPProcedureAlignByDirection->bIsEditorOnly = true;
-	IPProcedureAlignByDirection->ExecutionOrder = 2;
+	IPOperationAlignByDirection = CreateDefaultSubobject<UIPOperationAlignByDirection>(TEXT("IPOperationAlignByDirection"));
+	IPOperationAlignByDirection->SetupAttachment(HISMComponent);
+	IPOperationAlignByDirection->Mobility = EComponentMobility::Static;
+	IPOperationAlignByDirection->bIsEditorOnly = true;
+	IPOperationAlignByDirection->ExecutionOrder = 2;
 
-	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
-	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
-	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
-	IPProcedureRandomTransform->bIsEditorOnly = true;
-	IPProcedureRandomTransform->ExecutionOrder = 3;
+	IPOperationRandomTransform = CreateDefaultSubobject<UIPOperationRandomTransform>(TEXT("IPOperationRandomTransform"));
+	IPOperationRandomTransform->SetupAttachment(HISMComponent);
+	IPOperationRandomTransform->Mobility = EComponentMobility::Static;
+	IPOperationRandomTransform->bIsEditorOnly = true;
+	IPOperationRandomTransform->ExecutionOrder = 3;
 #endif
 }

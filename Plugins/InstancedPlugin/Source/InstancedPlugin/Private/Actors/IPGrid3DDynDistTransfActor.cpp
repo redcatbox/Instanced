@@ -5,12 +5,12 @@
 AIPGrid3DDynDistTransfActor::AIPGrid3DDynDistTransfActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	IPProcedureDynamicTransform = CreateDefaultSubobject<UIPProcedureDynamicTransform>(TEXT("IPProcedureDynamicTransform"));
-	IPProcedureDynamicTransform->SetupAttachment(HISMComponent);
+	IPOperationDynamicTransform = CreateDefaultSubobject<UIPOperationDynamicTransform>(TEXT("IPOperationDynamicTransform"));
+	IPOperationDynamicTransform->SetupAttachment(HISMComponent);
 }
 
 void AIPGrid3DDynDistTransfActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	IPProcedureDynamicTransform->RunProcedureDynamic();
+	IPOperationDynamicTransform->RunOperationDynamic();
 }

@@ -3,8 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Kismet/BlueprintFunctionLibrary.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "IPEFunctionLibrary.generated.h"
 
 UCLASS()
@@ -25,5 +23,9 @@ public:
 	/** Check selected actors and instances for containing negative scale values */
 	UFUNCTION()
 		static void CheckNegativeScale();
+
+	/** Find the average location (centroid) of an array of Actors snapped to specified grid size */
+	UFUNCTION()
+		static FVector GetLocationArrayAverageWithGridSnapping(const TArray<FVector>& Locations, float GridSize = 100.f);
 #endif
 };

@@ -4,7 +4,7 @@
 
 #include "IPBaseGeneratedActor.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
-#include "Components/Procedures/IPProcedureComponent.h"
+#include "Components/Operations/IPOperationComponent.h"
 #include "IPBaseInstancedActor.generated.h"
 
 USTRUCT()
@@ -14,7 +14,7 @@ struct FSortByExecutionOrder
 
 	FSortByExecutionOrder() {}
 
-	bool operator()(const UIPProcedureComponent* A, const UIPProcedureComponent* B) const
+	bool operator()(const UIPOperationComponent* A, const UIPOperationComponent* B) const
 	{
 		int32 ExecutionOrderA = A->ExecutionOrder;
 		int32 ExecutionOrderB = B->ExecutionOrder;
@@ -22,7 +22,7 @@ struct FSortByExecutionOrder
 	}
 };
 
-UCLASS(Abstract, ClassGroup = (Instanced))
+UCLASS(Abstract)
 class INSTANCEDPLUGIN_API AIPBaseInstancedActor : public AIPBaseGeneratedActor
 {
 	GENERATED_BODY()

@@ -3,10 +3,10 @@
 #pragma once
 
 #include "IPGrid3DActor.h"
-#include "Components/Procedures/IPProcedureDynamicTransform.h"
+#include "Components/Operations/IPOperationDynamicTransform.h"
 #include "IPGrid3DDynDistTransfActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPGrid3DDynDistTransfActor : public AIPGrid3DActor
 {
 	GENERATED_BODY()
@@ -15,6 +15,6 @@ public:
 	AIPGrid3DDynDistTransfActor();
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureDynamicTransform* IPProcedureDynamicTransform;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationDynamicTransform* IPOperationDynamicTransform;
 };

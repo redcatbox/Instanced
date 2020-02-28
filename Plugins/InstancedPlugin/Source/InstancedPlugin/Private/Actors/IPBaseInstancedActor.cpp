@@ -21,11 +21,11 @@ void AIPBaseInstancedActor::RunGeneration()
 
 				if (ISMCompChildren.Num() > 0)
 				{
-					TArray<UIPProcedureComponent*> PComps;
+					TArray<UIPOperationComponent*> PComps;
 
 					for (USceneComponent* SComp : ISMCompChildren)
 					{
-						if (UIPProcedureComponent* PComp = Cast<UIPProcedureComponent>(SComp))
+						if (UIPOperationComponent* PComp = Cast<UIPOperationComponent>(SComp))
 						{
 							if (PComp->bEnabled)
 							{
@@ -39,9 +39,9 @@ void AIPBaseInstancedActor::RunGeneration()
 						Algo::Sort(PComps, FSortByExecutionOrder());
 						Transforms.Add(FTransform());
 
-						for (UIPProcedureComponent* PComp : PComps)
+						for (UIPOperationComponent* PComp : PComps)
 						{
-							PComp->RunProcedure(Transforms);
+							PComp->RunOperation(Transforms);
 						}
 					}
 				}

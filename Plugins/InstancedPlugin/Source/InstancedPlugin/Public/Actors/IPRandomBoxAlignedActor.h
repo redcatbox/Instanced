@@ -3,13 +3,13 @@
 #pragma once
 
 #include "IPInstancedHISMActor.h"
-#include "Components/Procedures/IPProcedureTransformMultiply.h"
-#include "Components/Procedures/IPProcedureRandomBox.h"
-#include "Components/Procedures/IPProcedureAlignByDirection.h"
-#include "Components/Procedures/IPProcedureRandomTransform.h"
+#include "Components/Operations/IPOperationTransformMultiply.h"
+#include "Components/Operations/IPOperationRandomBox.h"
+#include "Components/Operations/IPOperationAlignByDirection.h"
+#include "Components/Operations/IPOperationRandomTransform.h"
 #include "IPRandomBoxAlignedActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPRandomBoxAlignedActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
@@ -18,16 +18,16 @@ public:
 	AIPRandomBoxAlignedActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureTransformMultiply* IPProcedureTransformMultiply;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureRandomBox* IPProcedureRandomBox;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationRandomBox* IPOperationRandomBox;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureAlignByDirection* IPProcedureAlignByDirection;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationAlignByDirection* IPOperationAlignByDirection;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureRandomTransform* IPProcedureRandomTransform;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

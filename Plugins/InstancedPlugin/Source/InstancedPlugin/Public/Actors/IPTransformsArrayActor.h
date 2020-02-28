@@ -3,10 +3,10 @@
 #pragma once
 
 #include "IPInstancedHISMActor.h"
-#include "Components/Procedures/IPProcedureTransformsArray.h"
+#include "Components/Operations/IPOperationTransformsArray.h"
 #include "IPTransformsArrayActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPTransformsArrayActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
@@ -15,7 +15,7 @@ public:
 	AIPTransformsArrayActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
-		UIPProcedureTransformsArray* IPProcedureTransformsArray;
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+		UIPOperationTransformsArray* IPOperationTransformsArray;
 #endif
 };

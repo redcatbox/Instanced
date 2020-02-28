@@ -5,23 +5,23 @@
 AIPGrid3DHexagonalActor::AIPGrid3DHexagonalActor()
 {
 #if WITH_EDITORONLY_DATA
-	IPProcedureTransformMultiply = CreateDefaultSubobject<UIPProcedureTransformMultiply>(TEXT("IPProcedureTransformMultiply"));
-	IPProcedureTransformMultiply->SetupAttachment(HISMComponent);
-	IPProcedureTransformMultiply->Mobility = EComponentMobility::Static;
-	IPProcedureTransformMultiply->bIsEditorOnly = true;
-	IPProcedureTransformMultiply->ExecutionOrder = 0;
-	IPProcedureTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
+	IPOperationTransformMultiply = CreateDefaultSubobject<UIPOperationTransformMultiply>(TEXT("IPOperationTransformMultiply"));
+	IPOperationTransformMultiply->SetupAttachment(HISMComponent);
+	IPOperationTransformMultiply->Mobility = EComponentMobility::Static;
+	IPOperationTransformMultiply->bIsEditorOnly = true;
+	IPOperationTransformMultiply->ExecutionOrder = 0;
+	IPOperationTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
 
-	IPProcedureGrid3DHexagonal = CreateDefaultSubobject<UIPProcedureGrid3DHexagonal>(TEXT("IPProcedureGrid3DHexagonal"));
-	IPProcedureGrid3DHexagonal->SetupAttachment(HISMComponent);
-	IPProcedureGrid3DHexagonal->Mobility = EComponentMobility::Static;
-	IPProcedureGrid3DHexagonal->bIsEditorOnly = true;
-	IPProcedureGrid3DHexagonal->ExecutionOrder = 1;
+	IPOperationGrid3DHexagonal = CreateDefaultSubobject<UIPOperationGrid3DHexagonal>(TEXT("IPOperationGrid3DHexagonal"));
+	IPOperationGrid3DHexagonal->SetupAttachment(HISMComponent);
+	IPOperationGrid3DHexagonal->Mobility = EComponentMobility::Static;
+	IPOperationGrid3DHexagonal->bIsEditorOnly = true;
+	IPOperationGrid3DHexagonal->ExecutionOrder = 1;
 
-	IPProcedureRandomTransform = CreateDefaultSubobject<UIPProcedureRandomTransform>(TEXT("IPProcedureRandomTransform"));
-	IPProcedureRandomTransform->SetupAttachment(HISMComponent);
-	IPProcedureRandomTransform->Mobility = EComponentMobility::Static;
-	IPProcedureRandomTransform->bIsEditorOnly = true;
-	IPProcedureRandomTransform->ExecutionOrder = 2;
+	IPOperationRandomTransform = CreateDefaultSubobject<UIPOperationRandomTransform>(TEXT("IPOperationRandomTransform"));
+	IPOperationRandomTransform->SetupAttachment(HISMComponent);
+	IPOperationRandomTransform->Mobility = EComponentMobility::Static;
+	IPOperationRandomTransform->bIsEditorOnly = true;
+	IPOperationRandomTransform->ExecutionOrder = 2;
 #endif
 }

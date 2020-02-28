@@ -8,7 +8,7 @@
 #include "Components/SceneComponent.h"
 #include "IPBaseGeneratedActor.generated.h"
 
-UCLASS(Abstract, ClassGroup = (Instanced))
+UCLASS(Abstract)
 class INSTANCEDPLUGIN_API AIPBaseGeneratedActor : public AActor
 {
 	GENERATED_BODY()

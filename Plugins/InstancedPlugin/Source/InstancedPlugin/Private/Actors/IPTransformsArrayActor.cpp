@@ -5,9 +5,9 @@
 AIPTransformsArrayActor::AIPTransformsArrayActor()
 {
 #if WITH_EDITORONLY_DATA
-	IPProcedureTransformsArray = CreateDefaultSubobject<UIPProcedureTransformsArray>(TEXT("IPProcedureTransformsArray"));
-	IPProcedureTransformsArray->SetupAttachment(HISMComponent);
-	IPProcedureTransformsArray->Mobility = EComponentMobility::Static;
-	IPProcedureTransformsArray->bIsEditorOnly = true;
+	IPOperationTransformsArray = CreateDefaultSubobject<UIPOperationTransformsArray>(TEXT("IPOperationTransformsArray"));
+	IPOperationTransformsArray->SetupAttachment(HISMComponent);
+	IPOperationTransformsArray->Mobility = EComponentMobility::Static;
+	IPOperationTransformsArray->bIsEditorOnly = true;
 #endif
 }

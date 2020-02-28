@@ -7,7 +7,7 @@
 #include "Components/SplineMeshComponent.h"
 #include "IPSplineMeshActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPSplineMeshActor : public AIPBaseGeneratedActor
 {
 	GENERATED_BODY()

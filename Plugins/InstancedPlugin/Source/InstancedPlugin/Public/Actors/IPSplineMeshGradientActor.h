@@ -7,7 +7,7 @@
 #include "Components/SplineMeshComponent.h"
 #include "IPSplineMeshGradientActor.generated.h"
 
-UCLASS(ClassGroup = (Instanced))
+UCLASS()
 class INSTANCEDPLUGIN_API AIPSplineMeshGradientActor : public AIPBaseGeneratedActor
 {
 	GENERATED_BODY()
@@ -21,14 +21,14 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		USplineMeshComponent* SplineMeshComponent;
 
 	UPROPERTY()
 		TArray<USplineMeshComponent*> SplineMeshComponents;
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Procedures)
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		USplineComponent* SplineComponent;
 
 	/** Should reverse gradient direction? */
