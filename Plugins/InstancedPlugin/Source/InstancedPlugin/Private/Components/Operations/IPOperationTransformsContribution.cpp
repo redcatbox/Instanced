@@ -15,21 +15,25 @@ UIPOperationTransformsContribution::UIPOperationTransformsContribution()
 void UIPOperationTransformsContribution::RunOperation(TArray<FTransform>& Transforms)
 {
 	Super::RunOperation(Transforms);
-	ContributionRangeEnd = FMath::Clamp(ContributionRangeEnd, ContributionRangeStart, ContributionRangeEnd);
-	TArray<FTransform> ResultTransforms;
 
 	if (Transforms.Num() <= 1)
 	{
 		return;
 	}
 
+	ContributionRangeEnd = FMath::Clamp(ContributionRangeEnd, ContributionRangeStart, ContributionRangeEnd);
+
 	if (bUseRandomStream)
 	{
 		UIPFunctionLibrary::ShuffleArray(Transforms, bUseRandomStream, RandomStream);
 	}
 
-	int32 IdStart = (float)(Transforms.Num() - 1) * ContributionRangeStart;
-	int32 IdEnd = IdStart + (float)(Transforms.Num() - 1) * FMath::Abs(ContributionRangeEnd - ContributionRangeStart);
+	int32 IdStart = (float)Transforms.Num() * ContributionRangeStart;
+	IdStart = FMath::Clamp(IdStart, 0, Transforms.Num() - 1);
+	int32 IdEnd = IdStart + (float)Transforms.Num() * (ContributionRangeEnd - ContributionRangeStart);
+	IdEnd = FMath::Clamp(IdEnd, IdStart, Transforms.Num() - 1);
+
+	TArray<FTransform> ResultTransforms;
 
 	for (int i = IdStart; i <= IdEnd; i++)
 	{

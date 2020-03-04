@@ -19,7 +19,6 @@ UIPOperationSplinePlacement::UIPOperationSplinePlacement()
 void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 {
 	USplineComponent* SplineComponent = GetParentSplineComponent();
-
 	if (SplineComponent)
 	{
 		if (bPlaceBetweenPoints)
@@ -52,9 +51,6 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 			bOrientBySplineEditCondition = true;
 		}
 
-		XSizeToScale = FMath::Clamp(XSizeToScale, 0.f, 1000000.f);
-
-		TArray<FTransform> ResultTransforms;
 		bool bLoop = SplineComponent->IsClosedLoop();
 
 		if (bPlaceBetweenPoints)
@@ -66,6 +62,9 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 				InstancesNum++;
 			}
 		}
+
+		XSizeToScale = FMath::Clamp(XSizeToScale, 0.f, 1000000.f);
+		TArray<FTransform> ResultTransforms;
 
 		for (FTransform Transf : Transforms)
 		{

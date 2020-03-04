@@ -19,7 +19,7 @@ AIPBaseGeneratedActor::AIPBaseGeneratedActor()
 #if WITH_EDITOR
 void AIPBaseGeneratedActor::RunGeneration()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("RunGeneration()"));
+	//UE_LOG(IPLog, Log, TEXT("RunGeneration()"));
 	this->Modify();
 }
 

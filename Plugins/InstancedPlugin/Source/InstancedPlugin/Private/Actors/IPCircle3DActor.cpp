@@ -22,6 +22,6 @@ AIPCircle3DActor::AIPCircle3DActor()
 	IPOperationRandomTransform->SetupAttachment(HISMComponent);
 	IPOperationRandomTransform->Mobility = EComponentMobility::Static;
 	IPOperationRandomTransform->bIsEditorOnly = true;
-	IPOperationRandomTransform->ExecutionOrder = 3;
+	IPOperationRandomTransform->ExecutionOrder = 2;
 #endif
 }

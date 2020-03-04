@@ -10,6 +10,7 @@ UIPOperationInstanceSpaceBase::UIPOperationInstanceSpaceBase()
 	InstanceSpace = FVector(100.f);
 	bInstanceSpaceFromMeshBounds = false;
 	bInstanceSpaceFromMeshBoundsWithCurrentScale = true;
+	bHalfSpaceOffsetEditCond = false;
 	bHalfSpaceOffset = false;
 #endif
 }

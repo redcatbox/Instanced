@@ -7,6 +7,8 @@
 
 #define LOCTEXT_NAMESPACE "FInstancedPluginEditorModule"
 
+DEFINE_LOG_CATEGORY(IPELog);
+
 void FInstancedPluginEditorModule::StartupModule()
 {
 	FInstancedPluginEditorCommands::Register();

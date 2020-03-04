@@ -39,9 +39,5 @@ public:
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bOrientToCentralAxis;
-
-	/** Should instances be placed evenly along spiral? */
-	//UPROPERTY(EditAnywhere, Category = "Operation | Parameters")
-	//	bool bPlaceEvenly;
 #endif
 };

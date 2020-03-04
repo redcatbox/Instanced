@@ -11,6 +11,8 @@ class INSTANCEDPLUGIN_API UIPOperationGrid3D : public UIPOperationGrid3DBase
 	GENERATED_BODY()
 
 public:
+	UIPOperationGrid3D();
+
 #if WITH_EDITOR
 	virtual void RunOperation(TArray<FTransform>& Transforms) override;
 #endif

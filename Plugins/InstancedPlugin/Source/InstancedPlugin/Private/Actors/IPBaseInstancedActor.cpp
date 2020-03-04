@@ -45,6 +45,7 @@ void AIPBaseInstancedActor::RunGeneration()
 						}
 					}
 				}
+				else return;
 
 				UHierarchicalInstancedStaticMeshComponent* HISMComp = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComp);
 				if (HISMComp)

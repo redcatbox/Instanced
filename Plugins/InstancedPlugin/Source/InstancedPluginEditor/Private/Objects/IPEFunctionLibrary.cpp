@@ -1,6 +1,7 @@
 // Dmitriy Barannik aka redbox, 2020
 
 #include "Objects/IPEFunctionLibrary.h"
+#include "InstancedPluginEditor.h"
 #include "Engine/Selection.h"
 #include "Engine/StaticMeshActor.h"
 #include "Actors/IPTransformsArrayActor.h"
@@ -53,7 +54,7 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 
 	if (ProcessedSMComps.Num() > 0 && SMs.Num() > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Processing convertation."));
+		UE_LOG(IPELog, Warning, TEXT("Processing convertation."));
 		GEditor->SelectNone(false, true);
 
 		for (ULevel* Level : Levels)
@@ -86,7 +87,7 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 				if (SMComps.Num() > 0)
 				{
 					IPTAActor->HISMComponent->SetStaticMesh(SM);
-					UE_LOG(LogTemp, Warning, TEXT("Material(s) from first found StaticMeshComponent will be used for all instances with the same static mesh!"));
+					UE_LOG(IPELog, Warning, TEXT("Material(s) from first found StaticMeshComponent will be used for all instances with the same static mesh!"));
 
 					for (int32 i = 0; i < SMComps[0]->GetNumMaterials(); i++)
 					{
@@ -100,8 +101,8 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 
 					if (Transform.GetScale3D().GetMin() < 0)
 					{
-						UE_LOG(LogTemp, Warning, TEXT("Negative scale value in component:"));
-						UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SMComp->GetOwner()->GetOuter()->GetOuter()->GetName(), *SMComp->GetOwner()->GetName(), *SMComp->GetName(), *Transform.GetScale3D().ToString());
+						UE_LOG(IPELog, Warning, TEXT("Negative scale value in component:"));
+						UE_LOG(IPELog, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SMComp->GetOwner()->GetOuter()->GetOuter()->GetName(), *SMComp->GetOwner()->GetName(), *SMComp->GetName(), *Transform.GetScale3D().ToString());
 					}
 
 					Transform = Transform.GetRelativeTransform(IPTAActor->GetActorTransform());
@@ -130,13 +131,13 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 				GEditor->SelectActor(IPTAActor, true, false);
 			}
 
-			UE_LOG(LogTemp, Warning, TEXT("%d StaticMeshComponents successfully converted to instances."), ProcessedSMComps.Num());
+			UE_LOG(IPELog, Warning, TEXT("%d StaticMeshComponents successfully converted to instances."), ProcessedSMComps.Num());
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No StaticMeshComponents or valid StaticMesh properties found. Nothing to convert."));
-		UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+		UE_LOG(IPELog, Warning, TEXT("No StaticMeshComponents or valid StaticMesh properties found. Nothing to convert."));
+		UE_LOG(IPELog, Warning, TEXT("Convertation aborted."));
 	}
 }
 
@@ -211,7 +212,7 @@ void UIPEFunctionLibrary::ConvertInstancesToStaticMeshes()
 				GEditor->SelectActor(SMActor, true, false);
 			}
 
-			UE_LOG(LogTemp, Warning, TEXT("%d instances successfully converted to static meshes!"), ISMComp->GetInstanceCount());
+			UE_LOG(IPELog, Warning, TEXT("%d instances successfully converted to static meshes!"), ISMComp->GetInstanceCount());
 
 			OriginalActorsToDestroy.AddUnique(ISMComp->GetOwner());
 		}
@@ -225,8 +226,8 @@ void UIPEFunctionLibrary::ConvertInstancesToStaticMeshes()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No InstancedStaticMeshComponents, instances or valid StaticMesh properties found. Nothing to convert."));
-		UE_LOG(LogTemp, Warning, TEXT("Convertation aborted."));
+		UE_LOG(IPELog, Warning, TEXT("No InstancedStaticMeshComponents, instances or valid StaticMesh properties found. Nothing to convert."));
+		UE_LOG(IPELog, Warning, TEXT("Convertation aborted."));
 	}
 }
 
@@ -256,8 +257,8 @@ void UIPEFunctionLibrary::CheckNegativeScale()
 								ISMComp->GetInstanceTransform(i, InstanceTransf);
 								if (InstanceTransf.GetScale3D().GetMin() < 0)
 								{
-									UE_LOG(LogTemp, Warning, TEXT("Negative scale value in instance:"));
-									UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> %d -> (%s)"), *SelectedActor->GetOuter()->GetOuter()->GetName(), *SelectedActor->GetName(), *ISMComp->GetName(), i, *InstanceTransf.GetScale3D().ToString());
+									UE_LOG(IPELog, Warning, TEXT("Negative scale value in instance:"));
+									UE_LOG(IPELog, Warning, TEXT("%s -> %s -> %s -> %d -> (%s)"), *SelectedActor->GetOuter()->GetOuter()->GetName(), *SelectedActor->GetName(), *ISMComp->GetName(), i, *InstanceTransf.GetScale3D().ToString());
 								}
 							}
 						}
@@ -267,8 +268,8 @@ void UIPEFunctionLibrary::CheckNegativeScale()
 						FVector CompScale = SMComp->GetComponentTransform().GetScale3D();
 						if (CompScale.GetMin() < 0)
 						{
-							UE_LOG(LogTemp, Warning, TEXT("Negative scale value in component:"));
-							UE_LOG(LogTemp, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SelectedActor->GetOuter()->GetOuter()->GetName(), *SelectedActor->GetName(), *SMComp->GetName(), *CompScale.ToString());
+							UE_LOG(IPELog, Warning, TEXT("Negative scale value in component:"));
+							UE_LOG(IPELog, Warning, TEXT("%s -> %s -> %s -> (%s)"), *SelectedActor->GetOuter()->GetOuter()->GetName(), *SelectedActor->GetName(), *SMComp->GetName(), *CompScale.ToString());
 						}
 					}
 				}

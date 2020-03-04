@@ -22,6 +22,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ShowOnlyInnerProperties))
 		FIntVector InstancesNum3D;
 
+	UPROPERTY()
+		bool bRemoveInnerInstancesEditCond;
+
+	/** Remove inner instances */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRemoveInnerInstancesEditCond"))
+		bool bRemoveInnerInstances;
+
 	/** Override world axes with custom axes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bUseCustomAxes;

@@ -100,7 +100,7 @@ void AIPSplineMeshActor::RunGeneration()
 
 	//for (auto& Obj : SplineMeshComponents)
 	//{
-	//	UE_LOG(LogTemp, Log, TEXT("name = %s"), *Obj->GetName());
+	//	UE_LOG(IPLog, Log, TEXT("name = %s"), *Obj->GetName());
 	//}
 }
 

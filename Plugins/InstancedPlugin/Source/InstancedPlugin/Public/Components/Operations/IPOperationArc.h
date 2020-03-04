@@ -2,26 +2,22 @@
 
 #pragma once
 
-#include "IPOperationInstanceSpaceBase.h"
-#include "IPOperationArc3D.generated.h"
+#include "IPOperationComponent.h"
+#include "IPOperationArc.generated.h"
 
 UCLASS(Meta = (BlueprintSpawnableComponent))
-class INSTANCEDPLUGIN_API UIPOperationArc3D : public UIPOperationInstanceSpaceBase
+class INSTANCEDPLUGIN_API UIPOperationArc : public UIPOperationComponent
 {
 	GENERATED_BODY()
 
 public:
-	UIPOperationArc3D();
+	UIPOperationArc();
 
 #if WITH_EDITOR
 	virtual void RunOperation(TArray<FTransform>& Transforms) override;
 #endif
 
 #if WITH_EDITORONLY_DATA
-	/** Number of instances to create */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ShowOnlyInnerProperties))
-		FIntVector InstancesNum3D;
-
 	/** Arc 1st point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
 		FVector Point1;

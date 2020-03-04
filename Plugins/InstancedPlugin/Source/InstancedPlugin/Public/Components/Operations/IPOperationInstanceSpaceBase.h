@@ -30,8 +30,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bInstanceSpaceFromMeshBounds"))
 		bool bInstanceSpaceFromMeshBoundsWithCurrentScale;
 
+	UPROPERTY()
+		bool bHalfSpaceOffsetEditCond;
+
 	/** Should instances be offset on half space from it's center? */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bHalfSpaceOffsetEditCond"))
 		bool bHalfSpaceOffset;
 #endif
 

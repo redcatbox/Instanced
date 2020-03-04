@@ -4,24 +4,24 @@
 
 #include "IPInstancedHISMActor.h"
 #include "Components/Operations/IPOperationTransformMultiply.h"
-#include "Components/Operations/IPOperationArc3D.h"
+#include "Components/Operations/IPOperationArc.h"
 #include "Components/Operations/IPOperationRandomTransform.h"
-#include "IPArc3DActor.generated.h"
+#include "IPArcActor.generated.h"
 
 UCLASS()
-class INSTANCEDPLUGIN_API AIPArc3DActor : public AIPInstancedHISMActor
+class INSTANCEDPLUGIN_API AIPArcActor : public AIPInstancedHISMActor
 {
 	GENERATED_BODY()
 
 public:
-	AIPArc3DActor();
+	AIPArcActor();
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationArc3D* IPOperationArc3D;
+		UIPOperationArc* IPOperationArc;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationRandomTransform* IPOperationRandomTransform;

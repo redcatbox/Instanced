@@ -23,9 +23,6 @@ void UIPOperationSpiral::RunOperation(TArray<FTransform>& Transforms)
 	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
-			//if (bPlaceEvenly)
-			//	float SpiralLength = (InitialLinearVelocity * Time + LinearAcceleration * Time * Time / 2 + AngularVelocity * Time).Size();
-
 			int32 Intervals = InstancesNum - 1;
 			float IntervalFactor = (float)i / Intervals;
 			float SpiralAngle = (AngularVelocity * Time).Size();

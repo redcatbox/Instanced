@@ -33,7 +33,6 @@ void UIPOperationComponent::RunOperation(TArray<FTransform>& Transforms)
 	//		ResultTransforms.Add(Transf * ProcTransf);
 	//	}
 	//}
-
 	//Transforms = ResultTransforms;
 }
 

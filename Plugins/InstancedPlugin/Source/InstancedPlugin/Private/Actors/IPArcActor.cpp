@@ -1,8 +1,8 @@
 // Dmitriy Barannik aka redbox, 2020
 
-#include "Actors/IPArc3DActor.h"
+#include "Actors/IPArcActor.h"
 
-AIPArc3DActor::AIPArc3DActor()
+AIPArcActor::AIPArcActor()
 {
 #if WITH_EDITORONLY_DATA
 	IPOperationTransformMultiply = CreateDefaultSubobject<UIPOperationTransformMultiply>(TEXT("IPOperationTransformMultiply"));
@@ -12,16 +12,16 @@ AIPArc3DActor::AIPArc3DActor()
 	IPOperationTransformMultiply->ExecutionOrder = 0;
 	IPOperationTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
 
-	IPOperationArc3D = CreateDefaultSubobject<UIPOperationArc3D>(TEXT("IPOperationArc3D"));
-	IPOperationArc3D->SetupAttachment(HISMComponent);
-	IPOperationArc3D->Mobility = EComponentMobility::Static;
-	IPOperationArc3D->bIsEditorOnly = true;
-	IPOperationArc3D->ExecutionOrder = 1;
+	IPOperationArc = CreateDefaultSubobject<UIPOperationArc>(TEXT("IPOperationArc"));
+	IPOperationArc->SetupAttachment(HISMComponent);
+	IPOperationArc->Mobility = EComponentMobility::Static;
+	IPOperationArc->bIsEditorOnly = true;
+	IPOperationArc->ExecutionOrder = 1;
 
 	IPOperationRandomTransform = CreateDefaultSubobject<UIPOperationRandomTransform>(TEXT("IPOperationRandomTransform"));
 	IPOperationRandomTransform->SetupAttachment(HISMComponent);
 	IPOperationRandomTransform->Mobility = EComponentMobility::Static;
 	IPOperationRandomTransform->bIsEditorOnly = true;
-	IPOperationRandomTransform->ExecutionOrder = 3;
+	IPOperationRandomTransform->ExecutionOrder = 2;
 #endif
 }

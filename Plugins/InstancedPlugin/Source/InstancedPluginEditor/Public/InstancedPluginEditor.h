@@ -11,6 +11,8 @@ class FMenuBuilder;
 class FReply;
 class SWidget;
 
+DECLARE_LOG_CATEGORY_EXTERN(IPELog, Log, All);
+
 class FInstancedPluginEditorModule : public IModuleInterface
 {
 public:
