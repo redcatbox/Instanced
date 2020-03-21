@@ -50,7 +50,8 @@ public class InstancedPluginEditor : ModuleRules
                     "LevelEditor",
                     "EditorStyle",
                     "Slate",
-                    "SlateCore"
+                    "SlateCore",
+                    "PropertyEditor"
                 }
             );
         }

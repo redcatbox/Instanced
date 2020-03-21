@@ -52,40 +52,46 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 		float Radius = P1C.Size();
 		FVector P2CN = (Point2 - ArcCenter).GetSafeNormal();
 		FVector P3CN = (Point3 - ArcCenter).GetSafeNormal();
-		FVector UpN = FVector::CrossProduct(P1CN, P2CN);
-		float DotFwd = FVector::DotProduct(P1CN, FVector::ForwardVector);
-		float P1Angle = FMath::RadiansToDegrees(FMath::Acos(DotFwd));
-		float DotRt = FVector::DotProduct(P1CN, FVector::RightVector);
 
-		if (DotRt < 0.f)
+		FVector UpN = FVector::CrossProduct(P1CN, P2CN);
+		if (FVector::DotProduct(UpN, FVector::UpVector) < 0)
 		{
-			P1Angle = 360.f - P1Angle;
+			UpN = -UpN;
 		}
 
-		FVector InitialLocation = FVector(Radius, 0.f, 0.f);
-		InitialLocation = FRotator(0.f, P1Angle, 0.f).RotateVector(InitialLocation);
+		//float DotFwd = FVector::DotProduct(P1CN, FVector::ForwardVector);
+		//float P1Angle = 0.f;//FMath::RadiansToDegrees(FMath::Acos(DotFwd));
+		//float DotRt = FVector::DotProduct(P1CN, FVector::RightVector);
 
-		DrawDebugLine(GetWorld(), ArcCenter, FRotator(0.f, P1Angle, 0.f).RotateVector(FVector::ForwardVector) * Radius, FColor::Red, false, 2.f, 0, 5.f);
-		UE_LOG(IPLog, Warning, TEXT("P1Angle = %f"), P1Angle);
+		//if (DotRt < 0.f)
+		//{
+		//	P1Angle = 360.f - P1Angle;
+		//}
+
+		//FVector InitialLocation = Point1;//FVector(Radius, 0.f, 0.f);
+		//InitialLocation = FRotator(0.f, P1Angle, 0.f).RotateVector(InitialLocation);
+
+		//DrawDebugLine(GetWorld(), ArcCenter, FRotator(0.f, P1Angle, 0.f).RotateVector(FVector::ForwardVector) * Radius, FColor::Red, false, 2.f, 0, 5.f);
+		//UE_LOG(IPLog, Warning, TEXT("P1Angle = %f"), P1Angle);
 
 		float Dot12 = FVector::DotProduct(P1CN, P2CN);
 		float P12Angle = FMath::RadiansToDegrees(FMath::Acos(Dot12));
 
-		DrawDebugLine(GetWorld(), ArcCenter, FRotator(0.f, P1Angle + P12Angle, 0.f).RotateVector(FVector::ForwardVector) * Radius, FColor::Green, false, 2.f, 0, 5.f);
-		UE_LOG(IPLog, Warning, TEXT("P12Angle = %f"), P12Angle);
+		//DrawDebugLine(GetWorld(), ArcCenter, FRotator(0.f, P12Angle, 0.f).RotateVector(FVector::ForwardVector) * Radius, FColor::Green, false, 2.f, 0, 5.f);
+		//UE_LOG(IPLog, Warning, TEXT("P12Angle = %f"), P12Angle);
 
 		float Dot23 = FVector::DotProduct(P2CN, P3CN);
 		float P23Angle = FMath::RadiansToDegrees(FMath::Acos(Dot23));
 
-		DrawDebugLine(GetWorld(), ArcCenter, FRotator(0.f, P1Angle + P12Angle + P23Angle, 0.f).RotateVector(FVector::ForwardVector) * Radius, FColor::Blue, false, 2.f, 0, 5.f);
-		UE_LOG(IPLog, Warning, TEXT("P23Angle = %f"), P23Angle);
+		//DrawDebugLine(GetWorld(), ArcCenter, FRotator(0.f, P1Angle + P12Angle + P23Angle, 0.f).RotateVector(FVector::ForwardVector) * Radius, FColor::Blue, false, 2.f, 0, 5.f);
+		//UE_LOG(IPLog, Warning, TEXT("P23Angle = %f"), P23Angle);
 
 		float ArcAngle = P12Angle + P23Angle;
 
-		if (((Point3.X - Point1.X)*(Point2.Y - Point1.Y) - (Point3.Y - Point1.Y)*(Point2.X - Point1.X)) < 0)
-		{
-			ArcAngle = -ArcAngle;
-		}
+		//if (((Point3.X - Point1.X)*(Point2.Y - Point1.Y) - (Point3.Y - Point1.Y)*(Point2.X - Point1.X)) < 0)
+		//{
+		//	ArcAngle = -ArcAngle;
+		//}
 
 		for (FTransform Transf : Transforms)
 		{
@@ -102,7 +108,7 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 				Rot.Yaw = 0.f;
 				FQuat Rotation = Rot.Quaternion() * FQuat(FRotator(0, RotYaw, 0));
 
-				FVector Location = ArcCenter + Rotation.RotateVector(InitialLocation);
+				FVector Location = ArcCenter + Rotation.RotateVector(P1C);
 
 				if (!bOrientToCenter)
 				{

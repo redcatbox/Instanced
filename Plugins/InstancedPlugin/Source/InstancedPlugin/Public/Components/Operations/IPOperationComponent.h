@@ -37,12 +37,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bInstancesNumEditCondition", ClampMin = "1", UIMin = "1"))
 		int32 InstancesNum;
 
-	/** Process this Operation or not */
+	/** Process this operation or not */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Execution")
 		bool bEnabled;
 #endif
 
-	/** Order in Operations execution chain */
+	/** Order in operations execution chain */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Execution")
 		int32 ExecutionOrder;
 };
