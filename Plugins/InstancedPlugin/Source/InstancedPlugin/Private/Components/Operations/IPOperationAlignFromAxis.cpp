@@ -25,7 +25,7 @@ void UIPOperationAlignFromAxis::RunOperation(TArray<FTransform>& Transforms)
 		{
 			FVector TraceStart = ParentISMComp->GetComponentTransform().TransformPosition(Location);
 			FVector TraceDirection = AlignAxisStart - AlignAxisEnd;
-			TraceDirection = -FVector::CrossProduct(FVector::CrossProduct(Location, TraceDirection), TraceDirection).GetSafeNormal();
+			TraceDirection = -((Location ^ TraceDirection) ^ TraceDirection).GetSafeNormal();
 			TraceDirection = ParentISMComp->GetComponentTransform().TransformVector(TraceDirection);
 
 			if (bReverse)
