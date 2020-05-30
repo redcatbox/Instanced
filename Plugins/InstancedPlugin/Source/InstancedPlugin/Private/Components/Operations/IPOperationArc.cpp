@@ -95,7 +95,7 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 
 				if (bInvertVertical)
 				{
-
+					Rotation = (Rotation.Quaternion() * FRotator(180.f, 0.f, 0.f).Quaternion()).Rotator();
 				}
 
 				ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));

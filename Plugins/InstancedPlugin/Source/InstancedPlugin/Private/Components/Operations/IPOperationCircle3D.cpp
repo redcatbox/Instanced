@@ -103,7 +103,7 @@ void UIPOperationCircle3D::RunOperation(TArray<FTransform>& Transforms)
 
 					if (bInvertOrientation)
 					{
-
+						Rotation = (Rotation.Quaternion() * FRotator(0.f, 180.f, 0.f).Quaternion()).Rotator();
 					}
 
 					ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
