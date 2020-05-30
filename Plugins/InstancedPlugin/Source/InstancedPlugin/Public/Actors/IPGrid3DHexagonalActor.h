@@ -17,13 +17,13 @@ public:
 	AIPGrid3DHexagonalActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationGrid3DHexagonal* IPOperationGrid3DHexagonal;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

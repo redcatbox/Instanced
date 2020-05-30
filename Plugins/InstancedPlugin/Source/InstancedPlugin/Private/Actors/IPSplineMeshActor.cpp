@@ -1,12 +1,14 @@
 // Dmitriy Barannik aka redbox, 2020
 
 #include "Actors/IPSplineMeshActor.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 AIPSplineMeshActor::AIPSplineMeshActor()
 {
-	SplineMeshComponent = CreateDefaultSubobject<USplineMeshComponent>(TEXT("SplineMeshComponent1"));
+	SplineMeshComponent = CreateDefaultSubobject<USplineMeshComponent>(TEXT("SplineMeshComponent"));
 	SplineMeshComponent->SetupAttachment(RootComponent);
 	SplineMeshComponent->Mobility = EComponentMobility::Static;
+	SplineMeshComponents.Add(SplineMeshComponent);
 
 #if WITH_EDITORONLY_DATA
 	SplineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComponent"));
@@ -19,6 +21,7 @@ AIPSplineMeshActor::AIPSplineMeshActor()
 void AIPSplineMeshActor::OnConstruction(const FTransform& Transform)
 {
 #if WITH_EDITOR
+	SplineComponent->bSplineHasBeenEdited = true;
 	RunGeneration();
 #endif
 }
@@ -26,20 +29,23 @@ void AIPSplineMeshActor::OnConstruction(const FTransform& Transform)
 #if WITH_EDITOR
 void AIPSplineMeshActor::RunGeneration()
 {
-	int32 SplinePointsNumber = SplineComponent->GetNumberOfSplinePoints();
-	bool bLoop = SplineComponent->IsClosedLoop();
-
 	if (SplineMeshComponents.Num() > 0)
 	{
 		for (int32 i = 1; i < SplineMeshComponents.Num(); i++)
 		{
-			SplineMeshComponents[i]->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-			SplineMeshComponents[i]->UnregisterComponent();
-			SplineMeshComponents[i]->DestroyComponent();
-		}
+			if (SplineMeshComponents[i])
+			{
+				SplineMeshComponents[i]->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+				SplineMeshComponents[i]->UnregisterComponent();
+				SplineMeshComponents[i]->DestroyComponent();
+			}
 
-		SplineMeshComponents.Empty();
+			SplineMeshComponents.RemoveAt(i);
+		}
 	}
+
+	int32 SplinePointsNumber = SplineComponent->GetNumberOfSplinePoints();
+	bool bLoop = SplineComponent->IsClosedLoop();
 
 	if (SplinePointsNumber > 1)
 	{
@@ -50,24 +56,21 @@ void AIPSplineMeshActor::RunGeneration()
 
 		for (int32 i = 0; i < SplinePointsNumber; i++)
 		{
-			//Create new component
 			int32 IndexCurrent = i;
 			int32 IndexNext = IndexCurrent + 1;
-			FName ComponentName = *(FString(TEXT("SplineMeshComponent")).Append(FString::SanitizeFloat(FPlatformTime::Seconds())));
 
-			if (i == 0)
+			if (i > 0)
 			{
-				SplineMeshComponents.Add(SplineMeshComponent);
-			}
-			else
-			{
-				SplineMeshComponents.Insert(DuplicateObject<USplineMeshComponent>(SplineMeshComponent, this, ComponentName), IndexCurrent);
-				SplineMeshComponents[i]->CreationMethod = EComponentCreationMethod::UserConstructionScript;
-				SplineMeshComponents[i]->SetupAttachment(RootComponent);
-				SplineMeshComponents[i]->RegisterComponent();
+				FName ComponentName = *(FString(TEXT("SMC")).Append(FString::SanitizeFloat(FPlatformTime::Seconds())));
+				USplineMeshComponent* SMC = DuplicateObject<USplineMeshComponent>(SplineMeshComponent, this, ComponentName);
+				SMC->OnComponentCreated();
+				SMC->CreationMethod = EComponentCreationMethod::UserConstructionScript;
+				SMC->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetIncludingScale);
+				SMC->RegisterComponent();
+				SplineMeshComponents.Insert(SMC, IndexCurrent);
 			}
 
-			if (bLoop && i == SplinePointsNumber - 1)
+			if (bLoop && (i == SplinePointsNumber - 1))
 			{
 				IndexNext = 0;
 			}
@@ -97,20 +100,11 @@ void AIPSplineMeshActor::RunGeneration()
 			}
 		}
 	}
-
-	//for (auto& Obj : SplineMeshComponents)
-	//{
-	//	UE_LOG(IPLog, Log, TEXT("name = %s"), *Obj->GetName());
-	//}
 }
 
 void AIPSplineMeshActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
-	FName PropertyName = (PropertyChangedEvent.Property != NULL) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
-	if (PropertyName == TEXT("Transform"))
-	{
-		OnConstruction(this->GetActorTransform());
-	}
+	OnConstruction(GetActorTransform());
 }
 #endif

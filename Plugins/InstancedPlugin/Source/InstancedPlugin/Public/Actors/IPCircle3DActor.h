@@ -17,13 +17,13 @@ public:
 	AIPCircle3DActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationCircle3D* IPOperationCircle3D;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

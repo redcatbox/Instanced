@@ -29,10 +29,3 @@ void AIPBaseGeneratedActor::PostEditChangeProperty(FPropertyChangedEvent& Proper
 	RunGeneration();
 }
 #endif
-
-//void AIPBaseGeneratedActor::OnConstruction(const FTransform& Transform)
-//{
-//#if WITH_EDITOR
-//	RunGeneration();
-//#endif
-//}

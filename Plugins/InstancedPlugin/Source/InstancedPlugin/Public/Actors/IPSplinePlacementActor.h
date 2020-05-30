@@ -19,16 +19,16 @@ public:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Components)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
 		USplineComponent* SplineComponent;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationSplinePlacement* IPOperationSplinePlacement;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

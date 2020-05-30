@@ -19,6 +19,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bAlignToSurface;
 
+	/** How much to offset location in trace direction */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
+		float OffsetInTraceDirection;
+
 	/** Should reverse alignment? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bReverse;

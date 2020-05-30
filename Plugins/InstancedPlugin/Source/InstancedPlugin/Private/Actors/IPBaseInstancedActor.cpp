@@ -55,12 +55,14 @@ void AIPBaseInstancedActor::RunGeneration()
 
 				//if (ISMComp->GetInstanceCount() != Transforms.Num()) // causes editor crash on copy/paste or duplicate!
 				//{
-					ISMComp->ClearInstances();
 
-					for (FTransform Transf : Transforms)
-					{
-						ISMComp->AddInstance(Transf);
-					}
+				ISMComp->ClearInstances();
+
+				for (FTransform Transf : Transforms)
+				{
+					ISMComp->AddInstance(Transf);
+				}
+
 				//}
 				//else
 				//{

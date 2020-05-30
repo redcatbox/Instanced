@@ -38,6 +38,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bOrientToCentralAxis;
 
+	/** Should invert orientation? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
+		bool bInvertOrientation;
+
 	/** Should make odd/even rows by Z in checker pattern? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bCheckerOddEven_Z;

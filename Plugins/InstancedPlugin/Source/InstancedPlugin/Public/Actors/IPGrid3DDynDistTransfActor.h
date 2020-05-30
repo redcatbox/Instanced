@@ -15,6 +15,6 @@ public:
 	AIPGrid3DDynDistTransfActor();
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationDynamicTransform* IPOperationDynamicTransform;
 };

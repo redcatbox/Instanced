@@ -13,9 +13,9 @@ class INSTANCEDPLUGIN_API UIPOperationDynamicComponent : public UIPOperationComp
 public:
 	UIPOperationDynamicComponent();
 
-	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		virtual void RunOperationDynamic();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
+	UFUNCTION(BlueprintImplementableEvent, Category = "InstancedPlugin")
 		void BlueprintOperationDynamic();
 };

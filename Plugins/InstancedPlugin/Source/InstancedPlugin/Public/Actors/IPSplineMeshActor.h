@@ -17,18 +17,18 @@ public:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 #if WITH_EDITOR
-	virtual void RunGeneration() override;
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	virtual void RunGeneration() override;
 #endif
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Components)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
 		USplineComponent* SplineComponent;
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Components)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
 		USplineMeshComponent* SplineMeshComponent;
-		
-	UPROPERTY()
+
+	UPROPERTY(TextExportTransient)
 		TArray<USplineMeshComponent*> SplineMeshComponents;
 };

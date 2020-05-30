@@ -10,6 +10,7 @@ UIPOperationCircle3D::UIPOperationCircle3D()
 	EndAngle = 360.f;
 	bAlignWithAngleEnd = false;
 	bOrientToCentralAxis = false;
+	bInvertOrientation = false;
 	bCheckerOddEven_Z = false;
 	bFlipOddEven_Z = false;
 	bSymmetricalEven_Z = false;
@@ -98,6 +99,11 @@ void UIPOperationCircle3D::RunOperation(TArray<FTransform>& Transforms)
 					if (!bOrientToCentralAxis)
 					{
 						Rotation = FRotator::ZeroRotator;
+					}
+
+					if (bInvertOrientation)
+					{
+
 					}
 
 					ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));

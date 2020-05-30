@@ -23,10 +23,10 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
-	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
+	UFUNCTION(BlueprintImplementableEvent, Category = "InstancedPlugin")
 		TArray<FTransform> BlueprintOperation(const TArray<FTransform>& Transforms);
 
-	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
 		virtual UInstancedStaticMeshComponent* GetParentISMComponent();
 
 #if WITH_EDITORONLY_DATA

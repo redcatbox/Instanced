@@ -2,37 +2,27 @@
 
 #pragma once
 
-#include "IPBaseGeneratedActor.h"
-#include "Components/SplineComponent.h"
-#include "Components/SplineMeshComponent.h"
+#include "Actors/IPSplineMeshActor.h"
 #include "IPSplineMeshGradientActor.generated.h"
 
 UCLASS()
-class INSTANCEDPLUGIN_API AIPSplineMeshGradientActor : public AIPBaseGeneratedActor
+class INSTANCEDPLUGIN_API AIPSplineMeshGradientActor : public AIPSplineMeshActor
 {
 	GENERATED_BODY()
 
 public:
 	AIPSplineMeshGradientActor();
-	virtual void OnConstruction(const FTransform& Transform) override;
 
 #if WITH_EDITOR
 	virtual void RunGeneration() override;
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Generation")
+		virtual void GenerateSplineGradient();
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		USplineMeshComponent* SplineMeshComponent;
-
-	UPROPERTY()
-		TArray<USplineMeshComponent*> SplineMeshComponents;
-
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		USplineComponent* SplineComponent;
-
 	/** Should reverse gradient direction? */
-	UPROPERTY(EditAnywhere, Category = Generation)
+	UPROPERTY(EditAnywhere, Category = "Generation")
 		bool bInverseGradient;
 #endif
 };

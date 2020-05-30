@@ -7,6 +7,7 @@ UIPOperationAlignBase::UIPOperationAlignBase()
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
 	bAlignToSurface = false;
+	OffsetInTraceDirection = 0.f;
 	bReverse = false;
 	bTraceComplex = false;
 	bIgnoreSelf = true;

@@ -33,6 +33,7 @@ void UIPOperationDynamicTransform::RunOperation(TArray<FTransform>& Transforms)
 			InstancesTransformsOld.Add(InstanceTransformOld);
 			InstanceTransformNew.SetLocation(InstanceTransformOld.GetLocation() + DynamicTransformDelta.GetLocation());
 			InstanceTransformNew.SetRotation(InstanceTransformOld.GetRotation() * DynamicTransformDelta.GetRotation());
+			// TO DO = scale is not updated
 			InstanceTransformNew.SetScale3D(InstanceTransformOld.GetScale3D() + DynamicTransformDelta.GetScale3D());
 			InstancesTransformsNew.Add(InstanceTransformNew);
 		}

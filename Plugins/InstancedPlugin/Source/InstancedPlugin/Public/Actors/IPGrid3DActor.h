@@ -17,13 +17,13 @@ public:
 	AIPGrid3DActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationGrid3D* IPOperationGrid3D;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
+	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
 		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

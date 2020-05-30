@@ -21,6 +21,8 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 	USplineComponent* SplineComponent = GetParentSplineComponent();
 	if (SplineComponent)
 	{
+		SplineComponent->bSplineHasBeenEdited = true;
+
 		if (bPlaceBetweenPoints)
 		{
 			bInstancesNumEditCondition = false;

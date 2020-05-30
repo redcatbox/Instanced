@@ -33,5 +33,9 @@ public:
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
 		bool bOrientToCenter;
+
+	/** Should invert vertical? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
+		bool bInvertVertical;
 #endif
 };

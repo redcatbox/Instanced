@@ -37,7 +37,8 @@ void UIPOperationAlignByDirection::RunOperation(TArray<FTransform>& Transforms)
 
 			if (bHit)
 			{
-				Location = ParentISMComp->GetComponentTransform().InverseTransformPosition(TraceOutHit.Location);
+				Location = TraceOutHit.Location + TraceDirection * OffsetInTraceDirection;
+				Location = ParentISMComp->GetComponentTransform().InverseTransformPosition(Location);
 			}
 
 			if (bAlignToSurface)
