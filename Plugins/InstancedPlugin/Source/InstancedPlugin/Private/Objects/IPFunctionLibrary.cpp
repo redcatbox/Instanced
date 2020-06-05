@@ -1,4 +1,4 @@
-// Dmitriy Barannik aka redbox, 2020
+// redbox, 2020
 
 #include "Objects/IPFunctionLibrary.h"
 #include "UObject/ConstructorHelpers.h"

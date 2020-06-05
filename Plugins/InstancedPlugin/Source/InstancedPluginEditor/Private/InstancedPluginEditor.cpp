@@ -1,4 +1,4 @@
-// Dmitriy Barannik aka redbox, 2020
+// redbox, 2020
 
 #include "InstancedPluginEditor.h"
 #include "InstancedPluginEditorCommands.h"

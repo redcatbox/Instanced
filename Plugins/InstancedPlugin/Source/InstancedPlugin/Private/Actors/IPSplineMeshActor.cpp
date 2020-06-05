@@ -1,4 +1,4 @@
-// Dmitriy Barannik aka redbox, 2020
+// redbox, 2020
 
 #include "Actors/IPSplineMeshActor.h"
 #include "Kismet/KismetSystemLibrary.h"

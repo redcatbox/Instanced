@@ -1,4 +1,4 @@
-// Dmitriy Barannik aka redbox, 2020
+// redbox, 2020
 
 /** https://en.wikipedia.org/wiki/Archimedean_spiral */
 
