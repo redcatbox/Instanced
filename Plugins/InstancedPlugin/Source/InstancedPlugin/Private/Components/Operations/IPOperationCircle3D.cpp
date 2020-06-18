@@ -30,14 +30,14 @@ void UIPOperationCircle3D::RunOperation(TArray<FTransform>& Transforms)
 	InstancesNum = InstancesNum3D.X * InstancesNum3D.Y * InstancesNum3D.Z;
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		for (int32 Z = 0; Z < InstancesNum3D.Z; ++Z)
 		{
 			for (int32 Y = 0; Y < InstancesNum3D.Y; ++Y)
 			{
 				int32 LastIndex_X = InstancesNum3D.X;
-				bool Even_Z = Z % 2 == 0;
+				const bool Even_Z = Z % 2 == 0;
 
 				if (bCheckerOddEven_Z && bSymmetricalEven_Z)
 				{
@@ -59,7 +59,7 @@ void UIPOperationCircle3D::RunOperation(TArray<FTransform>& Transforms)
 
 				for (int32 X = 0; X < LastIndex_X; ++X)
 				{
-					float PlacementAngle = EndAngle - StartAngle;
+					const float PlacementAngle = EndAngle - StartAngle;
 					float RotYaw = PlacementAngle / InstancesNum3D.X;
 
 					if (bAlignWithAngleEnd)
@@ -70,7 +70,7 @@ void UIPOperationCircle3D::RunOperation(TArray<FTransform>& Transforms)
 						}
 					}
 
-					float RotYawHalf = RotYaw * 0.5f;
+					const float RotYawHalf = RotYaw * 0.5f;
 					RotYaw *= X;
 
 					if (bCheckerOddEven_Z)
@@ -92,8 +92,8 @@ void UIPOperationCircle3D::RunOperation(TArray<FTransform>& Transforms)
 					}
 
 					FRotator Rotation = FRotator(0, RotYaw + StartAngle, 0);
-					float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
-					float LocZ = InstanceSpace.Z * Z;
+					const float LocX = InstanceSpace.X + InstanceSpace.Y * Y;
+					const float LocZ = InstanceSpace.Z * Z;
 					FVector Location = Rotation.RotateVector(FVector(LocX, 0, LocZ));
 
 					if (!bOrientToCentralAxis)

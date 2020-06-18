@@ -56,7 +56,7 @@ FRotator UIPOperationRandomTransform::RandomizeRotationByFixedRotatorSteps(FRota
 FVector UIPOperationRandomTransform::RandomizeScale(FVector Scale)
 {
 	UIPFunctionLibrary::MutateRandomSeed(RandomStream);
-	FVector NewScale = UIPFunctionLibrary::RandomVectorInMinMax(RandomScaleMin, RandomScaleMax, bUseRandomStream, RandomStream);
+	const FVector NewScale = UIPFunctionLibrary::RandomVectorInMinMax(RandomScaleMin, RandomScaleMax, bUseRandomStream, RandomStream);
 
 	if (bRandomizeScaleUniformly)
 	{
@@ -93,7 +93,7 @@ void UIPOperationRandomTransform::RunOperation(TArray<FTransform>& Transforms)
 
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{

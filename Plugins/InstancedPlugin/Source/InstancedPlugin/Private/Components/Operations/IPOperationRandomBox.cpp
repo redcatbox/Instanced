@@ -17,7 +17,7 @@ void UIPOperationRandomBox::RunOperation(TArray<FTransform>& Transforms)
 	BoxExtent = BoxExtent.GetAbs();
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{

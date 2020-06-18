@@ -16,14 +16,14 @@ void UIPOperationAlignFromAxis::RunOperation(TArray<FTransform>& Transforms)
 {
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		FVector Location = Transf.GetLocation();
 		FQuat Rotation = Transf.GetRotation();
 
 		if (UInstancedStaticMeshComponent* ParentISMComp = GetParentISMComponent())
 		{
-			FVector TraceStart = ParentISMComp->GetComponentTransform().TransformPosition(Location);
+			const FVector TraceStart = ParentISMComp->GetComponentTransform().TransformPosition(Location);
 			FVector TraceDirection = AlignAxisStart - AlignAxisEnd;
 			TraceDirection = -((Location ^ TraceDirection) ^ TraceDirection).GetSafeNormal();
 			TraceDirection = ParentISMComp->GetComponentTransform().TransformVector(TraceDirection);
@@ -33,9 +33,9 @@ void UIPOperationAlignFromAxis::RunOperation(TArray<FTransform>& Transforms)
 				TraceDirection = -TraceDirection;
 			}
 
-			FVector TraceEnd = TraceStart + TraceDirection * AlignDistance;
+			const FVector TraceEnd = TraceStart + TraceDirection * AlignDistance;
 			FHitResult TraceOutHit(ForceInit);
-			bool bHit = UKismetSystemLibrary::LineTraceSingle(GetOwner(), TraceStart, TraceEnd, TraceChannel, bTraceComplex, ActorsToIgnore, DrawDebugType, TraceOutHit, bIgnoreSelf, FLinearColor::Red, FLinearColor::Green, DrawTime);
+			const bool bHit = UKismetSystemLibrary::LineTraceSingle(GetOwner(), TraceStart, TraceEnd, TraceChannel, bTraceComplex, ActorsToIgnore, DrawDebugType, TraceOutHit, bIgnoreSelf, FLinearColor::Red, FLinearColor::Green, DrawTime);
 
 			if (bHit)
 			{

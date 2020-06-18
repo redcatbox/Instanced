@@ -10,6 +10,7 @@ class FToolBarBuilder;
 class FMenuBuilder;
 class FReply;
 class SWidget;
+class FUICommandList;
 
 DECLARE_LOG_CATEGORY_EXTERN(IPELog, Log, All);
 

@@ -9,7 +9,7 @@ void UIPOperationTransformRemove::RunOperation(TArray<FTransform>& Transforms)
 	{
 		Algo::Sort(OperationTransforms, FSortByInstanceId());
 
-		for (FPerInstanceTransform PIT : OperationTransforms)
+		for (auto& PIT : OperationTransforms)
 		{
 			if (PIT.InstanceId > -1 && PIT.InstanceId < Transforms.Num())
 			{

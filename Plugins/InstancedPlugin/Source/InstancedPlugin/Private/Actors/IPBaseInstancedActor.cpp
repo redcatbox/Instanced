@@ -11,7 +11,7 @@ void AIPBaseInstancedActor::RunGeneration()
 
 	if (ACompISMCs.Num() > 0)
 	{
-		for (UActorComponent* ACompISM : ACompISMCs)
+		for (auto& ACompISM : ACompISMCs)
 		{
 			if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(ACompISM))
 			{
@@ -23,7 +23,7 @@ void AIPBaseInstancedActor::RunGeneration()
 				{
 					TArray<UIPOperationComponent*> PComps;
 
-					for (USceneComponent* SComp : ISMCompChildren)
+					for (auto& SComp : ISMCompChildren)
 					{
 						if (UIPOperationComponent* PComp = Cast<UIPOperationComponent>(SComp))
 						{
@@ -39,7 +39,7 @@ void AIPBaseInstancedActor::RunGeneration()
 						Algo::Sort(PComps, FSortByExecutionOrder());
 						Transforms.Add(FTransform());
 
-						for (UIPOperationComponent* PComp : PComps)
+						for (auto& PComp : PComps)
 						{
 							PComp->RunOperation(Transforms);
 						}
@@ -58,7 +58,7 @@ void AIPBaseInstancedActor::RunGeneration()
 
 				ISMComp->ClearInstances();
 
-				for (FTransform Transf : Transforms)
+				for (auto& Transf : Transforms)
 				{
 					ISMComp->AddInstance(Transf);
 				}

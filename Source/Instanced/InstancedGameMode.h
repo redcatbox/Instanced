@@ -6,9 +6,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "InstancedGameMode.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class INSTANCED_API AInstancedGameMode : public AGameModeBase
 {

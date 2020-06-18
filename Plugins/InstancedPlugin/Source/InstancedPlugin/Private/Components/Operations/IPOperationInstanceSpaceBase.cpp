@@ -24,8 +24,7 @@ void UIPOperationInstanceSpaceBase::RunOperation(TArray<FTransform>& Transforms)
 	{
 		if (UInstancedStaticMeshComponent* ParentISMComp = GetParentISMComponent())
 		{
-			UStaticMesh* SM = ParentISMComp->GetStaticMesh();
-			if (SM)
+			if (UStaticMesh* SM = ParentISMComp->GetStaticMesh())
 			{
 				InstanceSpace = SM->GetBounds().GetBox().GetSize();
 

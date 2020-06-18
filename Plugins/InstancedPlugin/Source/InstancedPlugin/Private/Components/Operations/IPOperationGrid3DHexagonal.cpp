@@ -16,7 +16,7 @@ void UIPOperationGrid3DHexagonal::RunOperation(TArray<FTransform>& Transforms)
 	Super::RunOperation(Transforms);
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		for (int32 X = 0; X < InstancesNum3D.X; ++X)
 		{
