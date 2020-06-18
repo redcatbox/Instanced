@@ -20,7 +20,7 @@ void UIPOperationRectangle3D::RunOperation(TArray<FTransform>& Transforms)
 	Super::RunOperation(Transforms);
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		for (int32 X = 0; X < InstancesNum3D.X; ++X)
 		{
@@ -43,7 +43,7 @@ void UIPOperationRectangle3D::RunOperation(TArray<FTransform>& Transforms)
 						}
 
 						FRotator Rotation = FRotator::ZeroRotator;
-						bool bCornerMeshesCond = (X == 0 && Y == 0)
+						const bool bCornerMeshesCond = (X == 0 && Y == 0)
 							|| (X == 0 && Y == InstancesNum3D.Y - 1)
 							|| (X == InstancesNum3D.X - 1 && Y == 0)
 							|| (X == InstancesNum3D.X - 1 && Y == InstancesNum3D.Y - 1);

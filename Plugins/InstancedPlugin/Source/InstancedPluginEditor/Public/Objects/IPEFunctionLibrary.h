@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "IPEFunctionLibrary.generated.h"
 
 UCLASS()

@@ -18,14 +18,14 @@ UIPOperationComponent::UIPOperationComponent()
 #if WITH_EDITOR
 void UIPOperationComponent::RunOperation(TArray<FTransform>& Transforms)
 {
-	TArray<FTransform> ResultTransforms = BlueprintOperation(Transforms);
+	const TArray<FTransform> ResultTransforms = BlueprintOperation(Transforms);
 
 	if (ResultTransforms.Num() > 0)
 	{
 		Transforms = ResultTransforms;
 	}
 
-	//for (FTransform Transf : Transforms)
+	//for (auto& Transf : Transforms)
 	//{
 	//	for (int32 i = 0; i < InstancesNum; i++)
 	//	{
@@ -54,7 +54,7 @@ UInstancedStaticMeshComponent* UIPOperationComponent::GetParentISMComponent()
 
 	if (ParentComps.Num() > 0)
 	{
-		for (USceneComponent* SComp : ParentComps)
+		for (auto& SComp : ParentComps)
 		{
 			if (UInstancedStaticMeshComponent* ParentISMComp = Cast<UInstancedStaticMeshComponent>(SComp))
 			{

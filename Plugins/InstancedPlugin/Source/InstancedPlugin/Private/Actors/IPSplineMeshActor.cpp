@@ -45,7 +45,7 @@ void AIPSplineMeshActor::RunGeneration()
 	}
 
 	int32 SplinePointsNumber = SplineComponent->GetNumberOfSplinePoints();
-	bool bLoop = SplineComponent->IsClosedLoop();
+	const bool bLoop = SplineComponent->IsClosedLoop();
 
 	if (SplinePointsNumber > 1)
 	{
@@ -56,12 +56,12 @@ void AIPSplineMeshActor::RunGeneration()
 
 		for (int32 i = 0; i < SplinePointsNumber; i++)
 		{
-			int32 IndexCurrent = i;
+			const int32 IndexCurrent = i;
 			int32 IndexNext = IndexCurrent + 1;
 
 			if (i > 0)
 			{
-				FName ComponentName = *(FString(TEXT("SMC")).Append(FString::SanitizeFloat(FPlatformTime::Seconds())));
+				const FName ComponentName = *(FString(TEXT("SMC")).Append(FString::SanitizeFloat(FPlatformTime::Seconds())));
 				USplineMeshComponent* SMC = DuplicateObject<USplineMeshComponent>(SplineMeshComponent, this, ComponentName);
 				SMC->OnComponentCreated();
 				SMC->CreationMethod = EComponentCreationMethod::UserConstructionScript;
@@ -87,14 +87,14 @@ void AIPSplineMeshActor::RunGeneration()
 				SplineMeshComponents[IndexCurrent]->SetStartAndEnd(StartPos, StartTangent, EndPos, EndTangent, true);
 
 				//Rotation
-				float StartRoll = SplineComponent->GetRotationAtSplinePoint(IndexCurrent, ESplineCoordinateSpace::Local).Roll;
-				float EndRoll = SplineComponent->GetRotationAtSplinePoint(IndexNext, ESplineCoordinateSpace::Local).Roll;
+				const float StartRoll = SplineComponent->GetRotationAtSplinePoint(IndexCurrent, ESplineCoordinateSpace::Local).Roll;
+				const float EndRoll = SplineComponent->GetRotationAtSplinePoint(IndexNext, ESplineCoordinateSpace::Local).Roll;
 				SplineMeshComponents[IndexCurrent]->SetStartRoll(StartRoll, true);
 				SplineMeshComponents[IndexCurrent]->SetEndRoll(EndRoll, true);
 
 				//Scale
-				FVector2D StartScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexCurrent));
-				FVector2D EndScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexNext));
+				const FVector2D StartScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexCurrent));
+				const FVector2D EndScale = FVector2D(SplineComponent->GetScaleAtSplinePoint(IndexNext));
 				SplineMeshComponents[IndexCurrent]->SetStartScale(StartScale);
 				SplineMeshComponents[IndexCurrent]->SetEndScale(EndScale);
 			}

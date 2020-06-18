@@ -15,9 +15,9 @@ void UIPOperationTransformsArray::RunOperation(TArray<FTransform>& Transforms)
 	InstancesNum = PlacementTransforms.Num();
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
-		for (FTransform PTransf : PlacementTransforms)
+		for (auto& PTransf : PlacementTransforms)
 		{
 			ResultTransforms.Add(Transf * PTransf);
 		}

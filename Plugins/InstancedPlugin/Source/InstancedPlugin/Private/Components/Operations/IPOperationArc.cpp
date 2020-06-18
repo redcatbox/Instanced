@@ -41,24 +41,24 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 	else
 	{
 		// Get center
-		float Div = 2 * FMath::Pow((P12 ^ P23).Size(), 2);
-		float A = (L23 * L23) * (P12 | P13) / Div;
-		float B = (L13 * L13) * (-P12 | P23) / Div;
-		float C = (L12 * L12) * (-P13 | -P23) / Div;
-		FVector ArcCenter = A * Point1 + B * Point2 + C * Point3;
+		const float Div = 2 * FMath::Pow((P12 ^ P23).Size(), 2);
+		const float A = L23 * L23 * (P12 | P13) / Div;
+		const float B = L13 * L13 * (-P12 | P23) / Div;
+		const float C = L12 * L12 * (-P13 | -P23) / Div;
+		const FVector ArcCenter = A * Point1 + B * Point2 + C * Point3;
 
 		// Get vectors
-		FVector P1C = Point1 - ArcCenter;
+		const FVector P1C = Point1 - ArcCenter;
 		float Radius = P1C.Size();
-		FVector P1CN = P1C.GetSafeNormal();
-		FVector P2CN = (Point2 - ArcCenter).GetSafeNormal();
-		FVector P3CN = (Point3 - ArcCenter).GetSafeNormal();
-		FVector UpN = P12.GetSafeNormal() ^ P13.GetSafeNormal();
+		const FVector P1CN = P1C.GetSafeNormal();
+		const FVector P2CN = (Point2 - ArcCenter).GetSafeNormal();
+		const FVector P3CN = (Point3 - ArcCenter).GetSafeNormal();
+		const FVector UpN = P12.GetSafeNormal() ^ P13.GetSafeNormal();
 
 		// Get angles
-		float Dot12 = P1CN | P2CN;
+		const float Dot12 = P1CN | P2CN;
 		float P12Angle = FMath::RadiansToDegrees(FMath::Acos(Dot12));
-		float Dot23 = P2CN | P3CN;
+		const float Dot23 = P2CN | P3CN;
 		float P23Angle = FMath::RadiansToDegrees(FMath::Acos(Dot23));
 
 		if ((P2CN | (P1CN ^ UpN)) > 0.f)
@@ -73,7 +73,7 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 
 		float ArcAngle = P12Angle + P23Angle;
 
-		for (FTransform Transf : Transforms)
+		for (auto& Transf : Transforms)
 		{
 			for (int32 i = 0; i < InstancesNum; i++)
 			{

@@ -59,7 +59,6 @@ void UIPOperationDynamicTransform::RunOperationDynamic()
 		}
 
 		float Distance = DynamicDistance + 1.f;
-		int32 LastModifiedInstanceIndex = -1;
 		bool bInstanceModified = false;
 		float LerpAlpha = 0;
 		FTransform InstanceTransformNew;
@@ -70,7 +69,6 @@ void UIPOperationDynamicTransform::RunOperationDynamic()
 
 			if (Distance <= DynamicDistance)
 			{
-				LastModifiedInstanceIndex = i;
 				bInstanceModified = true;
 				LerpAlpha = 1 - (Distance / DynamicDistance - DynamicNearFactor) / (1.f - DynamicNearFactor - DynamicFarFactor);
 				LerpAlpha = FMath::Clamp(LerpAlpha, 0.f, 1.f);

@@ -19,14 +19,14 @@ void UIPOperationSpiral::RunOperation(TArray<FTransform>& Transforms)
 {
 	TArray<FTransform> ResultTransforms;
 
-	for (FTransform Transf : Transforms)
+	for (auto& Transf : Transforms)
 	{
 		for (int32 i = 0; i < InstancesNum; i++)
 		{
-			int32 Intervals = InstancesNum - 1;
-			float IntervalFactor = (float)i / Intervals;
-			float SpiralAngle = (AngularVelocity * Time).Size();
-			float RotYaw = SpiralAngle * IntervalFactor;
+			const int32 Intervals = InstancesNum - 1;
+			const float IntervalFactor = (float)i / Intervals;
+			const float SpiralAngle = (AngularVelocity * Time).Size();
+			const float RotYaw = SpiralAngle * IntervalFactor;
 			FRotator Rotation = FRotator(0, RotYaw, 0);
 			FVector LinearVelocity = InitialLinearVelocity + LinearAcceleration * Time;
 			FVector Location = LinearVelocity * Time * IntervalFactor;

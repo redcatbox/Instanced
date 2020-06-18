@@ -20,7 +20,7 @@ void AIPSplineMeshGradientActor::RunGeneration()
 void AIPSplineMeshGradientActor::GenerateSplineGradient()
 {
 	int32 SplinePointsNumber = SplineComponent->GetNumberOfSplinePoints();
-	bool bLoop = SplineComponent->IsClosedLoop();
+	const bool bLoop = SplineComponent->IsClosedLoop();
 
 	if (SplinePointsNumber > 1)
 	{
@@ -33,18 +33,18 @@ void AIPSplineMeshGradientActor::GenerateSplineGradient()
 		{
 			for (int32 i = 0; i < SplinePointsNumber; i++)
 			{
-				int32 IndexCurrent = i;
-				int32 IndexNext = IndexCurrent + 1;
-				float SplineLength = SplineComponent->GetSplineLength();
+				const int32 IndexCurrent = i;
+				const int32 IndexNext = IndexCurrent + 1;
+				const float SplineLength = SplineComponent->GetSplineLength();
 
 				for (int32 j = 0; j < SplineMeshComponents[IndexCurrent]->GetNumMaterials(); j++)
 				{
 					if (UMaterialInterface* Material = SplineMeshComponents[IndexCurrent]->GetMaterial(j))
 					{
 						UMaterialInstanceDynamic* MID = SplineMeshComponents[IndexCurrent]->CreateDynamicMaterialInstance(j, Material);
-						float GradientStart = bInverseGradient ?
+						const float GradientStart = bInverseGradient ?
 							SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexCurrent) / SplineLength : 1.f - SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexCurrent) / SplineLength;
-						float GradientEnd = bInverseGradient ?
+						const float GradientEnd = bInverseGradient ?
 							SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexNext) / SplineLength : 1.f - SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexNext) / SplineLength;
 						MID->SetScalarParameterValue(TEXT("GradientStart"), GradientStart);
 						MID->SetScalarParameterValue(TEXT("GradientEnd"), GradientEnd);

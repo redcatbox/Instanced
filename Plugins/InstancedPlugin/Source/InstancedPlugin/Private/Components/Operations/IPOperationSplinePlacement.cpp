@@ -68,7 +68,7 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 		XSizeToScale = FMath::Clamp(XSizeToScale, 0.f, 1000000.f);
 		TArray<FTransform> ResultTransforms;
 
-		for (FTransform Transf : Transforms)
+		for (auto& Transf : Transforms)
 		{
 			for (int32 i = 0; i < InstancesNum; i++)
 			{
@@ -145,7 +145,7 @@ USplineComponent* UIPOperationSplinePlacement::GetParentSplineComponent()
 
 	if (ParentComps.Num() > 0)
 	{
-		for (USceneComponent* SComp : ParentComps)
+		for (auto& SComp : ParentComps)
 		{
 			if (USplineComponent* ParentSplineComponent = Cast<USplineComponent>(SComp))
 			{

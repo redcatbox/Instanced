@@ -13,21 +13,25 @@ void UIPFunctionLibrary::MutateRandomSeed(FRandomStream& RandomStream)
 
 void UIPFunctionLibrary::ShuffleArray(TArray<FTransform>& Array, bool bFromStream, FRandomStream& RandomStream)
 {
-	int32 LastIndex = Array.Num() - 1;
+	const int32 LastIndex = Array.Num() - 1;
 
 	if (bFromStream)
 		for (int32 i = 0; i <= LastIndex; ++i)
 		{
-			int32 Index = RandomStream.RandRange(i, LastIndex);
+			const int32 Index = RandomStream.RandRange(i, LastIndex);
 			if (i != Index)
+			{
 				Array.SwapMemory(i, Index);
+			}
 		}
 	else
 		for (int32 i = 0; i <= LastIndex; ++i)
 		{
-			int32 Index = FMath::RandRange(i, LastIndex);
+			const int32 Index = FMath::RandRange(i, LastIndex);
 			if (i != Index)
+			{
 				Array.SwapMemory(i, Index);
+			}
 		}
 }
 // Random
@@ -36,21 +40,27 @@ void UIPFunctionLibrary::ShuffleArray(TArray<FTransform>& Array, bool bFromStrea
 FVector UIPFunctionLibrary::RandomVectorInDelta(FVector DeltaVector, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream)
 {
 	float Min = -1.f;
-	float Max = 1.f;
+	const float Max = 1.f;
 	float Value;
 	TArray<float> Values;
 
 	if (bPositiveOnly)
+	{
 		Min = 0.f;
+	}
 
 	Values.Empty();
 
 	for (int32 i = 0; i < 3; i++)
 	{
 		if (bUseRandomStream)
+		{
 			Value = UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream);
+		}
 		else
+		{
 			Value = UKismetMathLibrary::RandomFloatInRange(Min, Max);
+		}
 
 		Values.Add(Value);
 	}
@@ -81,21 +91,27 @@ FVector UIPFunctionLibrary::AbsVector(FVector Vector)
 FRotator UIPFunctionLibrary::RandomRotatorInDelta(FRotator DeltaRotator, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream)
 {
 	float Min = -1.f;
-	float Max = 1.f;
+	const float Max = 1.f;
 	float Value;
 	TArray<float> Values;
 
 	if (bPositiveOnly)
+	{
 		Min = 0.f;
+	}
 
 	Values.Empty();
 
 	for (int32 i = 0; i < 3; i++)
 	{
 		if (bUseRandomStream)
+		{
 			Value = UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream);
+		}
 		else
+		{
 			Value = UKismetMathLibrary::RandomFloatInRange(Min, Max);
+		}
 
 		Values.Add(Value);
 	}

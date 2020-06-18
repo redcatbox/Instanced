@@ -16,8 +16,8 @@ struct FSortByExecutionOrder
 
 	bool operator()(const UIPOperationComponent* A, const UIPOperationComponent* B) const
 	{
-		int32 ExecutionOrderA = A->ExecutionOrder;
-		int32 ExecutionOrderB = B->ExecutionOrder;
+		const int32 ExecutionOrderA = A->ExecutionOrder;
+		const int32 ExecutionOrderB = B->ExecutionOrder;
 		return ExecutionOrderA < ExecutionOrderB;
 	}
 };
