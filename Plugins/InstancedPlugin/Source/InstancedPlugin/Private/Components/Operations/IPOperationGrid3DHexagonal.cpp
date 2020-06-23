@@ -49,22 +49,14 @@ void UIPOperationGrid3DHexagonal::RunOperation(TArray<FTransform>& Transforms)
 
 					if (bFlipOddEven_X)
 					{
-						if (!(X % 2 == 0))
-						{
-							Location = Location;
-						}
-						else
+						if (X % 2 == 0)
 						{
 							Location.Y += InstanceSpace.Y * 0.5;
 						}
 					}
 					else
 					{
-						if (X % 2 == 0)
-						{
-							Location = Location;
-						}
-						else
+						if (!(X % 2 == 0))
 						{
 							Location.Y += InstanceSpace.Y * 0.5;
 						}

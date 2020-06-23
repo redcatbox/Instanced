@@ -53,7 +53,7 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 			bOrientBySplineEditCondition = true;
 		}
 
-		bool bLoop = SplineComponent->IsClosedLoop();
+		const bool bLoop = SplineComponent->IsClosedLoop();
 
 		if (bPlaceBetweenPoints)
 		{
@@ -90,14 +90,9 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 
 					if (bLoop)
 					{
-						if (i != InstancesNum)
-						{
-							NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local);
-						}
-						else
-						{
-							NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
-						}
+						NextLocation = i != InstancesNum
+							? NextLocation = SplineComponent->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::Local)
+							: NextLocation = SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::Local);
 					}
 
 					Location = (CurrentLocation + NextLocation) * 0.5;

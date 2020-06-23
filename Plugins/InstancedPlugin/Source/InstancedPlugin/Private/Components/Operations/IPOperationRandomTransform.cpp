@@ -58,14 +58,11 @@ FVector UIPOperationRandomTransform::RandomizeScale(FVector Scale)
 	UIPFunctionLibrary::MutateRandomSeed(RandomStream);
 	const FVector NewScale = UIPFunctionLibrary::RandomVectorInMinMax(RandomScaleMin, RandomScaleMax, bUseRandomStream, RandomStream);
 
-	if (bRandomizeScaleUniformly)
-	{
-		return Scale * FVector(NewScale.X, NewScale.X, NewScale.X);
-	}
-	else
-	{
-		return Scale * NewScale;
-	}
+	FVector Result = bRandomizeScaleUniformly
+		? Scale * FVector(NewScale.X, NewScale.X, NewScale.X)
+		: Scale * NewScale;
+
+	return Result;
 }
 
 void UIPOperationRandomTransform::RunOperation(TArray<FTransform>& Transforms)

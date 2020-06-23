@@ -28,9 +28,9 @@ void UIPOperationTransformsContribution::RunOperation(TArray<FTransform>& Transf
 		UIPFunctionLibrary::ShuffleArray(Transforms, bUseRandomStream, RandomStream);
 	}
 
-	int32 IdStart = (float)Transforms.Num() * ContributionRangeStart;
+	int32 IdStart = static_cast<float>(Transforms.Num()) * ContributionRangeStart;
 	IdStart = FMath::Clamp(IdStart, 0, Transforms.Num() - 1);
-	int32 IdEnd = IdStart + (float)Transforms.Num() * (ContributionRangeEnd - ContributionRangeStart);
+	int32 IdEnd = IdStart + static_cast<float>(Transforms.Num()) * (ContributionRangeEnd - ContributionRangeStart);
 	IdEnd = FMath::Clamp(IdEnd, IdStart, Transforms.Num() - 1);
 
 	TArray<FTransform> ResultTransforms;

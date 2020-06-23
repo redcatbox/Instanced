@@ -49,7 +49,7 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 
 		// Get vectors
 		const FVector P1C = Point1 - ArcCenter;
-		float Radius = P1C.Size();
+		const float Radius = P1C.Size();
 		const FVector P1CN = P1C.GetSafeNormal();
 		const FVector P2CN = (Point2 - ArcCenter).GetSafeNormal();
 		const FVector P3CN = (Point3 - ArcCenter).GetSafeNormal();
@@ -71,18 +71,15 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 			P23Angle = 360.f - P23Angle;
 		}
 
-		float ArcAngle = P12Angle + P23Angle;
+		const float ArcAngle = P12Angle + P23Angle;
 
 		for (auto& Transf : Transforms)
 		{
 			for (int32 i = 0; i < InstancesNum; i++)
 			{
-				float RotYaw = 0.f;
-
-				if (InstancesNum > 1)
-				{
-					RotYaw = ArcAngle * i / (InstancesNum - 1);
-				}
+				const float RotYaw = InstancesNum > 1
+					? 0.f
+					: ArcAngle * i / (InstancesNum - 1);
 
 				FQuat Rot = FRotationMatrix::MakeFromXZ(P1CN, UpN).ToQuat() * FQuat(FRotator(0.f, RotYaw, 0.f));
 				FRotator Rotation = Rot.Rotator();

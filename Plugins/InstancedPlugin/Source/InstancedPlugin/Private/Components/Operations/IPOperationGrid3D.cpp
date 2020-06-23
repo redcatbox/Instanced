@@ -45,7 +45,14 @@ void UIPOperationGrid3D::RunOperation(TArray<FTransform>& Transforms)
 
 					if (bRemoveInnerInstances)
 					{
-						if (X == 0 || X == InstancesNum3D.X - 1 || Y == 0 || Y == InstancesNum3D.Y - 1 || Z == 0 || Z == InstancesNum3D.Z - 1)
+						bool bIsInner = X == 0
+							|| X == InstancesNum3D.X - 1
+							|| Y == 0
+							|| Y == InstancesNum3D.Y - 1
+							|| Z == 0
+							|| Z == InstancesNum3D.Z - 1;
+
+						if (bIsInner)
 						{
 							ResultTransforms.Add(Transf * FTransform(Rotation, Location, FVector::OneVector));
 						}

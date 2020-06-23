@@ -39,28 +39,15 @@ void UIPFunctionLibrary::ShuffleArray(TArray<FTransform>& Array, bool bFromStrea
 // Vectors
 FVector UIPFunctionLibrary::RandomVectorInDelta(FVector DeltaVector, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream)
 {
-	float Min = -1.f;
+	const float Min = bPositiveOnly ? 0.f : -1.f;
 	const float Max = 1.f;
-	float Value;
 	TArray<float> Values;
-
-	if (bPositiveOnly)
-	{
-		Min = 0.f;
-	}
-
-	Values.Empty();
 
 	for (int32 i = 0; i < 3; i++)
 	{
-		if (bUseRandomStream)
-		{
-			Value = UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream);
-		}
-		else
-		{
-			Value = UKismetMathLibrary::RandomFloatInRange(Min, Max);
-		}
+		const float Value = bUseRandomStream
+			? UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream)
+			: UKismetMathLibrary::RandomFloatInRange(Min, Max);
 
 		Values.Add(Value);
 	}
@@ -90,28 +77,15 @@ FVector UIPFunctionLibrary::AbsVector(FVector Vector)
 // Rotators
 FRotator UIPFunctionLibrary::RandomRotatorInDelta(FRotator DeltaRotator, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream)
 {
-	float Min = -1.f;
+	const float Min = bPositiveOnly ? 0.f : -1.f;
 	const float Max = 1.f;
-	float Value;
 	TArray<float> Values;
-
-	if (bPositiveOnly)
-	{
-		Min = 0.f;
-	}
-
-	Values.Empty();
 
 	for (int32 i = 0; i < 3; i++)
 	{
-		if (bUseRandomStream)
-		{
-			Value = UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream);
-		}
-		else
-		{
-			Value = UKismetMathLibrary::RandomFloatInRange(Min, Max);
-		}
+		const float Value = bUseRandomStream
+			? UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream)
+			: UKismetMathLibrary::RandomFloatInRange(Min, Max);
 
 		Values.Add(Value);
 	}
