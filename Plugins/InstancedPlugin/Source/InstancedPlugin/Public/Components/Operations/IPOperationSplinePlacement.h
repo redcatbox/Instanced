@@ -18,7 +18,7 @@ public:
 	virtual void RunOperation(TArray<FTransform>& Transforms) override;
 #endif
 
-	UFUNCTION(BlueprintCallable, Category = "InstancedPlugin")
+	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
 		virtual USplineComponent* GetParentSplineComponent();
 
 #if WITH_EDITORONLY_DATA

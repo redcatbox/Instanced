@@ -15,7 +15,7 @@ public:
 	AIPTransformsArrayActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationTransformsArray* IPOperationTransformsArray;
 #endif
 };

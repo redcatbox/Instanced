@@ -18,16 +18,16 @@ public:
 	AIPRandomBoxAlignedActor();
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationRandomBox* IPOperationRandomBox;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationAlignByDirection* IPOperationAlignByDirection;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Operations")
+	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
 		UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

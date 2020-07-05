@@ -23,19 +23,19 @@ public:
 		UInstancedStaticMeshComponent* ParentISMComp;
 
 	/** Dynamic transformation amount */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DynamicTransform")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform)
 		FTransform DynamicTransformDelta;
 
 	/** Max distance to apply dynamic transformation */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DynamicTransform", Meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
 		float DynamicDistance;
 
 	/** Near factor for dynamic transformation distance */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DynamicTransform", Meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
 		float DynamicNearFactor;
 
 	/** Far factor for dynamic transformation distance */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DynamicTransform", Meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
 		float DynamicFarFactor;
 
 	UPROPERTY()

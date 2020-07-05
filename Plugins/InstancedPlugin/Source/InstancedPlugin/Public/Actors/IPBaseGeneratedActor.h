@@ -17,7 +17,7 @@ public:
 	AIPBaseGeneratedActor();
 
 #if WITH_EDITOR
-	UFUNCTION(CallInEditor, Category = "InstancedPlugin")
+	UFUNCTION(CallInEditor, Category = InstancedPlugin)
 		virtual void RunGeneration();
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;

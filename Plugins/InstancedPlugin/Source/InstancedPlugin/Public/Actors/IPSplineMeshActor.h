@@ -22,11 +22,11 @@ public:
 #endif
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
+	UPROPERTY(VisibleDefaultsOnly, Category = Components)
 		USplineComponent* SplineComponent;
 #endif
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
+	UPROPERTY(VisibleDefaultsOnly, Category = Components)
 		USplineMeshComponent* SplineMeshComponent;
 
 	UPROPERTY(TextExportTransient)

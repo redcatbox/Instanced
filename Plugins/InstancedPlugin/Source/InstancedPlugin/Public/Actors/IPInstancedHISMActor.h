@@ -13,6 +13,6 @@ class INSTANCEDPLUGIN_API AIPInstancedHISMActor : public AIPBaseInstancedActor
 public:
 	AIPInstancedHISMActor();
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Components")
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Components)
 		UHierarchicalInstancedStaticMeshComponent* HISMComponent;
 };
