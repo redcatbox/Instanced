@@ -25,4 +25,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = Generation)
 		bool bInverseGradient;
 #endif
+
+	/** Gradient start material parameter name */
+	UPROPERTY(EditAnywhere, Category = MaterialParameters)
+		FName GradientStartMaterialParameter;
+
+	/** Gradient end material parameter name */
+	UPROPERTY(EditAnywhere, Category = MaterialParameters)
+		FName GradientEndMaterialParameter;
 };

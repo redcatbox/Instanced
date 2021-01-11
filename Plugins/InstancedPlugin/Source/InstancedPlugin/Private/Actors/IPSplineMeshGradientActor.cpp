@@ -5,6 +5,9 @@
 
 AIPSplineMeshGradientActor::AIPSplineMeshGradientActor()
 {
+	GradientStartMaterialParameter = FName(TEXT("GradientStart"));
+	GradientEndMaterialParameter = FName(TEXT("GradientEnd"));
+
 #if WITH_EDITORONLY_DATA
 	bInverseGradient = false;
 #endif
@@ -46,8 +49,8 @@ void AIPSplineMeshGradientActor::GenerateSplineGradient()
 							SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexCurrent) / SplineLength : 1.f - SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexCurrent) / SplineLength;
 						const float GradientEnd = bInverseGradient ?
 							SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexNext) / SplineLength : 1.f - SplineComponent->GetDistanceAlongSplineAtSplinePoint(IndexNext) / SplineLength;
-						MID->SetScalarParameterValue(TEXT("GradientStart"), GradientStart);
-						MID->SetScalarParameterValue(TEXT("GradientEnd"), GradientEnd);
+						MID->SetScalarParameterValue(GradientStartMaterialParameter, GradientStart);
+						MID->SetScalarParameterValue(GradientEndMaterialParameter, GradientEnd);
 					}
 				}
 			}
