@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,27 +20,27 @@ public:
 #endif
 
 	UPROPERTY()
-		UInstancedStaticMeshComponent* ParentISMComp;
+	UInstancedStaticMeshComponent* ParentISMComp;
 
 	/** Dynamic transformation amount */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform)
-		FTransform DynamicTransformDelta;
+	FTransform DynamicTransformDelta;
 
 	/** Max distance to apply dynamic transformation */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
-		float DynamicDistance;
+	float DynamicDistance;
 
 	/** Near factor for dynamic transformation distance */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
-		float DynamicNearFactor;
+	float DynamicNearFactor;
 
 	/** Far factor for dynamic transformation distance */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DynamicTransform, Meta = (ClampMin = "0", UIMin = "0"))
-		float DynamicFarFactor;
+	float DynamicFarFactor;
 
 	UPROPERTY()
-		TArray<FTransform> InstancesTransformsOld;
+	TArray<FTransform> InstancesTransformsOld;
 
 	UPROPERTY()
-		TArray<FTransform> InstancesTransformsNew;
+	TArray<FTransform> InstancesTransformsNew;
 };

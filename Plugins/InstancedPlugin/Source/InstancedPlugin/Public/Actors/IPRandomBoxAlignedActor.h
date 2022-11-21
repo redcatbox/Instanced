@@ -1,8 +1,8 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
-#include "IPInstancedHISMActor.h"
+#include "IPInstancedISMActor.h"
 #include "Components/Operations/IPOperationTransformMultiply.h"
 #include "Components/Operations/IPOperationRandomBox.h"
 #include "Components/Operations/IPOperationAlignByDirection.h"
@@ -10,7 +10,7 @@
 #include "IPRandomBoxAlignedActor.generated.h"
 
 UCLASS()
-class INSTANCEDPLUGIN_API AIPRandomBoxAlignedActor : public AIPInstancedHISMActor
+class INSTANCEDPLUGIN_API AIPRandomBoxAlignedActor : public AIPInstancedISMActor
 {
 	GENERATED_BODY()
 
@@ -19,15 +19,15 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationTransformMultiply* IPOperationTransformMultiply;
+	UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationRandomBox* IPOperationRandomBox;
+	UIPOperationRandomBox* IPOperationRandomBox;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationAlignByDirection* IPOperationAlignByDirection;
+	UIPOperationAlignByDirection* IPOperationAlignByDirection;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationRandomTransform* IPOperationRandomTransform;
+	UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

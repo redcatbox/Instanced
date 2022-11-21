@@ -1,11 +1,9 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Objects/IPFunctionLibrary.h"
-#include "Components/SceneComponent.h"
 #include "IPBaseGeneratedActor.generated.h"
 
 UCLASS(Abstract)
@@ -18,11 +16,11 @@ public:
 
 #if WITH_EDITOR
 	UFUNCTION(CallInEditor, Category = InstancedPlugin)
-		virtual void RunGeneration();
+	virtual void RunGeneration();
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
 	UPROPERTY()
-		USceneComponent* DefaultSceneRoot;
+	class USceneComponent* DefaultSceneRoot;
 };

@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Actors/IPSplineMeshActor.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -14,7 +14,6 @@ AIPSplineMeshActor::AIPSplineMeshActor()
 	SplineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComponent"));
 	SplineComponent->SetupAttachment(RootComponent);
 	SplineComponent->Mobility = EComponentMobility::Static;
-	SplineComponent->bIsEditorOnly = true;
 #endif
 }
 

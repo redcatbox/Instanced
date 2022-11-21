@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Actors/IPRandomBoxAlignedActor.h"
 
@@ -6,28 +6,24 @@ AIPRandomBoxAlignedActor::AIPRandomBoxAlignedActor()
 {
 #if WITH_EDITORONLY_DATA
 	IPOperationTransformMultiply = CreateDefaultSubobject<UIPOperationTransformMultiply>(TEXT("IPOperationTransformMultiply"));
-	IPOperationTransformMultiply->SetupAttachment(HISMComponent);
+	IPOperationTransformMultiply->SetupAttachment(ISMComponent);
 	IPOperationTransformMultiply->Mobility = EComponentMobility::Static;
-	IPOperationTransformMultiply->bIsEditorOnly = true;
 	IPOperationTransformMultiply->ExecutionOrder = 0;
 	IPOperationTransformMultiply->OperationTransforms.Add(FPerInstanceTransform(-1, FTransform()));
 
 	IPOperationRandomBox = CreateDefaultSubobject<UIPOperationRandomBox>(TEXT("IPOperationRandomBox"));
-	IPOperationRandomBox->SetupAttachment(HISMComponent);
+	IPOperationRandomBox->SetupAttachment(ISMComponent);
 	IPOperationRandomBox->Mobility = EComponentMobility::Static;
-	IPOperationRandomBox->bIsEditorOnly = true;
 	IPOperationRandomBox->ExecutionOrder = 1;
 
 	IPOperationAlignByDirection = CreateDefaultSubobject<UIPOperationAlignByDirection>(TEXT("IPOperationAlignByDirection"));
-	IPOperationAlignByDirection->SetupAttachment(HISMComponent);
+	IPOperationAlignByDirection->SetupAttachment(ISMComponent);
 	IPOperationAlignByDirection->Mobility = EComponentMobility::Static;
-	IPOperationAlignByDirection->bIsEditorOnly = true;
 	IPOperationAlignByDirection->ExecutionOrder = 2;
 
 	IPOperationRandomTransform = CreateDefaultSubobject<UIPOperationRandomTransform>(TEXT("IPOperationRandomTransform"));
-	IPOperationRandomTransform->SetupAttachment(HISMComponent);
+	IPOperationRandomTransform->SetupAttachment(ISMComponent);
 	IPOperationRandomTransform->Mobility = EComponentMobility::Static;
-	IPOperationRandomTransform->bIsEditorOnly = true;
 	IPOperationRandomTransform->ExecutionOrder = 3;
 #endif
 }

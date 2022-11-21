@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Components/Operations/IPOperationArc.h"
 #include "InstancedPlugin.h"
@@ -9,7 +9,7 @@ UIPOperationArc::UIPOperationArc()
 	Point1 = FVector::ZeroVector;
 	Point2 = FVector(500.f, 500.f, 0.f);
 	Point3 = FVector(1000.f, 0.f, 0.f);
-	bOrientToCenter = false;
+	bOrientToArcAxis = false;
 	bInvertVertical = false;
 #endif
 }
@@ -78,14 +78,14 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 			for (int32 i = 0; i < InstancesNum; i++)
 			{
 				const float RotYaw = InstancesNum > 1
-					? 0.f
-					: ArcAngle * i / (InstancesNum - 1);
+					? ArcAngle * i / (InstancesNum - 1)
+					: 0.f;
 
 				FQuat Rot = FRotationMatrix::MakeFromXZ(P1CN, UpN).ToQuat() * FQuat(FRotator(0.f, RotYaw, 0.f));
 				FRotator Rotation = Rot.Rotator();
 				FVector Location = ArcCenter + Rotation.RotateVector(FVector::ForwardVector * Radius);
 
-				if (!bOrientToCenter)
+				if (!bOrientToArcAxis)
 				{
 					Rotation = FRotator::ZeroRotator;
 				}

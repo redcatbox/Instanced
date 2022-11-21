@@ -1,8 +1,8 @@
-// redbox, 2021
+// redbox, 2022
 
-#include "Components/Operations/IPOperationTransformsContribution.h"
+#include "Components/Operations/IPOperationTransformContribution.h"
 
-UIPOperationTransformsContribution::UIPOperationTransformsContribution()
+UIPOperationTransformContribution::UIPOperationTransformContribution()
 {
 #if WITH_EDITORONLY_DATA
 	bInstancesNumEditCondition = false;
@@ -12,7 +12,7 @@ UIPOperationTransformsContribution::UIPOperationTransformsContribution()
 }
 
 #if WITH_EDITOR
-void UIPOperationTransformsContribution::RunOperation(TArray<FTransform>& Transforms)
+void UIPOperationTransformContribution::RunOperation(TArray<FTransform>& Transforms)
 {
 	Super::RunOperation(Transforms);
 

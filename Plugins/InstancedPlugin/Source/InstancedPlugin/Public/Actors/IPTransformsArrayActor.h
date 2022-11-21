@@ -1,13 +1,13 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
-#include "IPInstancedHISMActor.h"
+#include "IPInstancedISMActor.h"
 #include "Components/Operations/IPOperationTransformsArray.h"
 #include "IPTransformsArrayActor.generated.h"
 
 UCLASS()
-class INSTANCEDPLUGIN_API AIPTransformsArrayActor : public AIPInstancedHISMActor
+class INSTANCEDPLUGIN_API AIPTransformsArrayActor : public AIPInstancedISMActor
 {
 	GENERATED_BODY()
 
@@ -16,6 +16,6 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationTransformsArray* IPOperationTransformsArray;
+	UIPOperationTransformsArray* IPOperationTransformsArray;
 #endif
 };

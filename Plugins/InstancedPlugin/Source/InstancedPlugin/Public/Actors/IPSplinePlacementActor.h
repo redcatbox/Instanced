@@ -1,8 +1,8 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
-#include "IPInstancedHISMActor.h"
+#include "IPInstancedISMActor.h"
 #include "Components/SplineComponent.h"
 #include "Components/Operations/IPOperationTransformMultiply.h"
 #include "Components/Operations/IPOperationSplinePlacement.h"
@@ -10,7 +10,7 @@
 #include "IPSplinePlacementActor.generated.h"
 
 UCLASS()
-class INSTANCEDPLUGIN_API AIPSplinePlacementActor : public AIPInstancedHISMActor
+class INSTANCEDPLUGIN_API AIPSplinePlacementActor : public AIPInstancedISMActor
 {
 	GENERATED_BODY()
 
@@ -20,15 +20,15 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly, Category = Components)
-		USplineComponent* SplineComponent;
+	USplineComponent* SplineComponent;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationTransformMultiply* IPOperationTransformMultiply;
+	UIPOperationTransformMultiply* IPOperationTransformMultiply;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationSplinePlacement* IPOperationSplinePlacement;
+	UIPOperationSplinePlacement* IPOperationSplinePlacement;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationRandomTransform* IPOperationRandomTransform;
+	UIPOperationRandomTransform* IPOperationRandomTransform;
 #endif
 };

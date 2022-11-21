@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,6 +20,6 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Direction to align */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector AlignDirection;
+	FVector AlignDirection;
 #endif
 };

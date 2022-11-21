@@ -1,6 +1,8 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Actors/IPBaseGeneratedActor.h"
+#include "Components/SceneComponent.h"
+#include "Objects/IPFunctionLibrary.h"
 
 AIPBaseGeneratedActor::AIPBaseGeneratedActor()
 {

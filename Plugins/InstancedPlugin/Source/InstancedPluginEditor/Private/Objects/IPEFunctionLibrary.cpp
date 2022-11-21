@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Objects/IPEFunctionLibrary.h"
 #include "InstancedPluginEditor.h"
@@ -86,12 +86,12 @@ void UIPEFunctionLibrary::ConvertStaticMeshesToInstances()
 
 				if (SMComps.Num() > 0)
 				{
-					IPTAActor->HISMComponent->SetStaticMesh(SM);
+					IPTAActor->ISMComponent->SetStaticMesh(SM);
 					UE_LOG(IPELog, Warning, TEXT("Material(s) from first found StaticMeshComponent will be used for all instances with the same static mesh!"));
 
 					for (int32 i = 0; i < SMComps[0]->GetNumMaterials(); i++)
 					{
-						IPTAActor->HISMComponent->SetMaterial(i, SMComps[0]->GetMaterial(i));
+						IPTAActor->ISMComponent->SetMaterial(i, SMComps[0]->GetMaterial(i));
 					}
 				}
 

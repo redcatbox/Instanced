@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 /** https://en.wikipedia.org/wiki/Archimedean_spiral */
 
@@ -22,22 +22,22 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Initial spiral velocity */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		FVector InitialLinearVelocity;
+	FVector InitialLinearVelocity;
 
 	/** Linear acceleration */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		FVector LinearAcceleration;
+	FVector LinearAcceleration;
 
 	/** Angular velocity */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		FVector AngularVelocity;
+	FVector AngularVelocity;
 
 	/** Time */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		float Time;
+	float Time;
 
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOrientToCentralAxis;
+	bool bOrientToCentralAxis;
 #endif
 };

@@ -1,11 +1,12 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Actors/IPInstancedHISMActor.h"
+#include "Components/HierarchicalInstancedStaticMeshComponent.h"
 
 AIPInstancedHISMActor::AIPInstancedHISMActor()
 {
-	HISMComponent = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent"));
-	HISMComponent->SetupAttachment(RootComponent);
-	HISMComponent->Mobility = EComponentMobility::Static;
-	HISMComponent->CreationMethod = EComponentCreationMethod::Native;
+	ISMComponent = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent"));
+	ISMComponent->SetupAttachment(RootComponent);
+	ISMComponent->Mobility = EComponentMobility::Static;
+	ISMComponent->CreationMethod = EComponentCreationMethod::Native;
 }

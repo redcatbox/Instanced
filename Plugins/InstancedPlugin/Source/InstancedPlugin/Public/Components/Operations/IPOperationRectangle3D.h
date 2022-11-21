@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,22 +20,22 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Create corner meshes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bCornersMeshes;
+	bool bCornersMeshes;
 
 	/** Orient corner meshes around the object */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOrientCornersMeshesAround;
+	bool bOrientCornersMeshesAround;
 
 	/** Create sides meshes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bSidesMeshes;
+	bool bSidesMeshes;
 
 	/** Orient sides meshes outside */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOrientSidesMeshesOutside;
+	bool bOrientSidesMeshesOutside;
 
 	/** Orient sides meshes inside */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bOrientSidesMeshesOutside"))
-		bool bReverseSidesMeshesOrientation;
+	bool bReverseSidesMeshesOrientation;
 #endif
 };

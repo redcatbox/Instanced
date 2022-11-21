@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,25 +20,25 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Space of every instance from it's center */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bInstanceSpaceEditCond"))
-		FVector InstanceSpace;
+	FVector InstanceSpace;
 
 	/** Should set instance space from mesh bounds? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bInstanceSpaceFromMeshBounds;
+	bool bInstanceSpaceFromMeshBounds;
 
 	/** Should instance space include current scale? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bInstanceSpaceFromMeshBounds"))
-		bool bInstanceSpaceFromMeshBoundsWithCurrentScale;
+	bool bInstanceSpaceFromMeshBoundsWithCurrentScale;
 
 	UPROPERTY()
-		bool bHalfSpaceOffsetEditCond;
+	bool bHalfSpaceOffsetEditCond;
 
 	/** Should instances be offset on half space from it's center? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bHalfSpaceOffsetEditCond"))
-		bool bHalfSpaceOffset;
+	bool bHalfSpaceOffset;
 #endif
 
 protected:
 	UPROPERTY()
-		bool bInstanceSpaceEditCond;
+	bool bInstanceSpaceEditCond;
 };

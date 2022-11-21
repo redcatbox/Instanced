@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -17,12 +17,12 @@ public:
 	virtual void RunOperation(TArray<FTransform>& Transforms) override;
 
 	UFUNCTION()
-		FTransform Operation(FTransform& A, FTransform& B);
+	FTransform Operation(FTransform& A, FTransform& B);
 #endif
 
 #if WITH_EDITORONLY_DATA
 	/** Increment by instance id */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bPerInstanceIncremental;
+	bool bPerInstanceIncremental;
 #endif
 };

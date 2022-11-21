@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -14,8 +14,8 @@ public:
 	UIPOperationDynamicComponent();
 
 	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
-		virtual void RunOperationDynamic();
+	virtual void RunOperationDynamic();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = InstancedPlugin)
-		void BlueprintOperationDynamic();
+	void BlueprintOperationDynamic();
 };

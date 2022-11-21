@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,22 +20,22 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Arc 1st point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector Point1;
+	FVector Point1;
 
 	/** Arc 2nd point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector Point2;
+	FVector Point2;
 
 	/** Arc 3rd point */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector Point3;
+	FVector Point3;
 
 	/** Should instances be oriented to central axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOrientToCenter;
+	bool bOrientToArcAxis;
 
 	/** Should invert vertical? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bInvertVertical;
+	bool bInvertVertical;
 #endif
 };

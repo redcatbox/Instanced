@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,10 +20,10 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Center to align from */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector AlignPoint;
+	FVector AlignPoint;
 
 	/** Distance to align at */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ClampMin = "0", UIMin = "0"))
-		float AlignDistance;
+	float AlignDistance;
 #endif
 };

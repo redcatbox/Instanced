@@ -1,7 +1,8 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Components/Operations/IPOperationComponent.h"
 #include "Actors/IPBaseGeneratedActor.h"
+#include "Components/InstancedStaticMeshComponent.h"
 
 UIPOperationComponent::UIPOperationComponent()
 {
@@ -24,16 +25,6 @@ void UIPOperationComponent::RunOperation(TArray<FTransform>& Transforms)
 	{
 		Transforms = ResultTransforms;
 	}
-
-	//for (auto& Transf : Transforms)
-	//{
-	//	for (int32 i = 0; i < InstancesNum; i++)
-	//	{
-	//		FTransform ProcTransf = FTransform();
-	//		ResultTransforms.Add(Transf * ProcTransf);
-	//	}
-	//}
-	//Transforms = ResultTransforms;
 }
 
 void UIPOperationComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)

@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,33 +20,33 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Number of instances to create */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ShowOnlyInnerProperties))
-		FIntVector InstancesNum3D;
+	FIntVector InstancesNum3D;
 
 	UPROPERTY()
-		bool bRemoveInnerInstancesEditCond;
+	bool bRemoveInnerInstancesEditCond;
 
 	/** Remove inner instances */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRemoveInnerInstancesEditCond"))
-		bool bRemoveInnerInstances;
+	bool bRemoveInnerInstances;
 
 	/** Override world axes with custom axes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bUseCustomAxes;
+	bool bUseCustomAxes;
 
 	/** Custom X axis */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
-		FVector CustomAxis_X;
+	FVector CustomAxis_X;
 
 	/** Custom Y axis */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
-		FVector CustomAxis_Y;
+	FVector CustomAxis_Y;
 
 	/** Custom Z axis */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true, EditCondition = "bUseCustomAxes"))
-		FVector CustomAxis_Z;
+	FVector CustomAxis_Z;
 
 	/** Orient by custom axes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bUseCustomAxes"))
-		bool bOrientByCustomAxes;
+	bool bOrientByCustomAxes;
 #endif
 };

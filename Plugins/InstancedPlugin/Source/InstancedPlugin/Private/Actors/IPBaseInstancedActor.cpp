@@ -1,23 +1,26 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Actors/IPBaseInstancedActor.h"
+#include "Components/HierarchicalInstancedStaticMeshComponent.h"
+#include "Components/Operations/IPOperationComponent.h"
 
 #if WITH_EDITOR
 void AIPBaseInstancedActor::RunGeneration()
 {
 	Super::RunGeneration();
-	TArray<UActorComponent*> ACompISMCs;
-	GetComponents(UInstancedStaticMeshComponent::StaticClass(), ACompISMCs);
 
-	if (ACompISMCs.Num() > 0)
+	TArray<UActorComponent*> ACompISMs;
+	GetComponents(UInstancedStaticMeshComponent::StaticClass(), ACompISMs);
+
+	if (ACompISMs.Num() > 0)
 	{
-		for (auto& ACompISM : ACompISMCs)
+		for (auto& ACompISM : ACompISMs)
 		{
 			if (UInstancedStaticMeshComponent* ISMComp = Cast<UInstancedStaticMeshComponent>(ACompISM))
 			{
 				TArray<FTransform> Transforms;
 				TArray<USceneComponent*> ISMCompChildren;
-				ISMComp->GetChildrenComponents(false, ISMCompChildren);
+				ISMComp->GetChildrenComponents(true, ISMCompChildren);
 
 				if (ISMCompChildren.Num() > 0)
 				{
@@ -45,7 +48,7 @@ void AIPBaseInstancedActor::RunGeneration()
 						}
 					}
 				}
-				else return;
+				else continue;
 
 				UHierarchicalInstancedStaticMeshComponent* HISMComp = Cast<UHierarchicalInstancedStaticMeshComponent>(ISMComp);
 				if (HISMComp)
@@ -53,24 +56,12 @@ void AIPBaseInstancedActor::RunGeneration()
 					HISMComp->bAutoRebuildTreeOnInstanceChanges = false;
 				}
 
-				//if (ISMComp->GetInstanceCount() != Transforms.Num()) // causes editor crash on copy/paste or duplicate!
-				//{
-
 				ISMComp->ClearInstances();
 
 				for (auto& Transf : Transforms)
 				{
 					ISMComp->AddInstance(Transf);
 				}
-
-				//}
-				//else
-				//{
-				//	for (int32 i = 0; i < Transforms.Num(); i++)
-				//	{
-				//		ISMComp->UpdateInstanceTransform(i, Transforms[i], false, false, false);
-				//	}
-				//}
 
 				if (HISMComp)
 				{

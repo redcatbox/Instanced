@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -23,12 +23,12 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleDefaultsOnly, Category = Components)
-		USplineComponent* SplineComponent;
+	USplineComponent* SplineComponent;
 #endif
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Components)
-		USplineMeshComponent* SplineMeshComponent;
+	USplineMeshComponent* SplineMeshComponent;
 
 	UPROPERTY(TextExportTransient)
-		TArray<USplineMeshComponent*> SplineMeshComponents;
+	TArray<USplineMeshComponent*> SplineMeshComponents;
 };

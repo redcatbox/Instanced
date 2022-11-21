@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -17,20 +17,20 @@ public:
 	virtual void RunGeneration() override;
 
 	UFUNCTION(BlueprintCallable, Category = Generation)
-		virtual void GenerateSplineGradient();
+	virtual void GenerateSplineGradient();
 #endif
 
 #if WITH_EDITORONLY_DATA
 	/** Should reverse gradient direction? */
 	UPROPERTY(EditAnywhere, Category = Generation)
-		bool bInverseGradient;
+	bool bInverseGradient;
 #endif
 
 	/** Gradient start material parameter name */
 	UPROPERTY(EditAnywhere, Category = MaterialParameters)
-		FName GradientStartMaterialParameter;
+	FName GradientStartMaterialParameter;
 
 	/** Gradient end material parameter name */
 	UPROPERTY(EditAnywhere, Category = MaterialParameters)
-		FName GradientEndMaterialParameter;
+	FName GradientEndMaterialParameter;
 };

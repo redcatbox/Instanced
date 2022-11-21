@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -14,18 +14,18 @@ public:
 #if WITH_EDITOR
 	/** Replace selected StaticMeshActors or actors containing StaticMeshComponents with instances */
 	UFUNCTION()
-		static void ConvertStaticMeshesToInstances();
+	static void ConvertStaticMeshesToInstances();
 
 	/** Replace selected instances with static meshes */
 	UFUNCTION()
-		static void ConvertInstancesToStaticMeshes();
+	static void ConvertInstancesToStaticMeshes();
 
 	/** Check selected actors and instances for containing negative scale values */
 	UFUNCTION()
-		static void CheckNegativeScale();
+	static void CheckNegativeScale();
 
 	/** Find the average location (centroid) of an array of Actors snapped to specified grid size */
 	UFUNCTION()
-		static FVector GetLocationArrayAverageWithGridSnapping(const TArray<FVector>& Locations, float GridSize = 100.f);
+	static FVector GetLocationArrayAverageWithGridSnapping(const TArray<FVector>& Locations, float GridSize = 100.f);
 #endif
 };

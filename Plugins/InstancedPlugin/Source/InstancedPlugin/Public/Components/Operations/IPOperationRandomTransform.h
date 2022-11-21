@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -17,76 +17,76 @@ public:
 	virtual void RunOperation(TArray<FTransform>& Transforms) override;
 
 	UFUNCTION()
-		FVector RandomizeLocation(FVector Location);
+	FVector RandomizeLocation(FVector Location);
 
 	UFUNCTION()
-		FRotator RandomizeRotation(FRotator Rotation);
+	FRotator RandomizeRotation(FRotator Rotation);
 
 	UFUNCTION()
-		FRotator RandomizeRotationByFixedRotatorSteps(FRotator Rotation);
+	FRotator RandomizeRotationByFixedRotatorSteps(FRotator Rotation);
 
 	UFUNCTION()
-		FVector RandomizeScale(FVector Scale);
+	FVector RandomizeScale(FVector Scale);
 #endif
 
 #if WITH_EDITORONLY_DATA
 	/** Should location be randomized? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bRandomLocation;
+	bool bRandomLocation;
 
 	/** Min random location */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomLocation"))
-		FVector RandomLocationMin;
+	FVector RandomLocationMin;
 
 	/** Max random location */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomLocation"))
-		FVector RandomLocationMax;
+	FVector RandomLocationMax;
 
 	/** Should rotation be randomized? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bRandomRotation;
+	bool bRandomRotation;
 
 	/** Min random rotation */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotation"))
-		FRotator RandomRotationMin;
+	FRotator RandomRotationMin;
 
 	/** Max random rotation */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotation"))
-		FRotator RandomRotationMax;
+	FRotator RandomRotationMax;
 
 	/** Should rotation be randomized by fixed rotator steps? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotation"))
-		bool bRandomRotationByFixedRotatorSteps;
+	bool bRandomRotationByFixedRotatorSteps;
 
 	UPROPERTY()
-		bool bRandomRotationByFixedRotatorStepsEditCondition;
+	bool bRandomRotationByFixedRotatorStepsEditCondition;
 
 	/** Fixed rotator */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCondition"))
-		FRotator FixedRotator;
+	FRotator FixedRotator;
 
 	/** Min number of steps */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCondition"))
-		int32 StepsMin;
+	int32 StepsMin;
 
 	/** Max number of steps */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCondition"))
-		int32 StepsMax;
+	int32 StepsMax;
 
 	/** Should scale be randomized? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bRandomScale;
+	bool bRandomScale;
 
 	/** Should scale be randomized uniformly (take only X value)? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomScale"))
-		bool bRandomizeScaleUniformly;
+	bool bRandomizeScaleUniformly;
 
 	/** Min random scale*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomScale"))
-		FVector RandomScaleMin;
+	FVector RandomScaleMin;
 
 	/** Max random scale */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomScale"))
-		FVector RandomScaleMax;
+	FVector RandomScaleMax;
 #endif
 };

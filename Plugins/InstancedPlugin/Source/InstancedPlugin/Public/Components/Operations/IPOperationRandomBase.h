@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,13 +20,13 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Should random stream be used for randomization? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bUseRandomStream;
+	bool bUseRandomStream;
 
 	/** Random stream seed value */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bUseRandomStream"))
-		int32 RandomStreamSeed;
+	int32 RandomStreamSeed;
 
 	UPROPERTY()
-		FRandomStream RandomStream;
+	FRandomStream RandomStream;
 #endif
 };

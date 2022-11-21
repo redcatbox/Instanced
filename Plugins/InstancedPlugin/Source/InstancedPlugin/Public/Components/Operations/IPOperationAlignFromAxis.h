@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,14 +20,14 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Axis start */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector AlignAxisStart;
+	FVector AlignAxisStart;
 
 	/** Axis end */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector AlignAxisEnd;
+	FVector AlignAxisEnd;
 
 	/** Distance to align at */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ClampMin = "0", UIMin = "0"))
-		float AlignDistance;
+	float AlignDistance;
 #endif
 };

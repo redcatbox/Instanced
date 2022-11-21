@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -16,5 +16,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Operations)
-		UIPOperationDynamicTransform* IPOperationDynamicTransform;
+	UIPOperationDynamicTransform* IPOperationDynamicTransform;
 };

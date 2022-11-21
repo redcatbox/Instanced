@@ -1,17 +1,17 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
 #include "IPOperationRandomBase.h"
-#include "IPOperationTransformsContribution.generated.h"
+#include "IPOperationTransformContribution.generated.h"
 
 UCLASS(Meta = (BlueprintSpawnableComponent))
-class INSTANCEDPLUGIN_API UIPOperationTransformsContribution : public UIPOperationRandomBase
+class INSTANCEDPLUGIN_API UIPOperationTransformContribution : public UIPOperationRandomBase
 {
 	GENERATED_BODY()
 
 public:
-	UIPOperationTransformsContribution();
+	UIPOperationTransformContribution();
 
 #if WITH_EDITOR
 	virtual void RunOperation(TArray<FTransform>& Transforms) override;
@@ -20,10 +20,10 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Contribution of processed transforms */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
-		float ContributionRangeStart;
+	float ContributionRangeStart;
 
 	/** Contribution of processed transforms */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
-		float ContributionRangeEnd;
+	float ContributionRangeEnd;
 #endif
 };

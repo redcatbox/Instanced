@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -60,12 +60,12 @@ public:
 	This operation will replace existing OperationTransforms data.
 	This operation will not update instances automatically. */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = Operation)
-		virtual void CopyTransforms();
+	virtual void CopyTransforms();
 #endif
 
 #if WITH_EDITORONLY_DATA
 	/** Transforms to use in operation. If contains any with InstanceId = -1, that one will be applied to all instances. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (ShowOnlyInnerProperties))
-		TArray<FPerInstanceTransform> OperationTransforms;
+	TArray<FPerInstanceTransform> OperationTransforms;
 #endif
 };

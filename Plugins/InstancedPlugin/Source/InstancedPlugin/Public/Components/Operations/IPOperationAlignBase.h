@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -17,32 +17,32 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Should orient to surface? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bAlignToSurface;
+	bool bAlignToSurface;
 
 	/** How much to offset location in trace direction */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		float OffsetInTraceDirection;
+	float OffsetInTraceDirection;
 
 	/** Should reverse alignment? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bReverse;
+	bool bReverse;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | TraceParameters")
-		TEnumAsByte<ETraceTypeQuery> TraceChannel;
+	TEnumAsByte<ETraceTypeQuery> TraceChannel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | TraceParameters")
-		bool bTraceComplex;
+	bool bTraceComplex;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | TraceParameters")
-		TArray<AActor*> ActorsToIgnore;
+	TArray<AActor*> ActorsToIgnore;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | TraceParameters")
-		bool bIgnoreSelf;
+	bool bIgnoreSelf;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | TraceParameters")
-		TEnumAsByte<EDrawDebugTrace::Type> DrawDebugType;
+	TEnumAsByte<EDrawDebugTrace::Type> DrawDebugType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | TraceParameters")
-		float DrawTime;
+	float DrawTime;
 #endif
 };

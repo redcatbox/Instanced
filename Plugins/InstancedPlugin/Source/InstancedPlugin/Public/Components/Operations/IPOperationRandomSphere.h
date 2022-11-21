@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,14 +20,14 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Should location be randomized? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector BoxExtent;
+	FVector BoxExtent;
 
 	/** Should instances be generated on sphere surface only? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOnSurfaceOnly;
+	bool bOnSurfaceOnly;
 
 	/** Should instances be oriented to sphere center? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOrientToCenter;
+	bool bOrientToCenter;
 #endif
 };

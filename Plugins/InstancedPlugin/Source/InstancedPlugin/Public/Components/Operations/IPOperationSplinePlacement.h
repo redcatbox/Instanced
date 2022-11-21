@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -19,33 +19,33 @@ public:
 #endif
 
 	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
-		virtual USplineComponent* GetParentSplineComponent();
+	virtual USplineComponent* GetParentSplineComponent();
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY()
-		bool bOrientBySplineEditCondition;
+	bool bOrientBySplineEditCondition;
 
 	UPROPERTY()
-		bool bPlaceBetweenPointsEditCondition;
+	bool bPlaceBetweenPointsEditCondition;
 
 	/** Should instances be oriented by spline? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bOrientBySplineEditCondition"))
-		bool bOrientBySpline;
+	bool bOrientBySpline;
 
 	/** Should instances be placed between spline points? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bPlaceBetweenPointsEditCondition"))
-		bool bPlaceBetweenPoints;
+	bool bPlaceBetweenPoints;
 
 	/** Should instances be oriented from point to point? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
-		bool bOrientByPoints;
+	bool bOrientByPoints;
 
 	/** Should instances be scaled between points? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
-		bool bScaleBetweenPoints;
+	bool bScaleBetweenPoints;
 
 	/** Size of instance on X axis to scale between points */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bPlaceBetweenPoints"))
-		float XSizeToScale;
+	float XSizeToScale;
 #endif
 };

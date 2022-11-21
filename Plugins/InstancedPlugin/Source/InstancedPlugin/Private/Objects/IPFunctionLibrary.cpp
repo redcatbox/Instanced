@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #include "Objects/IPFunctionLibrary.h"
 #include "UObject/ConstructorHelpers.h"
@@ -34,7 +34,7 @@ void UIPFunctionLibrary::ShuffleArray(TArray<FTransform>& Array, bool bFromStrea
 			}
 		}
 }
-// Random
+
 
 // Vectors
 FVector UIPFunctionLibrary::RandomVectorInDelta(FVector DeltaVector, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream)
@@ -72,7 +72,7 @@ FVector UIPFunctionLibrary::AbsVector(FVector Vector)
 {
 	return Vector.GetAbs();
 }
-// Vectors
+
 
 // Rotators
 FRotator UIPFunctionLibrary::RandomRotatorInDelta(FRotator DeltaRotator, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream)
@@ -105,5 +105,4 @@ FRotator UIPFunctionLibrary::ClampRotator(FRotator Rotator, FRotator RotatorMin,
 		FMath::Clamp(Rotator.Yaw, RotatorMin.Yaw, RotatorMax.Yaw),
 		FMath::Clamp(Rotator.Roll, RotatorMin.Roll, RotatorMax.Roll));
 }
-// Rotators
 #endif

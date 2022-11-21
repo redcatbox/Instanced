@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,10 +20,10 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Should odd and even rows be fliIPed along X axis? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bFlipOddEven_X;
+	bool bFlipOddEven_X;
 
 	/** Should grid be symmetrical along Y axiz? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bSymmetrical_Y;
+	bool bSymmetrical_Y;
 #endif
 };

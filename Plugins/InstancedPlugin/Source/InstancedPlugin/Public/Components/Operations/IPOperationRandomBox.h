@@ -1,4 +1,4 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
@@ -20,10 +20,10 @@ public:
 #if WITH_EDITORONLY_DATA
 	/** Box extent */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (MakeEditWidget = true))
-		FVector BoxExtent;
+	FVector BoxExtent;
 
 	/** Should instances be generated on box surface only? */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters")
-		bool bOnSurfaceOnly;
+	bool bOnSurfaceOnly;
 #endif
 };

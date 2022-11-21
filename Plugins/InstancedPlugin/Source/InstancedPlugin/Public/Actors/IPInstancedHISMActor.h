@@ -1,18 +1,15 @@
-// redbox, 2021
+// redbox, 2022
 
 #pragma once
 
-#include "IPBaseInstancedActor.h"
+#include "IPInstancedISMActor.h"
 #include "IPInstancedHISMActor.generated.h"
 
 UCLASS(Blueprintable)
-class INSTANCEDPLUGIN_API AIPInstancedHISMActor : public AIPBaseInstancedActor
+class INSTANCEDPLUGIN_API AIPInstancedHISMActor : public AIPInstancedISMActor
 {
 	GENERATED_BODY()
 
 public:
 	AIPInstancedHISMActor();
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Components)
-		UHierarchicalInstancedStaticMeshComponent* HISMComponent;
 };
