@@ -1,6 +1,7 @@
 // redbox, 2022
 
 #include "Components/Operations/IPOperationRandomBox.h"
+#include "Objects/IPFunctionLibrary.h"
 
 UIPOperationRandomBox::UIPOperationRandomBox()
 {

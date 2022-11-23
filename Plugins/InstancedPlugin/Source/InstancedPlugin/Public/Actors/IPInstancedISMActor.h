@@ -16,4 +16,13 @@ public:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Components)
 	UInstancedStaticMeshComponent* ISMComponent;
+
+#if WITH_EDITORONLY_DATA
+	UPROPERTY(EditAnywhere, Category = InstancedPlugin)
+	TSubclassOf<UInstancedStaticMeshComponent> InstancedStaticMeshComponentClass;
+#endif
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
 };

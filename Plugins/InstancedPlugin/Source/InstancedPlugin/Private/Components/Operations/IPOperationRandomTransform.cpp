@@ -1,6 +1,7 @@
 // redbox, 2022
 
 #include "Components/Operations/IPOperationRandomTransform.h"
+#include "Objects/IPFunctionLibrary.h"
 
 UIPOperationRandomTransform::UIPOperationRandomTransform()
 {

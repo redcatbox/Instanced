@@ -1,6 +1,7 @@
 // redbox, 2022
 
 #include "Components/Operations/IPOperationTransformContribution.h"
+#include "Objects/IPFunctionLibrary.h"
 
 UIPOperationTransformContribution::UIPOperationTransformContribution()
 {
