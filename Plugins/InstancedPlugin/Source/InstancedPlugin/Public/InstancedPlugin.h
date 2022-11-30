@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(IPLog, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogIP, Log, All);
 
 class FInstancedPluginModule : public IModuleInterface
 {

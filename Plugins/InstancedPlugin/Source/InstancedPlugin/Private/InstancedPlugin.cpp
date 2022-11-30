@@ -4,7 +4,7 @@
 
 #define LOCTEXT_NAMESPACE "FInstancedPluginModule"
 
-DEFINE_LOG_CATEGORY(IPLog);
+DEFINE_LOG_CATEGORY(LogIP);
 
 void FInstancedPluginModule::StartupModule()
 {

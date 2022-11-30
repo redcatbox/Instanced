@@ -30,12 +30,12 @@ void UIPOperationArc::RunOperation(TArray<FTransform>& Transforms)
 
 	if (FVector::Parallel(P12.GetSafeNormal(), P23.GetSafeNormal()))
 	{
-		UE_LOG(IPLog, Warning, TEXT("Three arc points are collinear, can't create arc!"));
+		UE_LOG(LogIP, Warning, TEXT("Three arc points are collinear, can't create arc!"));
 		ResultTransforms = Transforms;
 	}
 	else if (Point1.Equals(Point2, 1.f) || Point2.Equals(Point3, 1.f) || Point1.Equals(Point3, 1.f))
 	{
-		UE_LOG(IPLog, Warning, TEXT("Two of three arc points are coincident, can't create arc!"));
+		UE_LOG(LogIP, Warning, TEXT("Two of three arc points are coincident, can't create arc!"));
 		ResultTransforms = Transforms;
 	}
 	else
