@@ -7,6 +7,7 @@ AIPInstancedISMActor::AIPInstancedISMActor()
 	InstancedStaticMeshComponentClass = UInstancedStaticMeshComponent::StaticClass();
 	ISMComponent = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("ISMComponent"));
 	ISMComponent->Mobility = EComponentMobility::Static;
+	ISMComponent->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
 	ISMComponent->SetupAttachment(RootComponent);
 }
 

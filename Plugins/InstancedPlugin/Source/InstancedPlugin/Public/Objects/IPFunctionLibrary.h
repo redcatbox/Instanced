@@ -22,11 +22,11 @@ public:
 	static void ShuffleArray(TArray<FTransform>& Array, bool bFromStream, FRandomStream& RandomStream);
 
 	/** Get random vector in delta vector */
-	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+	UFUNCTION(BlueprintPure, Category = InstancedPlugin)
 	static FVector RandomVectorInDelta(FVector DeltaVector, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream);
 
 	/** Get random vector between min and max vectors */
-	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+	UFUNCTION(BlueprintPure, Category = InstancedPlugin)
 	static FVector RandomVectorInMinMax(FVector VectorMin, FVector VectorMax, bool bUseRandomStream, FRandomStream RandomStream);
 
 	/** Clamp vector between min and max vectors */
@@ -38,11 +38,11 @@ public:
 	static FVector AbsVector(FVector Vector);
 
 	/** Get random rotator in delta rotator */
-	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+	UFUNCTION(BlueprintPure, Category = InstancedPlugin)
 	static FRotator RandomRotatorInDelta(FRotator DeltaRotator, bool bPositiveOnly, bool bUseRandomStream, FRandomStream RandomStream);
 
 	/** Get random rotator between min and max rotators */
-	UFUNCTION(BlueprintCallable, Category = InstancedPlugin)
+	UFUNCTION(BlueprintPure, Category = InstancedPlugin)
 	static FRotator RandomRotatorInMinMax(FRotator RotatorMin, FRotator RotatorMax, bool bUseRandomStream, FRandomStream RandomStream);
 	
 	/** Clamp rotator between min and max rotators */
