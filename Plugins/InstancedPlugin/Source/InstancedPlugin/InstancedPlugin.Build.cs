@@ -35,7 +35,8 @@ public class InstancedPlugin : ModuleRules
 			new string[]
 			{
 				"CoreUObject",
-				"Engine"
+				"Engine",
+				"ProceduralMeshComponent"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

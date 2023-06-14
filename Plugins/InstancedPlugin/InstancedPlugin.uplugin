@@ -25,9 +25,15 @@
 			]
 		},
 		{
-			"Name" : "InstancedPluginEditor",
-			"Type" : "Editor",
-			"LoadingPhase" : "Default"
+			"Name": "InstancedPluginEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ProceduralMeshComponent",
+			"Enabled": true
 		}
 	]
 }
