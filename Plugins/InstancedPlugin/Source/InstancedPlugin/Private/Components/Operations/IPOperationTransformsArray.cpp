@@ -5,7 +5,7 @@
 UIPOperationTransformsArray::UIPOperationTransformsArray()
 {
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
+	bInstancesNumEditCond = false;
 #endif
 }
 

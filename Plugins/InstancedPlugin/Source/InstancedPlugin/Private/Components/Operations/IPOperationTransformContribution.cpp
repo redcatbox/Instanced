@@ -6,7 +6,7 @@
 UIPOperationTransformContribution::UIPOperationTransformContribution()
 {
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
+	bInstancesNumEditCond = false;
 	ContributionRangeStart = 0.f;
 	ContributionRangeEnd = 1.f;
 #endif

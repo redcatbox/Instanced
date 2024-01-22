@@ -5,8 +5,8 @@
 UIPOperationSplinePlacement::UIPOperationSplinePlacement()
 {
 #if WITH_EDITORONLY_DATA
-	bOrientBySplineEditCondition = true;
-	bPlaceBetweenPointsEditCondition = true;
+	bOrientBySplineEditCond = true;
+	bPlaceBetweenPointsEditCond = true;
 	bOrientBySpline = false;
 	bPlaceBetweenPoints = false;
 	bOrientByPoints = false;
@@ -25,32 +25,32 @@ void UIPOperationSplinePlacement::RunOperation(TArray<FTransform>& Transforms)
 
 		if (bPlaceBetweenPoints)
 		{
-			bInstancesNumEditCondition = false;
+			bInstancesNumEditCond = false;
 			InstancesNum = SplineComponent->GetNumberOfSplinePoints() - 1;
 		}
 		else
 		{
-			bInstancesNumEditCondition = true;
+			bInstancesNumEditCond = true;
 		}
 
 		if (bOrientBySpline)
 		{
-			bPlaceBetweenPointsEditCondition = false;
+			bPlaceBetweenPointsEditCond = false;
 			bPlaceBetweenPoints = false;
 		}
 		else
 		{
-			bPlaceBetweenPointsEditCondition = true;
+			bPlaceBetweenPointsEditCond = true;
 		}
 
 		if (bPlaceBetweenPoints)
 		{
-			bOrientBySplineEditCondition = false;
+			bOrientBySplineEditCond = false;
 			bOrientBySpline = false;
 		}
 		else
 		{
-			bOrientBySplineEditCondition = true;
+			bOrientBySplineEditCond = true;
 		}
 
 		const bool bLoop = SplineComponent->IsClosedLoop();

@@ -59,18 +59,18 @@ public:
 	bool bRandomRotationByFixedRotatorSteps;
 
 	UPROPERTY()
-	bool bRandomRotationByFixedRotatorStepsEditCondition;
+	bool bRandomRotationByFixedRotatorStepsEditCond;
 
 	/** Fixed rotator */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCond"))
 	FRotator FixedRotator;
 
 	/** Min number of steps */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCond"))
 	int32 StepsMin;
 
 	/** Max number of steps */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCondition"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bRandomRotationByFixedRotatorStepsEditCond"))
 	int32 StepsMax;
 
 	/** Should scale be randomized? */

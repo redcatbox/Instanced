@@ -46,7 +46,7 @@ FVector UIPFunctionLibrary::RandomVectorInDelta(FVector DeltaVector, bool bPosit
 	for (int32 i = 0; i < 3; i++)
 	{
 		const float Value = bUseRandomStream
-			? UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream)
+			? UKismetMathLibrary::RandomFloatInRangeFromStream(RandomStream, Min, Max)
 			: UKismetMathLibrary::RandomFloatInRange(Min, Max);
 
 		Values.Add(Value);
@@ -84,7 +84,7 @@ FRotator UIPFunctionLibrary::RandomRotatorInDelta(FRotator DeltaRotator, bool bP
 	for (int32 i = 0; i < 3; i++)
 	{
 		const float Value = bUseRandomStream
-			? UKismetMathLibrary::RandomFloatInRangeFromStream(Min, Max, RandomStream)
+			? UKismetMathLibrary::RandomFloatInRangeFromStream(RandomStream, Min, Max)
 			: UKismetMathLibrary::RandomFloatInRange(Min, Max);
 
 		Values.Add(Value);

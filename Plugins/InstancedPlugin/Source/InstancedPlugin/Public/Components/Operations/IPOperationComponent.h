@@ -29,10 +29,10 @@ public:
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY()
-	bool bInstancesNumEditCondition;
+	bool bInstancesNumEditCond;
 
 	/** Number of instances to create */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bInstancesNumEditCondition", ClampMin = "1", UIMin = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Operation | Parameters", Meta = (EditCondition = "bInstancesNumEditCond", ClampMin = "1", UIMin = "1"))
 	int32 InstancesNum;
 
 	/** Process this operation or not */

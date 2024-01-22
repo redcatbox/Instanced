@@ -9,7 +9,7 @@ UIPOperationComponent::UIPOperationComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = true;
+	bInstancesNumEditCond = true;
 	InstancesNum = 1;
 	bEnabled = true;
 	ExecutionOrder = 0;

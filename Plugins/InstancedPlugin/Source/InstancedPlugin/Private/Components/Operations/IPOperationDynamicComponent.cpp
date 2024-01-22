@@ -7,7 +7,7 @@ UIPOperationDynamicComponent::UIPOperationDynamicComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
+	bInstancesNumEditCond = false;
 #endif
 }
 

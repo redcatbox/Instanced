@@ -1,11 +1,12 @@
 // redbox, 2022
 
 #include "Components/Operations/IPOperationInstanceSpaceBase.h"
+#include "Components/InstancedStaticMeshComponent.h"
 
 UIPOperationInstanceSpaceBase::UIPOperationInstanceSpaceBase()
 {
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
+	bInstancesNumEditCond = false;
 	bInstanceSpaceEditCond = true;
 	InstanceSpace = FVector(100.f);
 	bInstanceSpaceFromMeshBounds = false;

@@ -15,7 +15,7 @@ UIPOperationRandomTransform::UIPOperationRandomTransform()
 	RandomRotationMax = FRotator(0.f, 0.f, 0.f);
 
 	bRandomRotationByFixedRotatorSteps = false;
-	bRandomRotationByFixedRotatorStepsEditCondition = bRandomRotation && bRandomRotationByFixedRotatorSteps;
+	bRandomRotationByFixedRotatorStepsEditCond = bRandomRotation && bRandomRotationByFixedRotatorSteps;
 	FixedRotator = FRotator(0.f, 0.f, 0.f);
 	StepsMin = 0;
 	StepsMax = 1;
@@ -85,7 +85,7 @@ void UIPOperationRandomTransform::RunOperation(TArray<FTransform>& Transforms)
 		FMath::Clamp(RandomScaleMax.Y, RandomScaleMin.Y, RandomScaleMax.Y),
 		FMath::Clamp(RandomScaleMax.Z, RandomScaleMin.Z, RandomScaleMax.Z));
 
-	bRandomRotationByFixedRotatorStepsEditCondition = bRandomRotation && bRandomRotationByFixedRotatorSteps;
+	bRandomRotationByFixedRotatorStepsEditCond = bRandomRotation && bRandomRotationByFixedRotatorSteps;
 	StepsMin = FMath::Clamp(StepsMin, 1, StepsMax);
 	StepsMax = FMath::Clamp(StepsMax, StepsMin, StepsMax);
 

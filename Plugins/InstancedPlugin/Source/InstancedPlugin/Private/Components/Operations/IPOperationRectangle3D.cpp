@@ -5,7 +5,7 @@
 UIPOperationRectangle3D::UIPOperationRectangle3D()
 {
 #if WITH_EDITORONLY_DATA
-	bInstancesNumEditCondition = false;
+	bInstancesNumEditCond = false;
 	bCornersMeshes = true;
 	bOrientCornersMeshesAround = false;
 	bSidesMeshes = true;

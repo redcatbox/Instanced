@@ -14,7 +14,7 @@ public:
 			TEXT("InstancedPluginEditor"),
 			NSLOCTEXT("Contexts", "InstancedPluginEditor", "InstancedPluginEditor Plugin"),
 			NAME_None,
-			FEditorStyle::GetStyleSetName()
+			FAppStyle::GetAppStyleSetName()
 		) {}
 
 	virtual void RegisterCommands() override;

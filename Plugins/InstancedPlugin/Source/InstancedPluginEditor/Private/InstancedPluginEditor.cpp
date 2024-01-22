@@ -37,7 +37,7 @@ void FInstancedPluginEditorModule::StartupModule()
 	{
 		TSharedPtr<FExtender> ToolbarExtender = MakeShareable(new FExtender);
 		ToolbarExtender->AddToolBarExtension("Content",
-			EExtensionHook::Before,
+			EExtensionHook::After,
 			PluginCommands,
 			FToolBarExtensionDelegate::CreateRaw(this, &FInstancedPluginEditorModule::AddToolbarButton));
 		LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(ToolbarExtender);
@@ -68,10 +68,8 @@ void FInstancedPluginEditorModule::AddToolbarButton(FToolBarBuilder& ToolbarBuil
 {
 	ToolbarBuilder.AddToolBarButton(FInstancedPluginEditorCommands::Get().PluginCommand0);
 
-	FUIAction TempCompileOptionsCommand;
-
 	ToolbarBuilder.AddComboButton(
-		TempCompileOptionsCommand,
+		FUIAction(),
 		FOnGetContent::CreateRaw(this, &FInstancedPluginEditorModule::FillComboButton, PluginCommands),
 		LOCTEXT("InstancedPlugin", "Instanced Plugin"),
 		LOCTEXT("InstancedPluginCommands", "Instanced Plugin Commands"),
@@ -83,6 +81,7 @@ void FInstancedPluginEditorModule::AddToolbarButton(FToolBarBuilder& ToolbarBuil
 TSharedRef<SWidget> FInstancedPluginEditorModule::FillComboButton(TSharedPtr<class FUICommandList> Commands)
 {
 	FMenuBuilder MenuBuilder(true, Commands);
+	MenuBuilder.AddMenuEntry(FInstancedPluginEditorCommands::Get().PluginCommand0);
 	MenuBuilder.AddMenuEntry(FInstancedPluginEditorCommands::Get().PluginCommand1);
 	MenuBuilder.AddMenuEntry(FInstancedPluginEditorCommands::Get().PluginCommand2);
 	return MenuBuilder.MakeWidget();
